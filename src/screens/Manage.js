@@ -7,6 +7,7 @@ import { Icon } from "@ahaui/react";
 // import PostList from "../components/Home/PostList";
 import PostListManage from "../components/Manage/PostListManage";
 import { getPostsAction } from "../store/reducers/postsReducer";
+import PostListSkeleton from "../components/Home/Post/PostListSkeleton";
 export default function Manage() {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.posts);
@@ -24,6 +25,9 @@ export default function Manage() {
   return (
     <Layout>
       {/* <WrapperPostManage> */}
+
+      {/* {loading && <PostListSkeleton num={5} />} */}
+
       <PostListManage
         data={[
           {
@@ -98,6 +102,7 @@ export default function Manage() {
           },
         ]}
       />
+
       <AddIcon>
         <Icon size="large" name="plus" />
       </AddIcon>

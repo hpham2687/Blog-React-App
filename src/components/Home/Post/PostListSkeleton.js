@@ -3,11 +3,11 @@ import { Skeleton } from "@ahaui/react";
 
 export default function PostListSkeleton({ num }) {
   return (
-    <div className="u-flex u-flexWrap u-justifyContentAround">
+    <div className="u-flex u-flexWrap u-justifyContentAround u-paddingSmall">
       {[...Array(10).keys()].map(() => (
-        <div className="u-paddingSmall">
+        <div className="">
           <Skeleton width={250} height={200} />
-          <div className="u-marginLeftSmall u-flexGrow1">
+          <div className=" u-flexGrow1 u-paddingSmall">
             <Skeleton width="60%" />
             <Skeleton />
             <Skeleton />
