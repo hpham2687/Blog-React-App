@@ -12,6 +12,7 @@ import LoginPage from "./screens/Login";
 import ManagePage from "./screens/Manage";
 import RegisterPage from "./screens/Register";
 import AddPostPage from "./screens/AddPost";
+import EditPostPage from "./screens/EditPost";
 
 const GlobalStyle = createGlobalStyle`
 body {
@@ -56,7 +57,17 @@ function App() {
                   </ProtectedRoute>
                 }
               ></Route>
+              <Route
+                path="/edit-post/:postId"
+                exact
+                element={
+                  <ProtectedRoute>
+                    <EditPostPage />
+                  </ProtectedRoute>
+                }
+              ></Route>
               <Route path="/" element={<Home />}></Route>
+              <Route element={<>Not found</>}></Route>
             </Routes>
           </Router>
         </ErrorBoundary>

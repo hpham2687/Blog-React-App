@@ -4,11 +4,15 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { ADD_POST_ERROR_MESSAGES } from "../../constants/AddPost/Message";
-import { resetErrorAction } from "../../store/reducers/authReducer";
+// TODO: fill all data to input - edit case
 
-export default function PostForm({ submitText, onSubmit, ...props }) {
+export default function PostForm({
+  submitText,
+  onSubmit,
+  data = {},
+  ...props
+}) {
   let loading;
-  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -16,7 +20,6 @@ export default function PostForm({ submitText, onSubmit, ...props }) {
     formState: { errors },
   } = useForm();
 
-  //   const isHasUsernameError = errorApi?.username || errors?.username;
   const isHasUsernameError = errors?.title;
   const isHasContentError = errors?.content;
   const isHasImageError = errors?.image;
@@ -32,11 +35,9 @@ export default function PostForm({ submitText, onSubmit, ...props }) {
                   type="text"
                   isInvalid={isHasUsernameError}
                   placeholder="Enter title"
+                  value={data?.title}
                   {...register("title", {
                     required: ADD_POST_ERROR_MESSAGES.TITLE_REQUIRED,
-                    onChange: () => {
-                      dispatch(resetErrorAction());
-                    },
                   })}
                 />
                 {isHasUsernameError && (
@@ -56,9 +57,6 @@ export default function PostForm({ submitText, onSubmit, ...props }) {
                   placeholder="Enter content"
                   {...register("content", {
                     required: ADD_POST_ERROR_MESSAGES.CONTENT_REQUIRED,
-                    onChange: () => {
-                      dispatch(resetErrorAction());
-                    },
                   })}
                 />
                 {isHasContentError && (
@@ -76,9 +74,6 @@ export default function PostForm({ submitText, onSubmit, ...props }) {
                   placeholder="Enter image url"
                   {...register("image", {
                     required: ADD_POST_ERROR_MESSAGES.IMAGE_REQUIRED,
-                    onChange: () => {
-                      dispatch(resetErrorAction());
-                    },
                   })}
                 />
                 {isHasImageError && (
