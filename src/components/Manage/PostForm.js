@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { ADD_POST_ERROR_MESSAGES } from "../../constants/AddPost/Message";
 import { resetErrorAction } from "../../store/reducers/authReducer";
 
-export default function PostForm({ submitText, ...props }) {
+export default function PostForm({ submitText, onSubmit, ...props }) {
   let loading;
   const dispatch = useDispatch();
   const {
@@ -15,20 +15,6 @@ export default function PostForm({ submitText, ...props }) {
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = ({ title, content, image }) => {
-    console.log({
-      title,
-      content,
-      image,
-    });
-    // TODO: Add dispatch action
-    // dispatch(
-    //   loginAction({
-    //     title,
-    //     content,
-    //   })
-    // );
-  };
 
   //   const isHasUsernameError = errorApi?.username || errors?.username;
   const isHasUsernameError = errors?.title;
