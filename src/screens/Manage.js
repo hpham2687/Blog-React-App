@@ -32,22 +32,82 @@ export default function Manage() {
   `;
   return (
     <Layout>
-      <WrapperPostManage>
-        <PostListManage
-          data={[
-            {
-              content:
-                "Magna minim tempor nulla aliqua. Ea exercitation sit irure sit eiusmod anim. Anim voluptate commodo consequat incididunt occaecat.\r\n",
-              gender: "male",
-              name: "Pitts Shaw",
-              picture: "https://picsum.photos/seed/picsum/300/250",
-              posted_date: "2015-07-16T11:52:12 -07:00",
-              title: "Dorothy Chase",
-              _id: "61ab37f8aba0176343688b99",
-            },
-          ]}
-        />
-      </WrapperPostManage>
+      {/* <WrapperPostManage> */}
+      <PostListManage
+        data={[
+          {
+            content:
+              "Magna minim tempor nulla aliqua. Ea exercitation sit irure sit eiusmod anim. Anim voluptate commodo consequat incididunt occaecat.\r\n",
+            gender: "male",
+            name: "Pitts Shaw",
+            picture: "https://picsum.photos/seed/picsum/300/250",
+            posted_date: "2015-07-16T11:52:12 -07:00",
+            title: "Dorothy Chase",
+            _id: "61ab37f8aba0176343688b99",
+          },
+          {
+            content:
+              "Magna minim tempor nulla aliqua. Ea exercitation sit irure sit eiusmod anim. Anim voluptate commodo consequat incididunt occaecat.\r\n",
+            gender: "male",
+            name: "Pitts Shaw",
+            picture: "https://picsum.photos/seed/picsum/300/250",
+            posted_date: "2015-07-16T11:52:12 -07:00",
+            title: "Dorothy Chase",
+            _id: "61ab37f8aba0176343688b99",
+          },
+          {
+            content:
+              "Magna minim tempor nulla aliqua. Ea exercitation sit irure sit eiusmod anim. Anim voluptate commodo consequat incididunt occaecat.\r\n",
+            gender: "male",
+            name: "Pitts Shaw",
+            picture: "https://picsum.photos/seed/picsum/300/250",
+            posted_date: "2015-07-16T11:52:12 -07:00",
+            title: "Dorothy Chase",
+            _id: "61ab37f8aba0176343688b99",
+          },
+          {
+            content:
+              "Magna minim tempor nulla aliqua. Ea exercitation sit irure sit eiusmod anim. Anim voluptate commodo consequat incididunt occaecat.\r\n",
+            gender: "male",
+            name: "Pitts Shaw",
+            picture: "https://picsum.photos/seed/picsum/300/250",
+            posted_date: "2015-07-16T11:52:12 -07:00",
+            title: "Dorothy Chase",
+            _id: "61ab37f8aba0176343688b99",
+          },
+          {
+            content:
+              "Magna minim tempor nulla aliqua. Ea exercitation sit irure sit eiusmod anim. Anim voluptate commodo consequat incididunt occaecat.\r\n",
+            gender: "male",
+            name: "Pitts Shaw",
+            picture: "https://picsum.photos/seed/picsum/300/250",
+            posted_date: "2015-07-16T11:52:12 -07:00",
+            title: "Dorothy Chase",
+            _id: "61ab37f8aba0176343688b99",
+          },
+          {
+            content:
+              "Magna minim tempor nulla aliqua. Ea exercitation sit irure sit eiusmod anim. Anim voluptate commodo consequat incididunt occaecat.\r\n",
+            gender: "male",
+            name: "Pitts Shaw",
+            picture: "https://picsum.photos/seed/picsum/300/250",
+            posted_date: "2015-07-16T11:52:12 -07:00",
+            title: "Dorothy Chase",
+            _id: "61ab37f8aba0176343688b99",
+          },
+          {
+            content:
+              "Magna minim tempor nulla aliqua. Ea exercitation sit irure sit eiusmod anim. Anim voluptate commodo consequat incididunt occaecat.\r\n",
+            gender: "male",
+            name: "Pitts Shaw",
+            picture: "https://picsum.photos/seed/picsum/300/250",
+            posted_date: "2015-07-16T11:52:12 -07:00",
+            title: "Dorothy Chase",
+            _id: "61ab37f8aba0176343688b99",
+          },
+        ]}
+      />
+      {/* </WrapperPostManage> */}
     </Layout>
   );
 }
