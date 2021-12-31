@@ -30,13 +30,15 @@ export default function PostWithAction(props) {
             {/* <Button variant="primary">Button</Button> */}
           </CardFooterWrapper>
         </StyledCard.Body>
-        <StyledIcon size="medium" name="closeCircle" />
+        <RemoveIcon size="medium" name="closeCircle" />
       </StyledCard>
     </PostWrapper>
   );
 }
 
-const StyledIcon = styled(Icon)`
+const RemoveIcon = styled(Icon)`
+  transition: all 0.2s ease-out;
+
   position: absolute;
   top: 0;
   right: 0;

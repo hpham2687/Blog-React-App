@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Layout from "../components/common/Layout";
 import LoadMoreBtn from "../components/Home/LoadMoreBtn";
+import { Icon } from "@ahaui/react";
 // import PostList from "../components/Home/PostList";
 import PostListManage from "../components/Manage/PostListManage";
 import { getPostsAction } from "../store/reducers/postsReducer";
@@ -20,16 +21,6 @@ export default function Manage() {
     return error;
   }
 
-  const WrapperPostManage = styled.div`
-    max-height: calc(100vh - 150px);
-    overflow: auto;
-
-    max-width: 800px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-self: center;
-  `;
   return (
     <Layout>
       {/* <WrapperPostManage> */}
@@ -107,7 +98,48 @@ export default function Manage() {
           },
         ]}
       />
+      <AddIcon>
+        <Icon size="large" name="plus" />
+      </AddIcon>
       {/* </WrapperPostManage> */}
     </Layout>
   );
 }
+
+const AddIcon = styled.div`
+  cursor: pointer;
+  border: 1px solid var(--colorPrimary);
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  background: white;
+  z-index: 2;
+
+  transition: all 0.2s ease-out;
+  &:hover {
+    &:before {
+      left: 0;
+    }
+  }
+  &:before {
+    transition: all 0.2s ease-out;
+
+    z-index: 1;
+    content: "";
+    border-radius: 50%;
+
+    position: absolute;
+    top: 0;
+    left: 10px;
+    right: 0;
+    bottom: 0;
+    background: var(--colorPrimary);
+    opacity: 0.2;
+  }
+`;
