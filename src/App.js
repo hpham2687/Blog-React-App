@@ -9,8 +9,9 @@ import * as theme from "./config/theme";
 import { useTheme } from "./context/ThemeContext";
 import Home from "./screens/Home";
 import LoginPage from "./screens/Login";
-import Manage from "./screens/Manage";
-import Register from "./screens/Register";
+import ManagePage from "./screens/Manage";
+import RegisterPage from "./screens/Register";
+import AddPostPage from "./screens/AddPost";
 
 const GlobalStyle = createGlobalStyle`
 body {
@@ -38,12 +39,20 @@ function App() {
             renders the first one that matches the current URL. */}
             <Routes>
               <Route path="/login" element={<LoginPage />}></Route>
-              <Route path="/register" element={<Register />}></Route>
+              <Route path="/register" element={<RegisterPage />}></Route>
               <Route
                 path="/manage"
                 element={
                   <ProtectedRoute>
-                    <Manage />
+                    <ManagePage />
+                  </ProtectedRoute>
+                }
+              ></Route>
+              <Route
+                path="/add-post"
+                element={
+                  <ProtectedRoute>
+                    <AddPostPage />
                   </ProtectedRoute>
                 }
               ></Route>
