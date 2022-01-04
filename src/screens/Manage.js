@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Layout from "../components/common/Layout";
 import LoadMoreBtn from "../components/Home/LoadMoreBtn";
+import { Modal, Button } from "@ahaui/react";
 import { Icon } from "@ahaui/react";
 // import PostList from "../components/Home/PostList";
 import PostListManage from "../components/Manage/PostListManage";
@@ -10,6 +11,7 @@ import { getPostsAction } from "../store/reducers/postsReducer";
 import PostListSkeleton from "../components/Home/Post/PostListSkeleton";
 import { device } from "../utils/mediaQuery";
 import { Link } from "react-router-dom";
+import ModalConfirm from "../components/Modal/ModalConfirm";
 export default function Manage() {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.posts);
@@ -26,6 +28,10 @@ export default function Manage() {
 
   return (
     <Layout>
+      {/* <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button> */}
+
       {/* <WrapperPostManage> */}
 
       {/* {loading && <PostListSkeleton num={5} />} */}
