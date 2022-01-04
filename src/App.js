@@ -13,6 +13,7 @@ import ManagePage from "./screens/Manage";
 import RegisterPage from "./screens/Register";
 import AddPostPage from "./screens/AddPost";
 import EditPostPage from "./screens/EditPost";
+import PostDetail from "./screens/PostDetail";
 // TODO: Add not found page
 const GlobalStyle = createGlobalStyle`
 * {
@@ -78,6 +79,15 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <EditPostPage />
+                  </ProtectedRoute>
+                }
+              ></Route>
+              <Route
+                path="/posts/:postId"
+                exact
+                element={
+                  <ProtectedRoute>
+                    <PostDetail />
                   </ProtectedRoute>
                 }
               ></Route>
