@@ -22,7 +22,7 @@ export default function PostWithAction(props) {
               <Tag variant="primary">27/2/2021</Tag>
             </div>
 
-            <Link style={{ marginLeft: "auto" }} to={`posts/${_id}`}>
+            <Link style={{ marginLeft: "auto" }} to={`/edit-post/${_id}`}>
               <StyledViewButton size={"small"} variant="primary">
                 Edit
               </StyledViewButton>

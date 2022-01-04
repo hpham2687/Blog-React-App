@@ -21,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
   padding: 0;
   box-sizing: border-box;
 }
+
 :root {
    
 
@@ -30,12 +31,11 @@ const GlobalStyle = createGlobalStyle`
     @media (min-width: 1024px) {
     }
   }
-
-body {
-  color: ${({ theme }) => theme.textColor};
-  background-color: ${({ theme }) => theme.background};
-  
-}
+  body, #page-container-body, .Card, .Header {
+    background: ${({ theme }) => theme.body};
+    color: ${({ theme }) => theme.text};
+    transition: all 0.50s linear;
+  }
 a {
   text-decoration: none;
 }
