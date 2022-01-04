@@ -57,6 +57,7 @@ const PostWrapper = styled.div`
   flex: 1;
   max-width: 275px;
   min-width: 275px;
+  max-width: 300px;
 `;
 
 const StyledCard = styled(Card)`

@@ -13,8 +13,23 @@ import ManagePage from "./screens/Manage";
 import RegisterPage from "./screens/Register";
 import AddPostPage from "./screens/AddPost";
 import EditPostPage from "./screens/EditPost";
-
+// TODO: Add not found page
 const GlobalStyle = createGlobalStyle`
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+   
+
+    @media (min-width: 768px) {
+    }
+
+    @media (min-width: 1024px) {
+    }
+  }
+
 body {
   color: ${({ theme }) => theme.textColor};
   background-color: ${({ theme }) => theme.background};
