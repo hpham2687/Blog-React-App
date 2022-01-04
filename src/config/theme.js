@@ -1,12 +1,12 @@
-// theme.js
-const lightTheme = {
-  textColor: "#000",
-  background: "#fff",
+export const lightTheme = {
+  body: "#FFF",
+  text: "#363537",
+  toggleBorder: "#FFF",
+  background: "#363537",
 };
-
-const darkTheme = {
-  textColor: "#fff",
-  background: "#000",
+export const darkTheme = {
+  body: "#363537",
+  text: "#FAFAFA",
+  toggleBorder: "#6B8096",
+  background: "#999",
 };
-
-export { lightTheme, darkTheme };

@@ -14,6 +14,7 @@ export default function Layout({ children }) {
       </PageLayout.Header>
       <PageLayout.Body
         style={{ paddingTop: "64px" }}
+        id="page-container-body"
         className={`u-backgroundLightest u-flexColumn`}
       >
         {children}

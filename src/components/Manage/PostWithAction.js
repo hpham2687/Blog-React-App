@@ -4,12 +4,29 @@ import styled from "styled-components";
 import { Tag } from "@ahaui/react";
 import { Icon } from "@ahaui/react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import ModalConfirm from "../Modal/ModalConfirm";
 
 export default function PostWithAction(props) {
   let { _id, title, content, picture } = props;
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const onSubmitRemove = () => {
+    console.log("removing " + _id);
+  };
   return (
     <PostWrapper>
+      {show && (
+        <ModalConfirm
+          onSubmitRemove={onSubmitRemove}
+          show={show}
+          onClose={handleClose}
+          setShow={setShow}
+        />
+      )}
       <StyledCard>
         <img className="u-maxWidthFull" sizes={"small"} src={picture} alt="" />
         <StyledCard.Body className="Card-body">
@@ -22,7 +39,7 @@ export default function PostWithAction(props) {
               <Tag variant="primary">27/2/2021</Tag>
             </div>
 
-            <Link style={{ marginLeft: "auto" }} to={`posts/${_id}`}>
+            <Link style={{ marginLeft: "auto" }} to={`/edit-post/${_id}`}>
               <StyledViewButton size={"small"} variant="primary">
                 Edit
               </StyledViewButton>
@@ -30,7 +47,7 @@ export default function PostWithAction(props) {
             {/* <Button variant="primary">Button</Button> */}
           </CardFooterWrapper>
         </StyledCard.Body>
-        <RemoveIcon size="medium" name="closeCircle" />
+        <RemoveIcon onClick={handleShow} size="medium" name="closeCircle" />
       </StyledCard>
     </PostWrapper>
   );
@@ -57,6 +74,7 @@ const PostWrapper = styled.div`
   flex: 1;
   max-width: 275px;
   min-width: 275px;
+  max-width: 300px;
 `;
 
 const StyledCard = styled(Card)`

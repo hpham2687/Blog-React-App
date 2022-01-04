@@ -1,13 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Layout from "../components/common/Layout";
 import LoadMoreBtn from "../components/Home/LoadMoreBtn";
+import { Modal, Button } from "@ahaui/react";
 import { Icon } from "@ahaui/react";
 // import PostList from "../components/Home/PostList";
 import PostListManage from "../components/Manage/PostListManage";
 import { getPostsAction } from "../store/reducers/postsReducer";
 import PostListSkeleton from "../components/Home/Post/PostListSkeleton";
+import { device } from "../utils/mediaQuery";
+import { Link } from "react-router-dom";
+import ModalConfirm from "../components/Modal/ModalConfirm";
 export default function Manage() {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.posts);
@@ -24,6 +28,10 @@ export default function Manage() {
 
   return (
     <Layout>
+      {/* <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button> */}
+
       {/* <WrapperPostManage> */}
 
       {/* {loading && <PostListSkeleton num={5} />} */}
@@ -48,7 +56,7 @@ export default function Manage() {
             picture: "https://picsum.photos/seed/picsum/300/250",
             posted_date: "2015-07-16T11:52:12 -07:00",
             title: "Dorothy Chase",
-            _id: "61ab37f8aba0176343688b99",
+            _id: "61ab37f8aba017634368899",
           },
           {
             content:
@@ -58,7 +66,7 @@ export default function Manage() {
             picture: "https://picsum.photos/seed/picsum/300/250",
             posted_date: "2015-07-16T11:52:12 -07:00",
             title: "Dorothy Chase",
-            _id: "61ab37f8aba0176343688b99",
+            _id: "61ab37f8aba017634688b99",
           },
           {
             content:
@@ -68,7 +76,7 @@ export default function Manage() {
             picture: "https://picsum.photos/seed/picsum/300/250",
             posted_date: "2015-07-16T11:52:12 -07:00",
             title: "Dorothy Chase",
-            _id: "61ab37f8aba0176343688b99",
+            _id: "61ab37f8aba076343688b99",
           },
           {
             content:
@@ -78,7 +86,7 @@ export default function Manage() {
             picture: "https://picsum.photos/seed/picsum/300/250",
             posted_date: "2015-07-16T11:52:12 -07:00",
             title: "Dorothy Chase",
-            _id: "61ab37f8aba0176343688b99",
+            _id: "61ab37f8aba0f76343688b99",
           },
           {
             content:
@@ -88,7 +96,7 @@ export default function Manage() {
             picture: "https://picsum.photos/seed/picsum/300/250",
             posted_date: "2015-07-16T11:52:12 -07:00",
             title: "Dorothy Chase",
-            _id: "61ab37f8aba0176343688b99",
+            _id: "61ab37f8aba01743688b99",
           },
           {
             content:
@@ -98,20 +106,23 @@ export default function Manage() {
             picture: "https://picsum.photos/seed/picsum/300/250",
             posted_date: "2015-07-16T11:52:12 -07:00",
             title: "Dorothy Chase",
-            _id: "61ab37f8aba0176343688b99",
+            _id: "61ab37f80176343688b99",
           },
         ]}
       />
-
-      <AddIcon>
-        <Icon size="large" name="plus" />
-      </AddIcon>
+      <Link to="/add-post">
+        <AddIcon>
+          <Icon size="large" name="plus" />
+        </AddIcon>
+      </Link>
       {/* </WrapperPostManage> */}
     </Layout>
   );
 }
 
 const AddIcon = styled.div`
+  box-shadow: 0 10px 6px -6px #777;
+
   cursor: pointer;
   border: 1px solid var(--colorPrimary);
   position: fixed;
@@ -146,5 +157,10 @@ const AddIcon = styled.div`
     bottom: 0;
     background: var(--colorPrimary);
     opacity: 0.2;
+  }
+
+  @media ${device.mobileL} {
+    width: 50px;
+    height: 50px;
   }
 `;

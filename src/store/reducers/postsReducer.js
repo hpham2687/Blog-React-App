@@ -25,7 +25,7 @@ export const loadMorePostsAction = createAsyncThunk(
   async ({}, thunkAPI) => {
     try {
       const response = await UserApi.getPosts();
-
+      console.log({ response });
       return response.data;
     } catch (error) {
       const message =
@@ -76,7 +76,8 @@ const postsSlice = createSlice({
     [loadMorePostsAction.fulfilled]: (state, action) => {
       state.loading = false;
       //   console.log({ actionData: action.payload });
-      state.data = [...state.data, ...action.payload];
+      state.data = [...state.data, ...action.payload.posts];
+      state.limit = action.payload.limit;
     },
     [loadMorePostsAction.rejected]: (state, action) => {
       state.loading = false;

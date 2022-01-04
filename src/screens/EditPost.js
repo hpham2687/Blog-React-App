@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Layout from "../components/common/Layout";
 import PostForm from "../components/Manage/PostForm";
+import { Button } from "@ahaui/react";
+import styled from "styled-components";
 
 export default function EditPost() {
   const { postId } = useParams();
@@ -29,7 +31,19 @@ export default function EditPost() {
 
   return (
     <Layout>
+      <BackButton variant="primary">
+        <Link style={{ display: "block", width: "100%" }} to={`/manage`}>
+          Back
+        </Link>
+      </BackButton>
       <PostForm submitText="Edit" data={postData} onSubmit={onSubmitEditPost} />
     </Layout>
   );
 }
+
+const BackButton = styled(Button)`
+  a {
+    color: white;
+    text-decoration: none;
+  }
+`;

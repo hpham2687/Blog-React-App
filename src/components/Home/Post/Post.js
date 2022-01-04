@@ -8,41 +8,6 @@ import { Link } from "react-router-dom";
 export default function Post(props) {
   let { _id, title, content, picture } = props;
 
-  const StyledCard = styled(Card)`
-    border-top-right-radius: 6px;
-    border-top-left-radius: 6px;
-    overflow: hidden;
-    margin: 16px;
-
-    a {
-      text-decoration: none;
-    }
-    img {
-      width: 100%;
-
-      display: block;
-    }
-    .Card-footer {
-      padding: 8px 12px;
-    }
-    .Card-footer__desc {
-      margin: 0px 0px 0px 8px;
-    }
-    .Card-body {
-      padding-bottom: 0;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-bottom: 16px;
-    }
-  `;
-
-  const StyledViewButton = styled(Button)`
-    align-self: center;
-    margin-left: auto;
-  `;
   return (
     <PostListWrapper>
       <StyledCard>
@@ -81,4 +46,42 @@ const PostListWrapper = styled.div`
   flex: 1;
   max-width: 275px;
   min-width: 275px;
+
+  max-width: 300px;
+`;
+
+const StyledCard = styled(Card)`
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+  overflow: hidden;
+  margin: 16px;
+
+  a {
+    text-decoration: none;
+  }
+  img {
+    width: 100%;
+
+    display: block;
+  }
+  .Card-footer {
+    padding: 8px 12px;
+  }
+  .Card-footer__desc {
+    margin: 0px 0px 0px 8px;
+  }
+  .Card-body {
+    padding-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 16px;
+  }
+`;
+
+const StyledViewButton = styled(Button)`
+  align-self: center;
+  margin-left: auto;
 `;

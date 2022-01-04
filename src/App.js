@@ -13,13 +13,29 @@ import ManagePage from "./screens/Manage";
 import RegisterPage from "./screens/Register";
 import AddPostPage from "./screens/AddPost";
 import EditPostPage from "./screens/EditPost";
-
+import PostDetail from "./screens/PostDetail";
+// TODO: Add not found page
 const GlobalStyle = createGlobalStyle`
-body {
-  color: ${({ theme }) => theme.textColor};
-  background-color: ${({ theme }) => theme.background};
-  
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+:root {
+   
+
+    @media (min-width: 768px) {
+    }
+
+    @media (min-width: 1024px) {
+    }
+  }
+  body, #page-container-body, .Card, .Header {
+    background: ${({ theme }) => theme.body};
+    color: ${({ theme }) => theme.text};
+    transition: all 0.50s linear;
+  }
 a {
   text-decoration: none;
 }
@@ -63,6 +79,15 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <EditPostPage />
+                  </ProtectedRoute>
+                }
+              ></Route>
+              <Route
+                path="/posts/:postId"
+                exact
+                element={
+                  <ProtectedRoute>
+                    <PostDetail />
                   </ProtectedRoute>
                 }
               ></Route>
