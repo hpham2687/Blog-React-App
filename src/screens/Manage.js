@@ -8,6 +8,8 @@ import { Icon } from "@ahaui/react";
 import PostListManage from "../components/Manage/PostListManage";
 import { getPostsAction } from "../store/reducers/postsReducer";
 import PostListSkeleton from "../components/Home/Post/PostListSkeleton";
+import { device } from "../utils/mediaQuery";
+import { Link } from "react-router-dom";
 export default function Manage() {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.posts);
@@ -102,16 +104,19 @@ export default function Manage() {
           },
         ]}
       />
-
-      <AddIcon>
-        <Icon size="large" name="plus" />
-      </AddIcon>
+      <Link to="/add-post">
+        <AddIcon>
+          <Icon size="large" name="plus" />
+        </AddIcon>
+      </Link>
       {/* </WrapperPostManage> */}
     </Layout>
   );
 }
 
 const AddIcon = styled.div`
+  box-shadow: 0 10px 6px -6px #777;
+
   cursor: pointer;
   border: 1px solid var(--colorPrimary);
   position: fixed;
@@ -146,5 +151,10 @@ const AddIcon = styled.div`
     bottom: 0;
     background: var(--colorPrimary);
     opacity: 0.2;
+  }
+
+  @media ${device.mobileL} {
+    width: 50px;
+    height: 50px;
   }
 `;
