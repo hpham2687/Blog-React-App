@@ -1,15 +1,31 @@
-import React from "react";
-import { Card, Dropdown, Separator, Button } from "@ahaui/react";
+import React, { useState } from "react";
+import { Card, Icon, Separator, Button } from "@ahaui/react";
 import styled from "styled-components";
 import { Tag } from "@ahaui/react";
 import { Avatar } from "@ahaui/react";
 import { Link } from "react-router-dom";
+import ModalConfirm from "../../Modal/ModalConfirm";
 
 export default function Post(props) {
-  let { _id, title, content, picture } = props;
+  let { _id, title, content, picture, isManagePost } = props;
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const onSubmitRemove = () => {
+    console.log("removing " + _id);
+  };
   return (
     <PostListWrapper>
+      {show && (
+        <ModalConfirm
+          onSubmitRemove={onSubmitRemove}
+          show={show}
+          onClose={handleClose}
+          setShow={setShow}
+        />
+      )}
       <StyledCard>
         <img className="u-maxWidthFull" sizes={"small"} src={picture} alt="" />
         <StyledCard.Body className="Card-body">
@@ -18,25 +34,47 @@ export default function Post(props) {
         <Separator />
         <StyledCard.Body className="Card-footer">
           <CardFooterWrapper>
-            <Avatar className="u-backgroundPrimaryLight u-text200" text="KT" />
+            {!isManagePost && (
+              <Avatar
+                className="u-backgroundPrimaryLight u-text200"
+                text="KT"
+              />
+            )}
             <div className="Card-footer__desc">
-              <span className="u-block">Kriss pham</span>
+              {!isManagePost && <span className="u-block">Kriss pham</span>}
               <Tag variant="primary">27/2/2021</Tag>
             </div>
 
-            <Link style={{ marginLeft: "auto" }} to={`posts/${_id}`}>
+            <Link
+              style={{ marginLeft: "auto" }}
+              to={isManagePost ? `/edit-post/${_id}` : `posts/${_id}`}
+            >
               <StyledViewButton size={"small"} variant="primary">
-                View
+                {isManagePost ? "Edit" : "View"}
               </StyledViewButton>
             </Link>
             {/* <Button variant="primary">Button</Button> */}
           </CardFooterWrapper>
         </StyledCard.Body>
+        {isManagePost && (
+          <RemoveIcon onClick={handleShow} size="medium" name="closeCircle" />
+        )}
       </StyledCard>
     </PostListWrapper>
   );
 }
 
+const RemoveIcon = styled(Icon)`
+  transition: all 0.2s ease-out;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
 const CardFooterWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -44,13 +82,12 @@ const CardFooterWrapper = styled.div`
 
 const PostListWrapper = styled.div`
   flex: 1;
-  max-width: 275px;
   min-width: 275px;
-
   max-width: 300px;
 `;
 
 const StyledCard = styled(Card)`
+  position: relative;
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;
   overflow: hidden;

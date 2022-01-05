@@ -1,18 +1,20 @@
-import { Button, Card, Form, Loader } from "@ahaui/react";
+import { Button, Card, Form } from "@ahaui/react";
 import React from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import styled from "styled-components";
-import Layout from "../components/common/Layout";
-import { useAuth } from "../hooks/useAuth";
-import { loginAction, resetErrorAction } from "../store/reducers/authReducer";
-import { useForm } from "react-hook-form";
-import { AUTH_ERROR_MESSAGES } from "../constants/Auth/Message";
-
-export default function Login() {
-  const { isLoggedIn, loading, error: errorApi } = useAuth();
+import { AUTH_ERROR_MESSAGES } from "../../constants/Auth/Message";
+import { useAuth } from "../../hooks/useAuth";
+import {
+  registerAction,
+  resetErrorAction,
+} from "../../store/reducers/authReducer";
+import Layout from "../common/Layout";
+export default function Register() {
+  const { isLoggedIn } = useAuth();
   const dispatch = useDispatch();
-  console.log({ errorApi });
+
   const {
     register,
     handleSubmit,
@@ -20,8 +22,9 @@ export default function Login() {
     formState: { errors },
   } = useForm();
   const onSubmit = ({ username, password }) => {
+    console.log(`onSubmit`, { username, password });
     dispatch(
-      loginAction({
+      registerAction({
         username,
         password,
       })
@@ -32,20 +35,25 @@ export default function Login() {
     return <Navigate to="/" />;
   }
 
-  const isHasUsernameError = errorApi?.username || errors?.username;
-  const isHasPasswordError = errors?.password || errorApi?.password;
   return (
     <Layout>
-      <LoginWrapper>
+      <RegisterWrapper>
         <Card style={{ height: "fit-content" }} size={"medium"}>
           <Card.Body>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div>
-                <Form.Group controlId="loginForm.username">
+                <Form.Group controlId="registerForm.email">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Input
+                    type="text"
+                    placeholder="Enter email"
+                    defaultValue=""
+                  />
+                </Form.Group>
+                <Form.Group controlId="registerForm.username">
                   <Form.Label>Username</Form.Label>
                   <Form.Input
                     type="text"
-                    isInvalid={isHasUsernameError}
                     placeholder="Enter text"
                     {...register("username", {
                       required: AUTH_ERROR_MESSAGES.USERNAME_REQUIRED,
@@ -54,17 +62,11 @@ export default function Login() {
                       },
                     })}
                   />
-                  {isHasUsernameError && (
-                    <Form.Feedback type="invalid">
-                      {errorApi?.username || errors?.username.message}
-                    </Form.Feedback>
-                  )}
                 </Form.Group>
-                <Form.Group controlId="loginForm.password">
+                <Form.Group controlId="registerForm.password">
                   <Form.Label>Password</Form.Label>
                   <Form.Input
                     type="password"
-                    isInvalid={isHasPasswordError}
                     placeholder="Enter password"
                     {...register("password", {
                       required: AUTH_ERROR_MESSAGES.PASSWORD_REQUIRED,
@@ -73,32 +75,24 @@ export default function Login() {
                       },
                     })}
                   />
-                  {isHasPasswordError && (
-                    <Form.Feedback type="invalid">
-                      {errorApi?.password || errors?.password.message}
-                    </Form.Feedback>
-                  )}
                 </Form.Group>
                 <Button
                   size={"small"}
-                  type="submit"
                   variant="primary"
                   className="u-marginRightSmall"
                 >
-                  <Button.Label>
-                    {loading ? <Loader size="small" /> : "Login"}
-                  </Button.Label>
+                  <Button.Label>Register</Button.Label>
                 </Button>
               </div>
             </form>
           </Card.Body>
         </Card>
-      </LoginWrapper>
+      </RegisterWrapper>
     </Layout>
   );
 }
 
-const LoginWrapper = styled.div`
+const RegisterWrapper = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 64px;

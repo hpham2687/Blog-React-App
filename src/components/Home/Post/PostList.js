@@ -2,11 +2,15 @@ import React from "react";
 import Post from "./Post";
 import styled from "styled-components";
 import { device } from "../../../utils/mediaQuery";
-export default React.memo(function PostList({ data }) {
+export default React.memo(function PostList({
+  data,
+  isManagePost = false,
+} = {}) {
+  console.log({ isManagePost });
   return (
     <PostListWrapper id="dsfs">
       {data.map((item, index) => (
-        <Post {...item} key={item._id} />
+        <Post isManagePost={isManagePost} {...item} key={item._id} />
       ))}
     </PostListWrapper>
   );

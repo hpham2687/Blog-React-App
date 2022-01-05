@@ -68,6 +68,7 @@ const StyledAhaHeader = styled(AhaHeader)`
   top: 0;
   width: 100%;
   z-index: 10;
+  border-bottom: 1px solid #999;
 `;
 
 const HeaderRightDesktopWrapper = styled.div`

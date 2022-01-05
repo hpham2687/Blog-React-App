@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
-import Layout from "../components/common/Layout";
-import LoadMoreBtn from "../components/Home/LoadMoreBtn";
-import { Modal, Button } from "@ahaui/react";
 import { Icon } from "@ahaui/react";
-// import PostList from "../components/Home/PostList";
-import PostListManage from "../components/Manage/PostListManage";
-import { getPostsAction } from "../store/reducers/postsReducer";
-import PostListSkeleton from "../components/Home/Post/PostListSkeleton";
-import { device } from "../utils/mediaQuery";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import ModalConfirm from "../components/Modal/ModalConfirm";
+import styled from "styled-components";
+import { device } from "../../utils/mediaQuery";
+import Layout from "../common/Layout";
+import PostList from "../Home/Post/PostList";
 export default function Manage() {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.posts);
@@ -36,7 +30,8 @@ export default function Manage() {
 
       {/* {loading && <PostListSkeleton num={5} />} */}
 
-      <PostListManage
+      <PostList
+        isManagePost={true}
         data={[
           {
             content:
