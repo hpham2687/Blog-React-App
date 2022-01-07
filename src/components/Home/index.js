@@ -5,13 +5,18 @@ import Layout from "../common/Layout";
 import LoadMoreBtn from "./LoadMoreBtn";
 import PostList from "./Post/PostList";
 import PostListSkeleton from "./Post/PostListSkeleton";
-import { getPostsAction } from "../../store/reducers/postsReducer";
+import {
+  getPostsAction,
+  getUserPostsAction,
+} from "../../store/reducers/postsReducer";
 export default function Home() {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.posts);
 
   useEffect(() => {
     // throw Error("loi roi");
+
+    dispatch(getUserPostsAction({ page: 1, items_per_page: 6 }));
     dispatch(getPostsAction({ page: 1, items_per_page: 6, search: "1" }));
   }, []);
 

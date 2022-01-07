@@ -59,17 +59,18 @@ function App() {
   //     console.log(error.message);
   //   }
   // }, []);
+
   // add post test
   // useEffect(() => {
   //   const headers = {
   //     "Content-Type": "application/json",
-  //     Authorization: "Bearer MzIyNzU3NTA1",
+  //     Authorization: "Bearer MTYzNDM5MzQ5Mw==",
   //   };
   //   try {
   //     axiosClient.post(
   //       "/posts",
   //       {
-  //         title: "this is title 11",
+  //         title: "this is title 14 by user 4 real",
   //         content: "lorem lorem ipsum...",
   //         picture: "https://picsum.photos/seed/picsum/300/250",
   //       },
@@ -77,6 +78,25 @@ function App() {
   //         headers: headers,
   //       }
   //     );
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // }, []);
+
+  //  get specific user post test
+  // useEffect(() => {
+  //   const headers = {
+  //     "Content-Type": "application/json",
+  //     Authorization: "Bearer MzIyNzU3NTA1",
+  //   };
+  //   try {
+  //     axiosClient.get("user/posts", {
+  //       params: {
+  //         page: 1,
+  //         items_per_page: 3,
+  //       },
+  //       headers: headers,
+  //     });
   //   } catch (error) {
   //     console.log(error.message);
   //   }

@@ -2,18 +2,20 @@
 import { rest } from "msw";
 import {
   createUserPostCtrl,
-  getAllPostsCtrl,
+  getPostsCtrl,
+  getUserPosts,
 } from "./controllers/post.controller";
 import { loginCtrl, registerCtrl } from "./controllers/user.controller";
-
-import { posts } from "./mockData/postData";
 
 export const handlers = [
   rest.post("/login", loginCtrl),
   rest.post("/register", registerCtrl),
 
   rest.post("/posts", createUserPostCtrl),
-  rest.get("/posts", getAllPostsCtrl),
+  rest.get("/posts", getPostsCtrl),
+
+  // Get posts of specific user
+  rest.get("/user/posts", getUserPosts),
 
   rest.get("/user", (req, res, ctx) => {
     // Check if the user is authenticated in this session

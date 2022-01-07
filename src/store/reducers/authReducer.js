@@ -10,6 +10,7 @@ export const registerAction = createAsyncThunk(
 
       const response = await UserApi.register({ email, username, password });
       console.log(response.data);
+      console.log(response.data);
       localStorage.setItem("user", JSON.stringify(response.data));
       notifyPositive({ message: AUTH_SUCCESS_MESSAGES.REGISTER_SUCCESS });
       return response.data;
@@ -75,7 +76,7 @@ const authSlice = createSlice({
       console.log(action.payload);
       state.isLoggedIn = true;
       state.loading = false;
-      state.user = action.payload.user;
+      state.user = action.payload;
     },
     [registerAction.rejected]: (state, action) => {
       state.isLoggedIn = false;
@@ -87,7 +88,7 @@ const authSlice = createSlice({
     [loginAction.fulfilled]: (state, action) => {
       state.isLoggedIn = true;
       state.loading = false;
-      state.user = action.payload.user;
+      state.user = action.payload;
     },
     [loginAction.rejected]: (state, action) => {
       console.log({ actionPayload: action.payload });

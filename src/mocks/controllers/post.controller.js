@@ -1,15 +1,37 @@
 import * as postsData from "./../mockData/postData";
 import * as authData from "../mockData/authData";
+import { getFilterParams } from "../utils/post";
 
-export const getAllPostsCtrl = async (req, res, ctx) => {
+export const getPostsCtrl = async (req, res, ctx) => {
   try {
-    // Persist user's authentication in the session
-    let page = req.url.searchParams.get("page");
-    let items_per_page = req.url.searchParams.get("items_per_page");
-    let search = req.url.searchParams.get("search") || null;
+    let { page, items_per_page, search } = getFilterParams(req);
 
-    console.log({ search });
-    const posts = await postsData.getPost(page, items_per_page, search);
+    const posts = await postsData.getPosts(page, items_per_page, search);
+    return res(ctx.json(posts));
+  } catch (error) {
+    return res(
+      ctx.status(500),
+      ctx.json({
+        status: "fail",
+        message: error.message,
+      })
+    );
+  }
+};
+
+export const getUserPosts = async (req, res, ctx) => {
+  try {
+    // Validate user
+    const user = await authData.getUser(req);
+    let { page, items_per_page, search } = getFilterParams(req);
+
+    const posts = await postsData.getUserPosts(
+      page,
+      items_per_page,
+      search,
+      user.id
+    );
+
     return res(ctx.json(posts));
     // return res(ctx.json(user));
   } catch (error) {
@@ -28,7 +50,6 @@ export const createUserPostCtrl = async (req, res, ctx) => {
     const { title, content, picture } = req.body;
     const user = await authData.getUser(req);
 
-    console.log({ user, title, content, picture });
     const createdPost = await postsData.create({
       user,
       title,

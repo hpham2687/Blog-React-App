@@ -1,3 +1,4 @@
+import { getToken } from "../utils/api";
 import { axiosClient } from "./axiosClient";
 
 function login({ username, password }) {
@@ -7,7 +8,7 @@ function register({ username, password }) {
   return axiosClient.post("/register", { username, password });
 }
 
-function getPosts(page = 1, items_per_page = 3, search = null) {
+function getPosts(page, items_per_page, search = null) {
   return axiosClient.get("/posts", {
     params: {
       page,
@@ -17,4 +18,20 @@ function getPosts(page = 1, items_per_page = 3, search = null) {
   });
 }
 
-export { login, register, getPosts };
+function getUserPosts(page, items_per_page, search = null) {
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${getToken()}`,
+  };
+
+  return axiosClient.get("user/posts", {
+    params: {
+      page,
+      items_per_page,
+      search,
+    },
+    headers,
+  });
+}
+
+export { login, register, getPosts, getUserPosts };

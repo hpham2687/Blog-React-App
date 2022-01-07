@@ -1,3 +1,5 @@
+import { func } from "prop-types";
+
 function validatePostForm({ title, content, picture }) {
   if (!title) {
     const error = new Error("A title is required");
@@ -16,4 +18,10 @@ function validatePostForm({ title, content, picture }) {
   }
 }
 
-export { validatePostForm };
+function getFilterParams(req) {
+  let page = req.url.searchParams.get("page");
+  let items_per_page = req.url.searchParams.get("items_per_page");
+  let search = req.url.searchParams.get("search") || null;
+  return { page, items_per_page, search };
+}
+export { validatePostForm, getFilterParams };
