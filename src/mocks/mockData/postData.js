@@ -1,6 +1,9 @@
+import { validatePostForm } from "../utils/post";
+import { v4 as uuidv4 } from "uuid";
+
 // const { hash, validateUserForm, sanitizeUser } = authUtils;
 const postsKey = "__all_post__";
-let allPosts = [];
+let allPosts = {};
 const persist = () =>
   window.localStorage.setItem(postsKey, JSON.stringify(allPosts));
 const load = () =>
@@ -176,13 +179,49 @@ const posts = [
   },
 ];
 
-async function getAll(limit = 6) {
-  const sliceArr = [...allPosts].slice(0, limit);
+async function create({ user, title, content, picture }) {
+  validatePostForm({ title, content, picture });
+  const id = uuidv4();
 
-  return { posts: sliceArr, limit };
+  allPosts[id] = {
+    authorId: user.id,
+    authorName: user.username,
+    title,
+    content,
+    picture,
+    createdAt: Date.now(),
+  };
+  persist();
+  return read(id);
+}
+
+async function read(id) {
+  validatePost(id);
+  return allPosts[id];
+}
+
+function validatePost(id) {
+  load();
+  if (!allPosts[id]) {
+    const error = new Error(`No posts with the id "${id}"`);
+    error.status = 404;
+    throw error;
+  }
+}
+function getArrayFromObjectPosts() {
+  load();
+  return Object.keys(allPosts).map((key) => ({ ...allPosts[key], id: key }));
+  // return Object.keys(allPosts).map((key) => ({ [key]: allPosts[key] }));
+}
+
+async function getAll(page = 0, limit = 6) {
+  // console.log(allPosts);
+  //  const sliceArr = [...allPosts].slice(0, limit);
+
+  return { posts: getArrayFromObjectPosts(), limit };
 }
 // async function read(id) {
 //   validateUser(id);
 //   return sanitizeUser(users[id]);
 // }
-export { posts, getAll };
+export { posts, getAll, create };

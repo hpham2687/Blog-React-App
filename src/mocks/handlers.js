@@ -13,6 +13,7 @@ export const handlers = [
   rest.post("/register", registerCtrl),
 
   rest.post("/posts", createUserPostCtrl),
+  rest.get("/posts", getAllPostsCtrl),
 
   rest.get("/user", (req, res, ctx) => {
     // Check if the user is authenticated in this session
@@ -36,5 +37,4 @@ export const handlers = [
       })
     );
   }),
-  rest.get("/posts", getAllPostsCtrl),
 ];
