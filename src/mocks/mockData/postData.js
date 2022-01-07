@@ -107,4 +107,4 @@ async function getPosts(page = 1, items_per_page = 6, search = null) {
 //   validateUser(id);
 //   return sanitizeUser(users[id]);
 // }
-export { getPosts, create, getUserPosts };
+export { getPosts, create, getUserPosts, read };

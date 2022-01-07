@@ -2,6 +2,7 @@
 import { rest } from "msw";
 import {
   createUserPostCtrl,
+  getPostDetailCtrl,
   getPostsCtrl,
   getUserPosts,
 } from "./controllers/post.controller";
@@ -13,6 +14,7 @@ export const handlers = [
 
   rest.post("/posts", createUserPostCtrl),
   rest.get("/posts", getPostsCtrl),
+  rest.get("/posts/:postId", getPostDetailCtrl),
 
   // Get posts of specific user
   rest.get("/user/posts", getUserPosts),

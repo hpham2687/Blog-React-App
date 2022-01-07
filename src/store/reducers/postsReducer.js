@@ -61,7 +61,6 @@ const postsSlice = createSlice({
       state.loading = true;
     },
     [getPostsAction.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.isLoggedIn = true;
       state.loading = false;
       state.data = action.payload.posts;

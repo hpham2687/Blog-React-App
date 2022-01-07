@@ -19,6 +19,24 @@ export const getPostsCtrl = async (req, res, ctx) => {
   }
 };
 
+export const getPostDetailCtrl = async (req, res, ctx) => {
+  try {
+    //let { page, items_per_page, search } = getFilterParams(req);
+    let { postId } = req.params;
+    const post = await postsData.read(postId);
+    console.log({ post });
+    return res(ctx.json(post));
+  } catch (error) {
+    return res(
+      ctx.status(500),
+      ctx.json({
+        status: "fail",
+        message: error.message,
+      })
+    );
+  }
+};
+
 export const getUserPosts = async (req, res, ctx) => {
   try {
     // Validate user
