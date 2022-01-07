@@ -33,7 +33,6 @@ export const getUserPosts = async (req, res, ctx) => {
     );
 
     return res(ctx.json(posts));
-    // return res(ctx.json(user));
   } catch (error) {
     return res(
       ctx.status(500),

@@ -14,9 +14,6 @@ export default function Home() {
   const { data, loading, error } = useSelector((state) => state.posts);
 
   useEffect(() => {
-    // throw Error("loi roi");
-
-    dispatch(getUserPostsAction({ page: 1, items_per_page: 6 }));
     dispatch(getPostsAction({ page: 1, items_per_page: 6, search: "1" }));
   }, []);
 

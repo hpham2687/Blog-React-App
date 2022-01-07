@@ -59,7 +59,7 @@ async function getUserPosts(
 ) {
   let posts = [...getArrayFromObjectPosts()];
   let filteredPosts = postFilter(posts, page, items_per_page, search, authorId);
-  return filteredPosts;
+  return { posts: filteredPosts, items_per_page, page };
 }
 
 function postFilter(
@@ -76,14 +76,7 @@ function postFilter(
     throw error;
   }
   if (authorId) {
-    filteredPosts = filteredPosts.filter((post) => {
-      console.log(
-        post,
-        post.authorId != authorId,
-        `post.authorId ${post.authorId} and ${authorId}`
-      );
-      return post.authorId == authorId;
-    });
+    filteredPosts = filteredPosts.filter((post) => post.authorId == authorId);
   }
   if (search) {
     filteredPosts = filteredPosts.filter((post) => post.title.includes(search));

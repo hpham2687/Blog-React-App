@@ -3,17 +3,20 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { getUserPostsAction } from "../../store/reducers/userPostsReducer";
 import { device } from "../../utils/mediaQuery";
 import Layout from "../common/Layout";
 import PostList from "../Home/Post/PostList";
+import PostListSkeleton from "../Home/Post/PostListSkeleton";
 export default function Manage() {
   const dispatch = useDispatch();
-  const { data, loading, error } = useSelector((state) => state.posts);
+  const { data, loading, error } = useSelector((state) => state.userPosts);
   const { user } = useSelector((state) => state.auth);
-  console.log({ user });
+  console.log({ data });
 
   useEffect(() => {
     // get posts list of user
+    dispatch(getUserPostsAction({ page: 1, items_per_page: 6 }));
   }, []);
 
   if (error) {
@@ -28,83 +31,9 @@ export default function Manage() {
 
       {/* <WrapperPostManage> */}
 
-      {/* {loading && <PostListSkeleton num={5} />} */}
+      {loading && <PostListSkeleton num={5} />}
 
-      <PostList
-        isManagePost={true}
-        data={[
-          {
-            content:
-              "Magna minim tempor nulla aliqua. Ea exercitation sit irure sit eiusmod anim. Anim voluptate commodo consequat incididunt occaecat.\r\n",
-            gender: "male",
-            name: "Pitts Shaw",
-            picture: "https://picsum.photos/seed/picsum/300/250",
-            posted_date: "2015-07-16T11:52:12 -07:00",
-            title: "Dorothy Chase",
-            _id: "61ab37f8aba0176343688b99",
-          },
-          {
-            content:
-              "Magna minim tempor nulla aliqua. Ea exercitation sit irure sit eiusmod anim. Anim voluptate commodo consequat incididunt occaecat.\r\n",
-            gender: "male",
-            name: "Pitts Shaw",
-            picture: "https://picsum.photos/seed/picsum/300/250",
-            posted_date: "2015-07-16T11:52:12 -07:00",
-            title: "Dorothy Chase",
-            _id: "61ab37f8aba017634368899",
-          },
-          {
-            content:
-              "Magna minim tempor nulla aliqua. Ea exercitation sit irure sit eiusmod anim. Anim voluptate commodo consequat incididunt occaecat.\r\n",
-            gender: "male",
-            name: "Pitts Shaw",
-            picture: "https://picsum.photos/seed/picsum/300/250",
-            posted_date: "2015-07-16T11:52:12 -07:00",
-            title: "Dorothy Chase",
-            _id: "61ab37f8aba017634688b99",
-          },
-          {
-            content:
-              "Magna minim tempor nulla aliqua. Ea exercitation sit irure sit eiusmod anim. Anim voluptate commodo consequat incididunt occaecat.\r\n",
-            gender: "male",
-            name: "Pitts Shaw",
-            picture: "https://picsum.photos/seed/picsum/300/250",
-            posted_date: "2015-07-16T11:52:12 -07:00",
-            title: "Dorothy Chase",
-            _id: "61ab37f8aba076343688b99",
-          },
-          {
-            content:
-              "Magna minim tempor nulla aliqua. Ea exercitation sit irure sit eiusmod anim. Anim voluptate commodo consequat incididunt occaecat.\r\n",
-            gender: "male",
-            name: "Pitts Shaw",
-            picture: "https://picsum.photos/seed/picsum/300/250",
-            posted_date: "2015-07-16T11:52:12 -07:00",
-            title: "Dorothy Chase",
-            _id: "61ab37f8aba0f76343688b99",
-          },
-          {
-            content:
-              "Magna minim tempor nulla aliqua. Ea exercitation sit irure sit eiusmod anim. Anim voluptate commodo consequat incididunt occaecat.\r\n",
-            gender: "male",
-            name: "Pitts Shaw",
-            picture: "https://picsum.photos/seed/picsum/300/250",
-            posted_date: "2015-07-16T11:52:12 -07:00",
-            title: "Dorothy Chase",
-            _id: "61ab37f8aba01743688b99",
-          },
-          {
-            content:
-              "Magna minim tempor nulla aliqua. Ea exercitation sit irure sit eiusmod anim. Anim voluptate commodo consequat incididunt occaecat.\r\n",
-            gender: "male",
-            name: "Pitts Shaw",
-            picture: "https://picsum.photos/seed/picsum/300/250",
-            posted_date: "2015-07-16T11:52:12 -07:00",
-            title: "Dorothy Chase",
-            _id: "61ab37f80176343688b99",
-          },
-        ]}
-      />
+      <PostList isManagePost={true} data={data} />
       <Link to="/add-post">
         <AddIcon>
           <Icon size="large" name="plus" />
