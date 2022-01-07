@@ -116,6 +116,9 @@ const StyledCard = styled(Card)`
     overflow: hidden;
     text-overflow: ellipsis;
     margin-bottom: 16px;
+    p {
+      margin-bottom: 0;
+    }
   }
 `;
 
