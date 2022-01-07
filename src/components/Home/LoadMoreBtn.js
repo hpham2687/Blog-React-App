@@ -9,13 +9,11 @@ LoadMoreBtn.propTypes = {
 };
 export default function LoadMoreBtn({ loading }) {
   const dispatch = useDispatch();
-  // const pageYOffsetRef = useRef(window.pageYOffset);
 
   return (
     <div>
       <Button
         onClick={() => {
-          // pageYOffsetRef.current = window.pageYOffset;
           dispatch(loadMorePostsAction({}));
         }}
         variant="primary"

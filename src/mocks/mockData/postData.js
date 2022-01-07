@@ -58,8 +58,14 @@ async function getUserPosts(
   authorId
 ) {
   let posts = [...getArrayFromObjectPosts()];
-  let filteredPosts = postFilter(posts, page, items_per_page, search, authorId);
-  return { posts: filteredPosts, items_per_page, page };
+  let { filteredPosts, maximunNumOfPages } = postFilter(
+    posts,
+    page,
+    items_per_page,
+    search,
+    authorId
+  );
+  return { posts: filteredPosts, items_per_page, page, maximunNumOfPages };
 }
 
 function postFilter(
@@ -95,13 +101,24 @@ function postFilter(
       : maximunIndex;
   filteredPosts = filteredPosts.slice(indexFrom, indexTo + 1);
 
-  return filteredPosts;
+  return { filteredPosts, maximunNumOfPages };
 }
 
 async function getPosts(page = 1, items_per_page = 6, search = null) {
   let posts = [...getArrayFromObjectPosts()];
-  let filteredPosts = postFilter(posts, page, items_per_page, search);
-  return { posts: filteredPosts, items_per_page, page };
+  let { filteredPosts, maximunNumOfPages } = postFilter(
+    posts,
+    page,
+    items_per_page,
+    search
+  );
+  return {
+    posts: filteredPosts,
+    items_per_page,
+    page,
+    search,
+    maximunNumOfPages,
+  };
 }
 // async function read(id) {
 //   validateUser(id);

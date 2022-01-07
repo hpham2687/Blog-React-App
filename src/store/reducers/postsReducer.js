@@ -25,7 +25,14 @@ export const loadMorePostsAction = createAsyncThunk(
   "posts/loadMorePostsAction",
   async ({}, thunkAPI) => {
     try {
-      const response = await UserApi.getPosts();
+      let {
+        posts: { items_per_page, page, search, maximunNumOfPages },
+      } = thunkAPI.getState();
+      console.log({ maximunNumOfPages });
+      let newPage = ++page;
+      console.log("xuong day");
+      console.log({ newPage });
+      const response = await UserApi.getPosts(newPage, items_per_page, search);
       console.log({ response });
       return response.data;
     } catch (error) {
@@ -48,8 +55,9 @@ const postsSlice = createSlice({
     items_per_page: null,
     page: null,
     search: null,
-    loading: false,
+    maximunNumOfPages: null,
     error: null,
+    loading: false,
   },
   reducers: {
     logout(state, action) {
@@ -66,11 +74,12 @@ const postsSlice = createSlice({
       state.data = action.payload.posts;
       state.items_per_page = action.payload.items_per_page;
       state.page = action.payload.page;
+      state.search = action.payload.search;
+      state.maximunNumOfPages = action.payload.maximunNumOfPages;
     },
     [getPostsAction.rejected]: (state, action) => {
       state.isLoggedIn = false;
       state.loading = false;
-
       state.data = null;
     },
     [loadMorePostsAction.pending]: (state, action) => {
@@ -82,6 +91,7 @@ const postsSlice = createSlice({
       state.data = [...state.data, ...action.payload.posts];
       state.items_per_page = action.payload.items_per_page;
       state.page = action.payload.page;
+      state.search = action.payload.search;
     },
     [loadMorePostsAction.rejected]: (state, action) => {
       state.loading = false;
