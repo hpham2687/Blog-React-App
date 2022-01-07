@@ -9,8 +9,8 @@ export const loginCtrl = async (req, res, ctx) => {
 };
 
 export const registerCtrl = async (req, res, ctx) => {
-  const { username, password } = req.body;
-  const userFields = { username, password };
+  const { email, username, password } = req.body;
+  const userFields = { email, username, password };
   await authData.create(userFields);
   let user;
   try {

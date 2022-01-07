@@ -1,10 +1,8 @@
+import { Avatar, Button, Card, Separator, Tag } from "@ahaui/react";
 import React from "react";
-import { Button, Separator, Avatar, Tag, Card } from "@ahaui/react";
-
 import { Link, useParams } from "react-router-dom";
-import Layout from "../common/Layout";
-import PostForm from "../Manage/PostForm";
 import styled from "styled-components";
+import Layout from "../common/Layout";
 import PostDetailSkeleton from "./PostDetailSkeleton";
 
 export default function PostDetail() {

@@ -4,11 +4,11 @@ import { notifyNegative, notifyPositive } from "../../utils/toast";
 import * as UserApi from "./../../api/userApi";
 export const registerAction = createAsyncThunk(
   "auth/register",
-  async ({ username, password }, thunkAPI) => {
+  async ({ email, username, password }, thunkAPI) => {
     try {
-      console.log(`onSubmit register thunk`, { username, password });
+      console.log(`onSubmit register thunk`, { email, username, password });
 
-      const response = await UserApi.register({ username, password });
+      const response = await UserApi.register({ email, username, password });
       console.log(response.data);
       localStorage.setItem("user", JSON.stringify(response.data));
       notifyPositive({ message: AUTH_SUCCESS_MESSAGES.REGISTER_SUCCESS });

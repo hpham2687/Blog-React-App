@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Layout from "../common/Layout";
-import PostForm from "../Manage/PostForm";
+import PostForm from "../common/PostForm";
 import { Button } from "@ahaui/react";
 import styled from "styled-components";
 

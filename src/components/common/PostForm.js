@@ -1,7 +1,6 @@
 import { Button, Card, Form, Loader } from "@ahaui/react";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { ADD_POST_ERROR_MESSAGES } from "../../constants/AddPost/Message";
 // TODO: fill all data to input - edit case

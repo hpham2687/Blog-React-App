@@ -21,10 +21,11 @@ export default function Register() {
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = ({ username, password }) => {
-    console.log(`onSubmit`, { username, password });
+  const onSubmit = ({ email, username, password }) => {
+    console.log(`onSubmit`, { email, username, password });
     dispatch(
       registerAction({
+        email,
         username,
         password,
       })
@@ -47,7 +48,12 @@ export default function Register() {
                   <Form.Input
                     type="text"
                     placeholder="Enter email"
-                    defaultValue=""
+                    {...register("email", {
+                      required: AUTH_ERROR_MESSAGES.EMAIL_REQUIRED,
+                      onChange: () => {
+                        dispatch(resetErrorAction());
+                      },
+                    })}
                   />
                 </Form.Group>
                 <Form.Group controlId="registerForm.username">

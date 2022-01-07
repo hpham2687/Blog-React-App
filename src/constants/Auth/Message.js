@@ -1,6 +1,7 @@
 const AUTH_ERROR_MESSAGES = {
   USERNAME_REQUIRED: "Username is required",
   PASSWORD_REQUIRED: "Password is required",
+  EMAIL_REQUIRED: "Email is required",
 };
 const AUTH_SUCCESS_MESSAGES = {
   REGISTER_SUCCESS: "Register Successfully",

@@ -3,7 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import Layout from "../common/Layout";
-import PostForm from "../Manage/PostForm";
+import PostForm from "../common/PostForm";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 

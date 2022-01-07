@@ -1,6 +1,9 @@
 // src/mocks/handlers.js
 import { rest } from "msw";
-import { getAllPostsCtrl } from "./controllers/post.controller";
+import {
+  createUserPostCtrl,
+  getAllPostsCtrl,
+} from "./controllers/post.controller";
 import { loginCtrl, registerCtrl } from "./controllers/user.controller";
 
 import { posts } from "./mockData/postData";
@@ -8,6 +11,8 @@ import { posts } from "./mockData/postData";
 export const handlers = [
   rest.post("/login", loginCtrl),
   rest.post("/register", registerCtrl),
+
+  rest.post("/posts", createUserPostCtrl),
 
   rest.get("/user", (req, res, ctx) => {
     // Check if the user is authenticated in this session
