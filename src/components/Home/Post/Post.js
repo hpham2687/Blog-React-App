@@ -5,16 +5,17 @@ import { Tag } from "@ahaui/react";
 import { Avatar } from "@ahaui/react";
 import { Link } from "react-router-dom";
 import ModalConfirm from "../../Modal/ModalConfirm";
+import { timestampToDate } from "../../../utils/datetime";
 
 export default function Post(props) {
-  let { _id, title, content, picture, isManagePost } = props;
+  let { id, title, authorName, createdAt, picture, isManagePost } = props;
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const onSubmitRemove = () => {
-    console.log("removing " + _id);
+    console.log("removing " + id);
   };
   return (
     <PostListWrapper>
@@ -29,7 +30,7 @@ export default function Post(props) {
       <StyledCard>
         <img className="u-maxWidthFull" sizes={"small"} src={picture} alt="" />
         <StyledCard.Body className="Card-body">
-          <p>{content}</p>
+          <p>{title}</p>
         </StyledCard.Body>
         <Separator />
         <StyledCard.Body className="Card-footer">
@@ -41,13 +42,13 @@ export default function Post(props) {
               />
             )}
             <div className="Card-footer__desc">
-              {!isManagePost && <span className="u-block">Kriss pham</span>}
-              <Tag variant="primary">27/2/2021</Tag>
+              {!isManagePost && <span className="u-block">{authorName}</span>}
+              <Tag variant="primary">{timestampToDate(createdAt)}</Tag>
             </div>
 
             <Link
               style={{ marginLeft: "auto" }}
-              to={isManagePost ? `/edit-post/${_id}` : `posts/${_id}`}
+              to={isManagePost ? `/edit-post/${id}` : `posts/${id}`}
             >
               <StyledViewButton size={"small"} variant="primary">
                 {isManagePost ? "Edit" : "View"}

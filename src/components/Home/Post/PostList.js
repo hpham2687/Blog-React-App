@@ -6,11 +6,11 @@ export default React.memo(function PostList({
   data,
   isManagePost = false,
 } = {}) {
-  console.log({ isManagePost });
+  console.log({ data });
   return (
     <PostListWrapper id="dsfs">
       {data.map((item, index) => (
-        <Post isManagePost={isManagePost} {...item} key={item._id} />
+        <Post isManagePost={isManagePost} {...item} key={item.id} />
       ))}
     </PostListWrapper>
   );
