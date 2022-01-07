@@ -46,7 +46,20 @@ a {
 
 function App() {
   const [isDarkMode] = useTheme();
-
+  //get post test settings
+  // useEffect(() => {
+  //   try {
+  //     axiosClient.get("/posts", {
+  //       params: {
+  //         page: 4,
+  //         limit: 3,
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // }, []);
+  // add post test
   // useEffect(() => {
   //   const headers = {
   //     "Content-Type": "application/json",
@@ -56,7 +69,7 @@ function App() {
   //     axiosClient.post(
   //       "/posts",
   //       {
-  //         title: "this is title",
+  //         title: "this is title 11",
   //         content: "lorem lorem ipsum...",
   //         picture: "https://picsum.photos/seed/picsum/300/250",
   //       },
@@ -109,11 +122,7 @@ function App() {
               <Route
                 path="/posts/:postId"
                 exact
-                element={
-                  <ProtectedRoute>
-                    <PostDetail />
-                  </ProtectedRoute>
-                }
+                element={<PostDetail />}
               ></Route>
               <Route path="/" element={<Home />}></Route>
               <Route element={<>Not found</>}></Route>

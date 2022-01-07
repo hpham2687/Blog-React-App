@@ -214,14 +214,44 @@ function getArrayFromObjectPosts() {
   // return Object.keys(allPosts).map((key) => ({ [key]: allPosts[key] }));
 }
 
-async function getAll(page = 0, limit = 6) {
-  // console.log(allPosts);
-  //  const sliceArr = [...allPosts].slice(0, limit);
+async function getPost(page = 1, items_per_page = 6, search = null) {
+  if (page < 1) {
+    const error = new Error(`Page number must be >=1`);
+    error.status = 400;
+    throw error;
+  }
+  let posts = [...getArrayFromObjectPosts()];
+  console.log(search);
+  if (search) {
+    posts = posts.filter((post) => {
+      // console.log(post.title);
+      // console.log(post.title.includes(search));
+      return post.title.includes(search);
+    });
+  }
+  console.log({ page });
+  console.log({ postsAfter: posts });
+  // console.log({ Postlength: posts.length });
+  // console.log(`handle page = ${page}, items_per_page = ${items_per_page}`);
+  let maximunNumOfPages = Math.ceil(posts.length / items_per_page);
+  console.log({ posts, maximunNumOfPages });
+  if (page > maximunNumOfPages) {
+    return { posts: [], items_per_page };
+  }
+  const indexFrom = (page - 1) * items_per_page;
+  const maximunIndex = posts.length - 1;
+  const indexTo =
+    page * items_per_page - 1 <= maximunIndex
+      ? page * items_per_page - 1
+      : maximunIndex;
+  posts = posts.slice(indexFrom, indexTo + 1);
 
-  return { posts: getArrayFromObjectPosts(), limit };
+  console.log(indexFrom + " to " + indexTo);
+
+  return { posts, items_per_page, page };
 }
 // async function read(id) {
 //   validateUser(id);
 //   return sanitizeUser(users[id]);
 // }
-export { posts, getAll, create };
+export { posts, getPost, create };

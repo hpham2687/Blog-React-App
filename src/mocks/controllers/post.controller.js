@@ -2,10 +2,25 @@ import * as postsData from "./../mockData/postData";
 import * as authData from "../mockData/authData";
 
 export const getAllPostsCtrl = async (req, res, ctx) => {
-  // Persist user's authentication in the session
-  const posts = await postsData.getAll();
-  return res(ctx.json(posts));
-  // return res(ctx.json(user));
+  try {
+    // Persist user's authentication in the session
+    let page = req.url.searchParams.get("page");
+    let items_per_page = req.url.searchParams.get("items_per_page");
+    let search = req.url.searchParams.get("search") || null;
+
+    console.log({ search });
+    const posts = await postsData.getPost(page, items_per_page, search);
+    return res(ctx.json(posts));
+    // return res(ctx.json(user));
+  } catch (error) {
+    return res(
+      ctx.status(500),
+      ctx.json({
+        status: "fail",
+        message: error.message,
+      })
+    );
+  }
 };
 
 export const createUserPostCtrl = async (req, res, ctx) => {
@@ -31,7 +46,7 @@ export const createUserPostCtrl = async (req, res, ctx) => {
     return res(
       ctx.status(500),
       ctx.json({
-        status: "ok",
+        status: "fail",
         message: error.message,
       })
     );

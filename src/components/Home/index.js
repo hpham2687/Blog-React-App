@@ -12,7 +12,7 @@ export default function Home() {
 
   useEffect(() => {
     // throw Error("loi roi");
-    dispatch(getPostsAction({}));
+    dispatch(getPostsAction({ page: 1, items_per_page: 6, search: "1" }));
   }, []);
 
   if (error) {
