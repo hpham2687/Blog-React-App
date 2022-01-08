@@ -14,6 +14,8 @@ import RegisterPage from "./components/Register";
 import AddPostPage from "./components/AddPost";
 import EditPostPage from "./components/EditPost";
 import PostDetail from "./components/PostDetail";
+import { history } from "./utils/history";
+
 import { useEffect } from "react";
 import axios from "axios";
 import { axiosClient } from "./api/axiosClient";
@@ -108,7 +110,7 @@ function App() {
         <ToastContainer />
 
         <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Router>
+          <Router navigator={history}>
             {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
             <Routes>
@@ -116,6 +118,7 @@ function App() {
               <Route path="/register" element={<RegisterPage />}></Route>
               <Route
                 path="/manage"
+                exact
                 element={
                   <ProtectedRoute>
                     <ManagePage />

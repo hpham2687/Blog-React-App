@@ -6,9 +6,12 @@ import Layout from "../common/Layout";
 import PostForm from "../common/PostForm";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { createPostsAction } from "../../store/reducers/postsReducer";
+import { useNavigate } from "react-router-dom";
 
-export default function AddPost() {
+export default function AddPost(props) {
   let loading;
+  let history = useNavigate();
   const dispatch = useDispatch();
   const {
     register,
@@ -17,19 +20,21 @@ export default function AddPost() {
     formState: { errors },
   } = useForm();
 
-  const onSubmitAddPost = ({ title, content, image }) => {
+  const onSubmitAddPost = ({ title, content, picture }) => {
     console.log({
       title,
       content,
-      image,
+      picture,
     });
     // TODO: Add dispatch action
-    // dispatch(
-    //   loginAction({
-    //     title,
-    //     content,
-    //   })
-    // );
+    dispatch(
+      createPostsAction({
+        title,
+        content,
+        picture,
+      })
+    );
+    history("/manage");
   };
 
   return (

@@ -5,9 +5,13 @@ import styled from "styled-components";
 import { ADD_POST_ERROR_MESSAGES } from "../../constants/AddPost/Message";
 // TODO: fill all data to input - edit case
 
-export default function PostForm({ submitText, onSubmit, data = {}, ...rest }) {
+export default function PostForm({
+  submitText,
+  onSubmit,
+  data = null,
+  ...rest
+}) {
   let loading;
-  let title = data.title;
   const {
     control,
     register,
@@ -17,12 +21,15 @@ export default function PostForm({ submitText, onSubmit, data = {}, ...rest }) {
     formState: { errors },
   } = useForm({
     defaultValues: useMemo(() => {
-      return data;
+      console.log("vao memo");
+      return data ? data : {};
     }, [data]),
   });
-  console.log({ errors });
+  // console.log({ errors });
 
   useEffect(() => {
+    console.log("vao day");
+    if (!data) return;
     reset(data);
   }, [data]);
 

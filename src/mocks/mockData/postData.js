@@ -22,6 +22,7 @@ async function create({ user, title, content, picture }) {
   validatePostForm({ title, content, picture });
   const id = short.generate();
   allPosts[id] = {
+    id,
     authorId: user.id,
     authorName: user.username,
     title,

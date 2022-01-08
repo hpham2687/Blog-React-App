@@ -1,5 +1,33 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { notifyNegative, notifyPositive } from "../../utils/toast";
+import * as PostApi from "./../../api/postApi";
 import * as UserApi from "./../../api/userApi";
+import { history } from "./../../utils/history";
+import { ADD_POST_SUCCESS_MESSAGES } from "./../../constants/AddPost/Message";
+
+export const createPostsAction = createAsyncThunk(
+  "posts/createPosts",
+  async (postData, thunkAPI) => {
+    try {
+      console.log("createpost");
+      const response = await PostApi.createPost(postData);
+      console.log(response.data);
+      notifyPositive({ message: ADD_POST_SUCCESS_MESSAGES.ADD_POST_SUCCESS });
+
+      return response.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      notifyNegative({ message: message });
+      // thunkAPI.dispatch(getPostsFailure(message));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 export const getPostsAction = createAsyncThunk(
   "posts/getPosts",
@@ -7,6 +35,7 @@ export const getPostsAction = createAsyncThunk(
     try {
       console.log(page, search);
       const response = await UserApi.getPosts(page, items_per_page, search);
+
       return response.data;
     } catch (error) {
       const message =
