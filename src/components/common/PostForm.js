@@ -1,27 +1,34 @@
 import { Button, Card, Form, Loader } from "@ahaui/react";
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect, useMemo } from "react";
+import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { ADD_POST_ERROR_MESSAGES } from "../../constants/AddPost/Message";
 // TODO: fill all data to input - edit case
 
-export default function PostForm({
-  submitText,
-  onSubmit,
-  data = {},
-  ...props
-}) {
+export default function PostForm({ submitText, onSubmit, data = {}, ...rest }) {
   let loading;
+  let title = data.title;
+  console.log({ title });
   const {
+    control,
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: useMemo(() => {
+      return data;
+    }, [data]),
+  });
 
-  const isHasUsernameError = errors?.title;
+  useEffect(() => {
+    reset(data);
+  }, [data]);
+
+  const isHasTitlenameError = errors?.title;
   const isHasContentError = errors?.content;
-  const isHasImageError = errors?.image;
+  const isHasPictureError = errors?.picture;
   return (
     <PostFormWrapper>
       <Card style={{ height: "fit-content" }} size={"medium"}>
@@ -30,16 +37,22 @@ export default function PostForm({
             <div>
               <Form.Group controlId="addPostForm.title">
                 <Form.Label>Title</Form.Label>
-                <Form.Input
-                  type="text"
-                  isInvalid={isHasUsernameError}
-                  placeholder="Enter title"
-                  value={data?.title}
-                  {...register("title", {
-                    required: ADD_POST_ERROR_MESSAGES.TITLE_REQUIRED,
-                  })}
+                <Controller
+                  name="title"
+                  control={control}
+                  render={({ field }) => (
+                    <Form.Input
+                      type="text"
+                      isInvalid={isHasTitlenameError}
+                      placeholder="Enter title"
+                      {...register("title", {
+                        required: ADD_POST_ERROR_MESSAGES.TITLE_REQUIRED,
+                      })}
+                      {...field}
+                    />
+                  )}
                 />
-                {isHasUsernameError && (
+                {isHasTitlenameError && (
                   <Form.Feedback type="invalid">
                     {errors?.title.message}
                     {/* {errorApi?.username || errors?.username.message} */}
@@ -48,15 +61,23 @@ export default function PostForm({
               </Form.Group>
               <Form.Group controlId="addPostForm.content">
                 <Form.Label>Content</Form.Label>
-                <Form.Input
-                  as="textarea"
-                  rows={3}
-                  type="text"
-                  isInvalid={isHasContentError}
-                  placeholder="Enter content"
-                  {...register("content", {
-                    required: ADD_POST_ERROR_MESSAGES.CONTENT_REQUIRED,
-                  })}
+
+                <Controller
+                  name="content"
+                  control={control}
+                  render={({ field }) => (
+                    <Form.Input
+                      as="textarea"
+                      rows={3}
+                      type="text"
+                      isInvalid={isHasContentError}
+                      placeholder="Enter content"
+                      {...register("content", {
+                        required: ADD_POST_ERROR_MESSAGES.CONTENT_REQUIRED,
+                      })}
+                      {...field}
+                    />
+                  )}
                 />
                 {isHasContentError && (
                   <Form.Feedback type="invalid">
@@ -65,19 +86,27 @@ export default function PostForm({
                   </Form.Feedback>
                 )}
               </Form.Group>
-              <Form.Group controlId="addPostForm.image">
+              <Form.Group controlId="addPostForm.picture">
                 <Form.Label>Image</Form.Label>
-                <Form.Input
-                  type="text"
-                  isInvalid={isHasImageError}
-                  placeholder="Enter image url"
-                  {...register("image", {
-                    required: ADD_POST_ERROR_MESSAGES.IMAGE_REQUIRED,
-                  })}
+                <Controller
+                  name="picture"
+                  control={control}
+                  render={({ field }) => (
+                    <Form.Input
+                      {...field}
+                      type="text"
+                      isInvalid={isHasPictureError}
+                      placeholder="Enter image url"
+                      {...register("picture", {
+                        required: ADD_POST_ERROR_MESSAGES.IMAGE_REQUIRED,
+                      })}
+                    />
+                  )}
                 />
-                {isHasImageError && (
+
+                {isHasPictureError && (
                   <Form.Feedback type="invalid">
-                    {errors?.image.message}
+                    {errors?.picture.message}
                     {/* {errorApi?.password || errors?.password.message} */}
                   </Form.Feedback>
                 )}

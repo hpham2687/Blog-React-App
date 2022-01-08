@@ -4,21 +4,36 @@ import Layout from "../common/Layout";
 import PostForm from "../common/PostForm";
 import { Button } from "@ahaui/react";
 import styled from "styled-components";
+import { getPostDetail } from "../../api/postApi";
+import { useState } from "react";
 
 export default function EditPost() {
   const { postId } = useParams();
-  console.log(postId);
-  let postData = {
-    title: "abcd",
-  };
-  useEffect(() => {
+
+  const [postData, setPostData] = useState({});
+  const [loading, setLoading] = useState({});
+
+  let { title, content, picture, authorName, createdAt, authorId, id } =
+    postData;
+
+  React.useEffect(() => {
     // TODO: fetch post detail
-  }, [postId]);
-  const onSubmitEditPost = ({ title, content, image }) => {
+    async function fetchPostDetail() {
+      setLoading(true);
+      let response = await getPostDetail(postId);
+      console.log(response.data);
+      setPostData(response.data);
+      setLoading(false);
+    }
+
+    fetchPostDetail();
+  }, []);
+
+  const onSubmitEditPost = ({ title, content, picture }) => {
     console.log({
       title,
       content,
-      image,
+      picture,
     });
     // TODO: Add dispatch action edit
     // dispatch(

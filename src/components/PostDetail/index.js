@@ -34,13 +34,12 @@ export default function PostDetail() {
     fetchPostDetail();
   }, []);
 
-  console.log(postId);
   const ThumbnailBackground = styled.div`
     width: 100%;
     min-height: 200px;
     background: url(${picture});
-    background-size: contain;
-    background-repeat: none;
+    background-size: cover;
+    background-repeat: no-repeat;
     position: absolute;
     filter: blur(1px);
   `;
@@ -117,7 +116,7 @@ const CardFooterWrapper = styled.div`
 const PostListWrapper = styled.div`
   flex: 1;
   max-width: 275px;
-  min-width: 275px;
+  min-width: 500px;
   margin: 0 auto;
   max-width: 700px;
 `;
@@ -144,8 +143,10 @@ const StyledCard = styled(Card)`
   }
   .Card-body {
     padding-bottom: 0;
-
     margin-bottom: 16px;
+    p {
+      text-align: left;
+    }
   }
 `;
 
