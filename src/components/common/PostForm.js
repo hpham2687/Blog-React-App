@@ -8,7 +8,6 @@ import { ADD_POST_ERROR_MESSAGES } from "../../constants/AddPost/Message";
 export default function PostForm({ submitText, onSubmit, data = {}, ...rest }) {
   let loading;
   let title = data.title;
-  console.log({ title });
   const {
     control,
     register,
@@ -21,6 +20,7 @@ export default function PostForm({ submitText, onSubmit, data = {}, ...rest }) {
       return data;
     }, [data]),
   });
+  console.log({ errors });
 
   useEffect(() => {
     reset(data);
@@ -29,9 +29,10 @@ export default function PostForm({ submitText, onSubmit, data = {}, ...rest }) {
   const isHasTitlenameError = errors?.title;
   const isHasContentError = errors?.content;
   const isHasPictureError = errors?.picture;
+
   return (
     <PostFormWrapper>
-      <Card style={{ height: "fit-content" }} size={"medium"}>
+      <StyledCard size={"medium"}>
         <Card.Body>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div>
@@ -47,6 +48,10 @@ export default function PostForm({ submitText, onSubmit, data = {}, ...rest }) {
                       placeholder="Enter title"
                       {...register("title", {
                         required: ADD_POST_ERROR_MESSAGES.TITLE_REQUIRED,
+                        maxLength: {
+                          value: 20,
+                          message: ADD_POST_ERROR_MESSAGES.TITLE_LENGTH_EXCEED,
+                        },
                       })}
                       {...field}
                     />
@@ -73,6 +78,11 @@ export default function PostForm({ submitText, onSubmit, data = {}, ...rest }) {
                       isInvalid={isHasContentError}
                       placeholder="Enter content"
                       {...register("content", {
+                        maxLength: {
+                          value: 150,
+                          message:
+                            ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_EXCEED,
+                        },
                         required: ADD_POST_ERROR_MESSAGES.CONTENT_REQUIRED,
                       })}
                       {...field}
@@ -99,6 +109,11 @@ export default function PostForm({ submitText, onSubmit, data = {}, ...rest }) {
                       placeholder="Enter image url"
                       {...register("picture", {
                         required: ADD_POST_ERROR_MESSAGES.IMAGE_REQUIRED,
+                        pattern: {
+                          value:
+                            /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
+                          message: ADD_POST_ERROR_MESSAGES.INVALID_IMAGE_URL,
+                        },
                       })}
                     />
                   )}
@@ -124,7 +139,7 @@ export default function PostForm({ submitText, onSubmit, data = {}, ...rest }) {
             </div>
           </form>
         </Card.Body>
-      </Card>
+      </StyledCard>
     </PostFormWrapper>
   );
 }
@@ -137,4 +152,9 @@ const PostFormWrapper = styled.div`
   background: url(https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?size=626&ext=jpg);
   background-repeat: no-repeat;
   background-size: cover;
+`;
+
+const StyledCard = styled(Card)`
+  min-width: 400px;
+  height: fit-content;
 `;

@@ -1,5 +1,6 @@
 import { validatePostForm } from "../utils/post";
 import { v4 as uuidv4 } from "uuid";
+const short = require("short-uuid");
 
 // const { hash, validateUserForm, sanitizeUser } = authUtils;
 const postsKey = "__all_post__";
@@ -19,15 +20,14 @@ try {
 
 async function create({ user, title, content, picture }) {
   validatePostForm({ title, content, picture });
-  const id = uuidv4();
-
+  const id = short.generate();
   allPosts[id] = {
     authorId: user.id,
     authorName: user.username,
     title,
     content,
     picture,
-    createdAt: Date.now(),
+    createdAt: new Date(),
   };
   persist();
   return read(id);
