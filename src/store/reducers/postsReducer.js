@@ -5,8 +5,8 @@ export const getPostsAction = createAsyncThunk(
   "posts/getPosts",
   async ({ page = 1, items_per_page = 6, search = null }, thunkAPI) => {
     try {
+      console.log(page, search);
       const response = await UserApi.getPosts(page, items_per_page, search);
-      console.log(response);
       return response.data;
     } catch (error) {
       const message =
@@ -15,6 +15,7 @@ export const getPostsAction = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
+      console.log({ message });
       // thunkAPI.dispatch(getPostsFailure(message));
       return thunkAPI.rejectWithValue(message);
     }
@@ -52,8 +53,8 @@ const postsSlice = createSlice({
   name: "posts",
   initialState: {
     data: [],
-    items_per_page: null,
-    page: null,
+    items_per_page: 6,
+    page: 1,
     search: null,
     maximunNumOfPages: null,
     error: null,
@@ -87,7 +88,6 @@ const postsSlice = createSlice({
     },
     [loadMorePostsAction.fulfilled]: (state, action) => {
       state.loading = false;
-      //   console.log({ actionData: action.payload });
       state.data = [...state.data, ...action.payload.posts];
       state.items_per_page = action.payload.items_per_page;
       state.page = action.payload.page;
