@@ -20,20 +20,20 @@ export default function AddPost(props) {
     formState: { errors },
   } = useForm();
 
-  const onSubmitAddPost = ({ title, content, picture }) => {
+  const onSubmitAddPost = async ({ title, content, picture }) => {
     console.log({
       title,
       content,
       picture,
     });
     // TODO: Add dispatch action
-    dispatch(
+    await dispatch(
       createPostsAction({
         title,
         content,
         picture,
       })
-    );
+    ).unwrap();
     history("/manage");
   };
 

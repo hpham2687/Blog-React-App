@@ -7,6 +7,8 @@ import PostList from "./Post/PostList";
 import PostListSkeleton from "./Post/PostListSkeleton";
 import { getPostsAction } from "../../store/reducers/postsReducer";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+
 export default function Home() {
   const dispatch = useDispatch();
   const { data, loading, error, page, maximunNumOfPages } = useSelector(
@@ -25,7 +27,7 @@ export default function Home() {
   }
 
   const noPost2Show = (
-    <>
+    <NoPostToShowWrapper>
       <h4>No posts to show.</h4>
       {!isLoggedIn ? (
         <p>
@@ -37,7 +39,7 @@ export default function Home() {
       ) : (
         <Link to="/add-post">Create post</Link>
       )}
-    </>
+    </NoPostToShowWrapper>
   );
 
   return (
@@ -49,3 +51,7 @@ export default function Home() {
     </Layout>
   );
 }
+
+const NoPostToShowWrapper = styled.div`
+  margin: 24px auto;
+`;

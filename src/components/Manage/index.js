@@ -8,6 +8,7 @@ import { device } from "../../utils/mediaQuery";
 import Layout from "../common/Layout";
 import PostList from "../Home/Post/PostList";
 import PostListSkeleton from "../Home/Post/PostListSkeleton";
+
 export default function Manage() {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.userPosts);
@@ -23,6 +24,13 @@ export default function Manage() {
     return error;
   }
 
+  const noPost2Show = (
+    <NoPostToShowWrapper>
+      <h4>No posts to show.</h4>
+      <Link to="/add-post">Create post</Link>
+    </NoPostToShowWrapper>
+  );
+
   return (
     <Layout>
       {/* <Button variant="primary" onClick={handleShow}>
@@ -32,8 +40,12 @@ export default function Manage() {
       {/* <WrapperPostManage> */}
 
       {loading && <PostListSkeleton num={5} />}
+      {data && data.length > 0 ? (
+        <PostList isManagePost={true} data={data} />
+      ) : (
+        noPost2Show
+      )}
 
-      <PostList isManagePost={true} data={data} />
       <Link to="/add-post">
         <AddIcon>
           <Icon size="large" name="plus" />
@@ -43,6 +55,10 @@ export default function Manage() {
     </Layout>
   );
 }
+
+const NoPostToShowWrapper = styled.div`
+  margin: 24px auto;
+`;
 
 const AddIcon = styled.div`
   box-shadow: 0 10px 6px -6px #777;

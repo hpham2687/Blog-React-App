@@ -3,6 +3,7 @@ import { Button, Loader } from "@ahaui/react";
 import { useDispatch } from "react-redux";
 import { loadMorePostsAction } from "../../store/reducers/postsReducer";
 import PropTypes from "prop-types"; // ES6
+import styled from "styled-components";
 
 LoadMoreBtn.propTypes = {
   loading: PropTypes.bool,
@@ -12,7 +13,7 @@ export default function LoadMoreBtn({ loading }) {
 
   return (
     <div>
-      <Button
+      <StyledButton
         onClick={() => {
           dispatch(loadMorePostsAction({}));
         }}
@@ -21,7 +22,10 @@ export default function LoadMoreBtn({ loading }) {
         <Button.Label>
           Load more {loading && <Loader size="small" />}
         </Button.Label>
-      </Button>
+      </StyledButton>
     </div>
   );
 }
+const StyledButton = styled(Button)`
+  margin: 12px auto;
+`;

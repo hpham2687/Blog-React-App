@@ -81,6 +81,7 @@ const CardFooterWrapper = styled.div`
 `;
 
 const PostListWrapper = styled.div`
+  display: flex;
   flex: 1;
   min-width: 275px;
   max-width: 300px;
@@ -93,22 +94,29 @@ const StyledCard = styled(Card)`
   overflow: hidden;
   margin: 16px;
 
+  display: flex;
+  flex-direction: column;
+
   a {
     text-decoration: none;
   }
   img {
     width: 100%;
-
     display: block;
+
+    height: 70%;
   }
   .Card-footer {
     padding: 8px 12px;
   }
   .Card-footer__desc {
     margin: 0px 0px 0px 8px;
+    span {
+      text-align: left;
+    }
   }
   .Card-body {
-    padding-bottom: 0;
+    padding-bottom: 4px;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
