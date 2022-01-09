@@ -25,7 +25,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    dispatch(getPostsAction({ page: 1, items_per_page: 6 }));
+    dispatch(getPostsAction({ page: 1, items_per_page: 10 }));
   }, [dispatch]);
 
   if (error) {
