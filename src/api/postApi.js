@@ -32,4 +32,18 @@ function editPost(postData) {
   });
 }
 
-export { getPostDetail, createPost, editPost };
+function removePost(postId) {
+  console.log({ postId });
+
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${getToken()}`,
+  };
+  console.log({ headers });
+
+  return axiosClient.delete(`/posts/${postId}`, {
+    headers,
+  });
+}
+
+export { getPostDetail, createPost, editPost, removePost };

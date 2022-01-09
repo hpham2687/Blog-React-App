@@ -1,26 +1,27 @@
+import { Avatar, Button, Card, Icon, Separator, Tag } from "@ahaui/react";
 import React, { useState } from "react";
-import { Card, Icon, Separator, Button } from "@ahaui/react";
-import styled from "styled-components";
-import { Tag } from "@ahaui/react";
-import { Avatar } from "@ahaui/react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { removePostAction } from "../../../store/reducers/postsReducer";
 import ModalConfirm from "../../Modal/ModalConfirm";
 
 export default function Post(props) {
   let { id, title, authorName, createdAt, picture, isManagePost } = props;
-
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const onSubmitRemove = () => {
+  const onSubmitRemove = async () => {
     console.log("removing " + id);
+    dispatch(removePostAction({ postId: id }));
   };
   return (
     <PostListWrapper>
       {show && (
         <ModalConfirm
-          onSubmitRemove={onSubmitRemove}
+          onConfirm={onSubmitRemove}
           show={show}
           onClose={handleClose}
           setShow={setShow}

@@ -36,7 +36,7 @@ export default function EditPost() {
         notifyPositive({ message: "Edit post sucessfully." });
       }
     } catch (error) {
-      notifyNegative({ message: `Cannot delete post with id ${id} ` });
+      notifyNegative({ message: `Cannot edit post with id ${id} ` });
     }
   };
 

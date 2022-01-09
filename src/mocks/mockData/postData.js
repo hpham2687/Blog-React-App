@@ -51,6 +51,13 @@ async function read(id) {
   return allPosts[id];
 }
 
+async function remove(id) {
+  validatePost(id);
+  delete allPosts[id];
+  persist();
+  return "ok";
+}
+
 function validatePost(id) {
   load();
   if (!allPosts[id]) {
@@ -137,4 +144,4 @@ async function getPosts(page = 1, items_per_page = 6, search = null) {
 //   validateUser(id);
 //   return sanitizeUser(users[id]);
 // }
-export { getPosts, create, getUserPosts, read, edit };
+export { getPosts, create, getUserPosts, read, edit, remove };

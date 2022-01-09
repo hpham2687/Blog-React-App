@@ -2,15 +2,20 @@ import React from "react";
 import { Modal, Button } from "@ahaui/react";
 import reactDom from "react-dom";
 
+const callAll =
+  (...fns) =>
+  (...args) =>
+    fns.forEach((fn) => fn && fn(...args));
+
 export default function ModalConfirm({
   show,
   handleClose,
   setShow,
-  onSubmitRemove,
+  onConfirm,
 }) {
   return reactDom.createPortal(
     <Modal show={show} size="small" onHide={handleClose}>
-      <Modal.Header closeButton>
+      <Modal.Header>
         <Modal.Title>Confirmation</Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -22,10 +27,7 @@ export default function ModalConfirm({
         </Button>
         <Button
           variant="negative"
-          onClick={() => {
-            setShow(false);
-            onSubmitRemove();
-          }}
+          onClick={callAll(() => setShow(false), onConfirm)}
           width="full"
         >
           Yes

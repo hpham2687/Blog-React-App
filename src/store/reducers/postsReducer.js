@@ -4,6 +4,7 @@ import * as PostApi from "./../../api/postApi";
 import * as UserApi from "./../../api/userApi";
 import { history } from "./../../utils/history";
 import { ADD_POST_SUCCESS_MESSAGES } from "./../../constants/AddPost/Message";
+import { getUserPostsAction } from "./userPostsReducer";
 
 export const createPostsAction = createAsyncThunk(
   "posts/createPosts",
@@ -14,6 +15,34 @@ export const createPostsAction = createAsyncThunk(
       console.log(response.data);
       notifyPositive({ message: ADD_POST_SUCCESS_MESSAGES.ADD_POST_SUCCESS });
 
+      return response.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      notifyNegative({ message: message });
+      // thunkAPI.dispatch(getPostsFailure(message));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const removePostAction = createAsyncThunk(
+  "posts/removePost",
+  async ({ postId }, thunkAPI) => {
+    try {
+      console.log("removePost");
+      const response = await PostApi.removePost(postId);
+      // console.log(response.data);
+      console.log();
+      const {
+        userPosts: { items_per_page, page },
+      } = thunkAPI.getState();
+      notifyPositive({ message: `Delete post ${postId} sucessfully.` });
+      thunkAPI.dispatch(getUserPostsAction({ page, items_per_page }));
       return response.data;
     } catch (error) {
       const message =
@@ -112,6 +141,7 @@ const postsSlice = createSlice({
       state.loading = false;
       state.data = null;
     },
+
     [loadMorePostsAction.pending]: (state, action) => {
       state.loading = true;
     },

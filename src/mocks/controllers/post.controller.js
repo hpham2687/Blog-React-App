@@ -126,3 +126,31 @@ export const editUserPostCtrl = async (req, res, ctx) => {
     );
   }
 };
+
+export const removeUserPostCtrl = async (req, res, ctx) => {
+  try {
+    // Validate user
+    await authData.getUser(req);
+
+    let { postId } = req.params;
+
+    console.log(`remove ${postId}`);
+
+    const status = await postsData.remove(postId);
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        status,
+      })
+    );
+  } catch (error) {
+    return res(
+      ctx.status(500),
+      ctx.json({
+        status: "fail",
+        message: error.message,
+      })
+    );
+  }
+};
