@@ -5,7 +5,10 @@ import Layout from "../common/Layout";
 import LoadMoreBtn from "./LoadMoreBtn";
 import PostList from "./Post/PostList";
 import PostListSkeleton from "./Post/PostListSkeleton";
-import { getPostsAction } from "../../store/reducers/postsReducer";
+import {
+  getPostsAction,
+  loadMorePostsAction,
+} from "../../store/reducers/postsReducer";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -17,6 +20,9 @@ export default function Home() {
   const { isLoggedIn } = useSelector((state) => state.auth);
 
   const canLoadMore = page < maximunNumOfPages;
+  const onLoadMore = () => {
+    dispatch(loadMorePostsAction({}));
+  };
 
   useEffect(() => {
     dispatch(getPostsAction({ page: 1, items_per_page: 6 }));
@@ -47,7 +53,7 @@ export default function Home() {
       <Banner />
       {data && data.length > 0 ? <PostList data={data} /> : noPost2Show}
       {loading && <PostListSkeleton num={5} />}
-      {canLoadMore && <LoadMoreBtn loading={loading} />}
+      {canLoadMore && <LoadMoreBtn onLoadMore={onLoadMore} loading={loading} />}
     </Layout>
   );
 }

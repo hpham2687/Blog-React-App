@@ -21,12 +21,40 @@ export const getUserPostsAction = createAsyncThunk(
   }
 );
 
+export const loadMoreUserPostsAction = createAsyncThunk(
+  "posts/loadMoreUserPostsAction",
+  async ({}, thunkAPI) => {
+    try {
+      let {
+        userPosts: { items_per_page, page, maximunNumOfPages },
+      } = thunkAPI.getState();
+      console.log({ maximunNumOfPages });
+      let newPage = ++page;
+      console.log("xuong day");
+      console.log({ newPage });
+      const response = await UserApi.getUserPosts(newPage, items_per_page);
+      console.log({ response });
+      return response.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      // thunkAPI.dispatch(getPostsFailure(message));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const userPostsSlice = createSlice({
   name: "userPosts",
   initialState: {
     data: [],
-    items_per_page: null,
-    page: null,
+    items_per_page: 6,
+    page: 1,
+    maximunNumOfPages: null,
     loading: false,
     error: null,
   },
@@ -40,26 +68,27 @@ const userPostsSlice = createSlice({
       state.data = action.payload.posts;
       state.items_per_page = action.payload.items_per_page;
       state.page = action.payload.page;
+      state.maximunNumOfPages = action.payload.maximunNumOfPages;
     },
     [getUserPostsAction.rejected]: (state, action) => {
       state.isLoggedIn = false;
       state.loading = false;
       state.data = null;
     },
-    //   [loadMorePostsAction.pending]: (state, action) => {
-    //     state.loading = true;
-    //   },
-    //   [loadMorePostsAction.fulfilled]: (state, action) => {
-    //     state.loading = false;
-    //     //   console.log({ actionData: action.payload });
-    //     state.data = [...state.data, ...action.payload.posts];
-    //     state.items_per_page = action.payload.items_per_page;
-    //     state.page = action.payload.page;
-    //   },
-    //   [loadMorePostsAction.rejected]: (state, action) => {
-    //     state.loading = false;
-    //     state.data = null;
-    //   },
+    [loadMoreUserPostsAction.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [loadMoreUserPostsAction.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.data = [...state.data, ...action.payload.posts];
+      state.items_per_page = action.payload.items_per_page;
+      state.page = action.payload.page;
+      state.search = action.payload.search;
+    },
+    [loadMoreUserPostsAction.rejected]: (state, action) => {
+      state.loading = false;
+      state.data = null;
+    },
   },
 });
 

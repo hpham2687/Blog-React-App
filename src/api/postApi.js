@@ -19,8 +19,6 @@ function createPost(postData) {
 }
 
 function editPost(postData) {
-  console.log({ postData });
-
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${getToken()}`,

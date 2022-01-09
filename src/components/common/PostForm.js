@@ -56,7 +56,7 @@ export default function PostForm({
                       {...register("title", {
                         required: ADD_POST_ERROR_MESSAGES.TITLE_REQUIRED,
                         maxLength: {
-                          value: 20,
+                          value: 50,
                           message: ADD_POST_ERROR_MESSAGES.TITLE_LENGTH_EXCEED,
                         },
                       })}

@@ -8,17 +8,12 @@ import styled from "styled-components";
 LoadMoreBtn.propTypes = {
   loading: PropTypes.bool,
 };
-export default function LoadMoreBtn({ loading }) {
+export default function LoadMoreBtn({ loading, onLoadMore }) {
   const dispatch = useDispatch();
 
   return (
     <div>
-      <StyledButton
-        onClick={() => {
-          dispatch(loadMorePostsAction({}));
-        }}
-        variant="primary"
-      >
+      <StyledButton onClick={onLoadMore} variant="primary">
         <Button.Label>
           Load more {loading && <Loader size="small" />}
         </Button.Label>

@@ -17,11 +17,9 @@ export default function EditPost() {
   let { id } = postData;
 
   React.useEffect(() => {
-    // TODO: fetch post detail
     async function fetchPostDetail() {
       setLoading(true);
       let response = await getPostDetail(postId);
-      // console.log(response.data);
       setPostData(response.data);
       setLoading(false);
     }

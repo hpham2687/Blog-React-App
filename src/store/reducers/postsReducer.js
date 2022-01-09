@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { notifyNegative, notifyPositive } from "../../utils/toast";
 import * as PostApi from "./../../api/postApi";
 import * as UserApi from "./../../api/userApi";
-import { history } from "./../../utils/history";
 import { ADD_POST_SUCCESS_MESSAGES } from "./../../constants/AddPost/Message";
 import { getUserPostsAction } from "./userPostsReducer";
 
@@ -34,15 +33,9 @@ export const removePostAction = createAsyncThunk(
   "posts/removePost",
   async ({ postId }, thunkAPI) => {
     try {
-      console.log("removePost");
       const response = await PostApi.removePost(postId);
-      // console.log(response.data);
-      console.log();
-      const {
-        userPosts: { items_per_page, page },
-      } = thunkAPI.getState();
       notifyPositive({ message: `Delete post ${postId} sucessfully.` });
-      thunkAPI.dispatch(getUserPostsAction({ page, items_per_page }));
+      thunkAPI.dispatch(getUserPostsAction({ page: 1, items_per_page: 6 }));
       return response.data;
     } catch (error) {
       const message =

@@ -3,18 +3,28 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { getUserPostsAction } from "../../store/reducers/userPostsReducer";
+import {
+  getUserPostsAction,
+  loadMoreUserPostsAction,
+} from "../../store/reducers/userPostsReducer";
 import { device } from "../../utils/mediaQuery";
 import Layout from "../common/Layout";
+import LoadMoreBtn from "../Home/LoadMoreBtn";
 import PostList from "../Home/Post/PostList";
 import PostListSkeleton from "../Home/Post/PostListSkeleton";
 
 export default function Manage() {
   const dispatch = useDispatch();
-  const { data, loading, error } = useSelector((state) => state.userPosts);
-  const { user } = useSelector((state) => state.auth);
-  console.log({ data });
 
+  const { data, loading, error, page, maximunNumOfPages } = useSelector(
+    (state) => state.userPosts
+  );
+  console.log({ page, maximunNumOfPages });
+  const { user } = useSelector((state) => state.auth);
+  const canLoadMore = page < maximunNumOfPages;
+  const onLoadMore = () => {
+    dispatch(loadMoreUserPostsAction({}));
+  };
   useEffect(() => {
     // get posts list of user
     dispatch(getUserPostsAction({ page: 1, items_per_page: 6 }));
@@ -45,6 +55,7 @@ export default function Manage() {
       ) : (
         noPost2Show
       )}
+      {canLoadMore && <LoadMoreBtn onLoadMore={onLoadMore} loading={loading} />}
 
       <Link to="/add-post">
         <AddIcon>
