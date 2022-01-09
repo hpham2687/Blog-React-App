@@ -61,8 +61,7 @@ const NoPostToShowWrapper = styled.div`
 `;
 
 const AddIcon = styled.div`
-  box-shadow: 0 10px 6px -6px #777;
-
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   cursor: pointer;
   border: 1px solid var(--colorPrimary);
   position: fixed;
@@ -82,6 +81,9 @@ const AddIcon = styled.div`
     &:before {
       left: 0;
     }
+    svg {
+      color: blue;
+    }
   }
   &:before {
     transition: all 0.2s ease-out;
@@ -89,7 +91,6 @@ const AddIcon = styled.div`
     z-index: 1;
     content: "";
     border-radius: 50%;
-
     position: absolute;
     top: 0;
     left: 10px;
