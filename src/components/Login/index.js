@@ -15,12 +15,13 @@ import { AUTH_ERROR_MESSAGES } from "../../constants/Auth/Message";
 export default function Login() {
   const { isLoggedIn, loading, error: errorApi } = useAuth();
   const dispatch = useDispatch();
-  console.log({ errorApi });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const onSubmit = ({ username, password }) => {
     dispatch(
       loginAction({
@@ -51,6 +52,10 @@ export default function Login() {
                     placeholder="Enter text"
                     {...register("username", {
                       required: AUTH_ERROR_MESSAGES.USERNAME_REQUIRED,
+                      minLength: {
+                        value: 6,
+                        message: AUTH_ERROR_MESSAGES.USERNAME_INVALID_LENGTH,
+                      },
                       onChange: () => {
                         dispatch(resetErrorAction());
                       },
@@ -70,6 +75,10 @@ export default function Login() {
                     placeholder="Enter password"
                     {...register("password", {
                       required: AUTH_ERROR_MESSAGES.PASSWORD_REQUIRED,
+                      minLength: {
+                        value: 6,
+                        message: AUTH_ERROR_MESSAGES.PASSWORD_INVALID_LENGTH,
+                      },
                       onChange: () => {
                         dispatch(resetErrorAction());
                       },
