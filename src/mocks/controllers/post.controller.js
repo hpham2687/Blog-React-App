@@ -89,9 +89,40 @@ export const createUserPostCtrl = async (req, res, ctx) => {
       })
     );
   }
-  // Persist user's authentication in the session
+};
 
-  // const posts = await postsData.getAll();
-  // return res(ctx.json(posts));
-  // return res(ctx.json(user));
+export const editUserPostCtrl = async (req, res, ctx) => {
+  try {
+    // Validate user
+    await authData.getUser(req);
+
+    let { postId } = req.params;
+    const { title, content, picture } = req.body;
+
+    console.log(`edit ${postId}`);
+    console.log({ title, content, picture });
+
+    const editedPost = await postsData.edit({
+      id: postId,
+      title,
+      content,
+      picture,
+    });
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        status: "ok",
+        post: editedPost,
+      })
+    );
+  } catch (error) {
+    return res(
+      ctx.status(500),
+      ctx.json({
+        status: "fail",
+        message: error.message,
+      })
+    );
+  }
 };

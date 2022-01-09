@@ -37,7 +37,7 @@ export default function Post(props) {
             {!isManagePost && (
               <Avatar
                 className="u-backgroundPrimaryLight u-text200"
-                text="KT"
+                text={authorName.substring(0, 2).toUpperCase()}
               />
             )}
             <div className="Card-footer__desc">

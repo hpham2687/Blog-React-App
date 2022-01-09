@@ -18,4 +18,18 @@ function createPost(postData) {
   });
 }
 
-export { getPostDetail, createPost };
+function editPost(postData) {
+  console.log({ postData });
+
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${getToken()}`,
+  };
+  console.log({ headers });
+
+  return axiosClient.put(`/posts/${postData.id}`, postData, {
+    headers,
+  });
+}
+
+export { getPostDetail, createPost, editPost };

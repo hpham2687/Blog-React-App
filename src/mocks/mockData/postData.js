@@ -34,6 +34,18 @@ async function create({ user, title, content, picture }) {
   return read(id);
 }
 
+async function edit({ id, title, content, picture }) {
+  validatePostForm({ title, content, picture });
+  allPosts[id] = {
+    ...allPosts[id],
+    title,
+    content,
+    picture,
+  };
+  persist();
+  return read(id);
+}
+
 async function read(id) {
   validatePost(id);
   return allPosts[id];
@@ -125,4 +137,4 @@ async function getPosts(page = 1, items_per_page = 6, search = null) {
 //   validateUser(id);
 //   return sanitizeUser(users[id]);
 // }
-export { getPosts, create, getUserPosts, read };
+export { getPosts, create, getUserPosts, read, edit };
