@@ -1,5 +1,3 @@
-import { func } from "prop-types";
-
 function validatePostForm({ title, content, picture }) {
   if (!title) {
     const error = new Error("A title is required");

@@ -1,4 +1,4 @@
-import { getToken } from "../utils/api";
+import { getHeadersWithToken } from "../utils/api";
 import { axiosClient } from "./axiosClient";
 
 function login({ username, password }) {
@@ -19,18 +19,13 @@ function getPosts(page, items_per_page, search = null) {
 }
 
 function getUserPosts(page, items_per_page, search = null) {
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${getToken()}`,
-  };
-
   return axiosClient.get("user/posts", {
     params: {
       page,
       items_per_page,
       search,
     },
-    headers,
+    headers: getHeadersWithToken(),
   });
 }
 

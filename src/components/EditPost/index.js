@@ -1,20 +1,18 @@
-import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import Layout from "../common/Layout";
-import PostForm from "../common/PostForm";
 import { Button } from "@ahaui/react";
+import React, { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getPostDetail } from "../../api/postApi";
-import { useState } from "react";
-import { editPost } from "./../../api/postApi";
 import { notifyNegative, notifyPositive } from "../../utils/toast";
+import Layout from "../common/Layout";
+import PostForm from "../common/PostForm";
+import { editPost } from "./../../api/postApi";
+import EditPostSkeleton from "./EditPostSkeleton";
 export default function EditPost() {
   const { postId } = useParams();
 
   const [postData, setPostData] = useState({});
   const [loading, setLoading] = useState({});
-
-  let { id } = postData;
 
   React.useEffect(() => {
     async function fetchPostDetail() {
@@ -25,16 +23,16 @@ export default function EditPost() {
     }
 
     fetchPostDetail();
-  }, []);
+  }, [postId]);
 
   const onSubmitEditPost = async (postData) => {
     try {
-      const editedPost = await editPost({ ...postData, id });
+      const editedPost = await editPost({ ...postData, id: postId });
       if (editedPost) {
         notifyPositive({ message: "Edit post sucessfully." });
       }
     } catch (error) {
-      notifyNegative({ message: `Cannot edit post with id ${id} ` });
+      notifyNegative({ message: `Cannot edit post with id ${postId} ` });
     }
   };
 
@@ -46,6 +44,7 @@ export default function EditPost() {
         </Link>
       </BackButton>
       <PostForm submitText="Save" data={postData} onSubmit={onSubmitEditPost} />
+      {loading && <EditPostSkeleton />}
     </Layout>
   );
 }

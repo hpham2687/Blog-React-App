@@ -23,7 +23,6 @@ export const createPostsAction = createAsyncThunk(
         error.message ||
         error.toString();
       notifyNegative({ message: message });
-      // thunkAPI.dispatch(getPostsFailure(message));
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -45,7 +44,6 @@ export const removePostAction = createAsyncThunk(
         error.message ||
         error.toString();
       notifyNegative({ message: message });
-      // thunkAPI.dispatch(getPostsFailure(message));
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -55,9 +53,7 @@ export const getPostsAction = createAsyncThunk(
   "posts/getPosts",
   async ({ page = 1, items_per_page = 6, search = null }, thunkAPI) => {
     try {
-      console.log(page, search);
       const response = await UserApi.getPosts(page, items_per_page, search);
-
       return response.data;
     } catch (error) {
       const message =
@@ -66,8 +62,6 @@ export const getPostsAction = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      console.log({ message });
-      // thunkAPI.dispatch(getPostsFailure(message));
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -78,12 +72,10 @@ export const loadMorePostsAction = createAsyncThunk(
   async ({}, thunkAPI) => {
     try {
       let {
-        posts: { items_per_page, page, search, maximunNumOfPages },
+        posts: { items_per_page, page, search },
       } = thunkAPI.getState();
-      console.log({ maximunNumOfPages });
       let newPage = ++page;
-      console.log("xuong day");
-      console.log({ newPage });
+
       const response = await UserApi.getPosts(newPage, items_per_page, search);
       console.log({ response });
       return response.data;
@@ -94,7 +86,6 @@ export const loadMorePostsAction = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      // thunkAPI.dispatch(getPostsFailure(message));
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -111,11 +102,7 @@ const postsSlice = createSlice({
     error: null,
     loading: false,
   },
-  reducers: {
-    logout(state, action) {
-      state.user = null;
-    },
-  },
+
   extraReducers: {
     [getPostsAction.pending]: (state, action) => {
       state.loading = true;

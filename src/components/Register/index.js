@@ -18,7 +18,6 @@ export default function Register() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
   const onSubmit = ({ email, username, password }) => {

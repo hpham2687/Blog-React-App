@@ -16,22 +16,18 @@ export default function PostForm({
     control,
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm({
     defaultValues: useMemo(() => {
-      console.log("vao memo");
       return data ? data : {};
     }, [data]),
   });
-  // console.log({ errors });
 
   useEffect(() => {
-    console.log("vao day");
     if (!data) return;
     reset(data);
-  }, [data]);
+  }, [data, reset]);
 
   const isHasTitlenameError = errors?.title;
   const isHasContentError = errors?.content;

@@ -19,8 +19,6 @@ export default function Manage() {
   const { data, loading, error, page, maximunNumOfPages } = useSelector(
     (state) => state.userPosts
   );
-  console.log({ page, maximunNumOfPages });
-  const { user } = useSelector((state) => state.auth);
   const canLoadMore = page < maximunNumOfPages;
   const onLoadMore = () => {
     dispatch(loadMoreUserPostsAction({}));
@@ -28,7 +26,7 @@ export default function Manage() {
   useEffect(() => {
     // get posts list of user
     dispatch(getUserPostsAction({ page: 1, items_per_page: 6 }));
-  }, []);
+  }, [dispatch]);
 
   if (error) {
     return error;
@@ -43,12 +41,6 @@ export default function Manage() {
 
   return (
     <Layout>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button> */}
-
-      {/* <WrapperPostManage> */}
-
       {loading && <PostListSkeleton num={5} />}
       {data && data.length > 0 ? (
         <PostList isManagePost={true} data={data} />
@@ -62,7 +54,6 @@ export default function Manage() {
           <Icon size="large" name="plus" />
         </AddIcon>
       </Link>
-      {/* </WrapperPostManage> */}
     </Layout>
   );
 }

@@ -1,5 +1,4 @@
 import { validatePostForm } from "../utils/post";
-import { v4 as uuidv4 } from "uuid";
 const short = require("short-uuid");
 
 // const { hash, validateUserForm, sanitizeUser } = authUtils;
@@ -102,7 +101,7 @@ function postFilter(
     throw error;
   }
   if (authorId) {
-    filteredPosts = filteredPosts.filter((post) => post.authorId == authorId);
+    filteredPosts = filteredPosts.filter((post) => post.authorId === authorId);
   }
   if (search) {
     filteredPosts = filteredPosts.filter((post) => post.title.includes(search));

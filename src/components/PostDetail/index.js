@@ -11,27 +11,25 @@ import PostDetailSkeleton from "./PostDetailSkeleton";
 export default function PostDetail() {
   const [postData, setPostData] = useState({});
   const [loading, setLoading] = useState({});
+  const { postId } = useParams();
   const {
     user: { id: userId },
   } = useAuth();
-  const { postId } = useParams();
   let { title, content, picture, authorName, createdAt, authorId, id } =
     postData;
 
-  const isUserPost = userId == authorId;
-  console.log(userId, authorId);
+  const isUserPost = userId === authorId;
+
   React.useEffect(() => {
-    // TODO: fetch post detail
     async function fetchPostDetail() {
       setLoading(true);
       let response = await getPostDetail(postId);
-      console.log(response.data);
       setPostData(response.data);
       setLoading(false);
     }
 
     fetchPostDetail();
-  }, []);
+  }, [postId]);
 
   const ThumbnailBackground = styled.div`
     width: 100%;

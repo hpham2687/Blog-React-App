@@ -21,10 +21,9 @@ export const getPostsCtrl = async (req, res, ctx) => {
 
 export const getPostDetailCtrl = async (req, res, ctx) => {
   try {
-    //let { page, items_per_page, search } = getFilterParams(req);
     let { postId } = req.params;
+
     const post = await postsData.read(postId);
-    console.log({ post });
     return res(ctx.json(post));
   } catch (error) {
     return res(
@@ -99,9 +98,6 @@ export const editUserPostCtrl = async (req, res, ctx) => {
     let { postId } = req.params;
     const { title, content, picture } = req.body;
 
-    console.log(`edit ${postId}`);
-    console.log({ title, content, picture });
-
     const editedPost = await postsData.edit({
       id: postId,
       title,
@@ -133,9 +129,6 @@ export const removeUserPostCtrl = async (req, res, ctx) => {
     await authData.getUser(req);
 
     let { postId } = req.params;
-
-    console.log(`remove ${postId}`);
-
     const status = await postsData.remove(postId);
 
     return res(

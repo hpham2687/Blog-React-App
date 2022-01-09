@@ -1,11 +1,9 @@
 import * as authData from "../mockData/authData";
 
 export const loginCtrl = async (req, res, ctx) => {
-  // Persist user's authentication in the session
   const { username, password } = req.body;
   const user = await authData.authenticate({ username, password });
   return res(ctx.json(user));
-  // return res(ctx.json(user));
 };
 
 export const registerCtrl = async (req, res, ctx) => {

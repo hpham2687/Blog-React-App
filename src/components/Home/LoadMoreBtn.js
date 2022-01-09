@@ -1,16 +1,12 @@
-import React, { useRef } from "react";
 import { Button, Loader } from "@ahaui/react";
-import { useDispatch } from "react-redux";
-import { loadMorePostsAction } from "../../store/reducers/postsReducer";
 import PropTypes from "prop-types"; // ES6
+import React from "react";
 import styled from "styled-components";
 
 LoadMoreBtn.propTypes = {
   loading: PropTypes.bool,
 };
 export default function LoadMoreBtn({ loading, onLoadMore }) {
-  const dispatch = useDispatch();
-
   return (
     <div>
       <StyledButton onClick={onLoadMore} variant="primary">

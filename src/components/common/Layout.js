@@ -1,12 +1,8 @@
 import { PageLayout } from "@ahaui/react";
 import React from "react";
 import Header from "../Header/Header";
-import { useTheme } from "../../context/ThemeContext";
-import { useAuth } from "../../hooks/useAuth";
 
 export default function Layout({ children }) {
-  const [isDarkMode] = useTheme();
-
   return (
     <PageLayout>
       <PageLayout.Header>
