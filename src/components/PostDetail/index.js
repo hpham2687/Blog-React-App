@@ -5,7 +5,6 @@ import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getPostDetail } from "../../api/postApi";
 import { useAuth } from "../../hooks/useAuth";
-import { timestampToDate } from "../../utils/datetime";
 import Layout from "../common/Layout";
 import PostDetailSkeleton from "./PostDetailSkeleton";
 
@@ -71,7 +70,7 @@ export default function PostDetail() {
                 />
                 <div className="Card-footer__desc">
                   <span className="u-block">{authorName}</span>
-                  <Tag variant="primary">{timestampToDate(createdAt)}</Tag>
+                  <Tag variant="primary">{createdAt}</Tag>
                 </div>
                 {isUserPost && (
                   <Link style={{ marginLeft: "auto" }} to={`/edit-post/${id}`}>

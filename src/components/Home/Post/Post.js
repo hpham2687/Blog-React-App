@@ -5,7 +5,6 @@ import { Tag } from "@ahaui/react";
 import { Avatar } from "@ahaui/react";
 import { Link } from "react-router-dom";
 import ModalConfirm from "../../Modal/ModalConfirm";
-import { timestampToDate } from "../../../utils/datetime";
 
 export default function Post(props) {
   let { id, title, authorName, createdAt, picture, isManagePost } = props;
@@ -43,7 +42,7 @@ export default function Post(props) {
             )}
             <div className="Card-footer__desc">
               {!isManagePost && <span className="u-block">{authorName}</span>}
-              <Tag variant="primary">{timestampToDate(createdAt)}</Tag>
+              <Tag variant="primary">{createdAt}</Tag>
             </div>
 
             <Link

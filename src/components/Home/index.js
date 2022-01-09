@@ -27,7 +27,7 @@ export default function Home() {
   const noPost2Show = (
     <>
       <h4>No posts to show.</h4>
-      {isLoggedIn ? (
+      {!isLoggedIn ? (
         <p>
           <Link style={{ display: "inlines" }} to="/login">
             Login

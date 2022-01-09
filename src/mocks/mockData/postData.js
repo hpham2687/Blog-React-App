@@ -28,7 +28,7 @@ async function create({ user, title, content, picture }) {
     title,
     content,
     picture,
-    createdAt: new Date(),
+    createdAt: new Date().toLocaleDateString("en-US"),
   };
   persist();
   return read(id);
