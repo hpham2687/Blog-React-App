@@ -7,8 +7,16 @@ import { removePostAction } from "../../../store/reducers/postsReducer";
 import ModalConfirm from "../../Modal/ModalConfirm";
 import PropTypes from "prop-types"; // ES6
 
-Post.propTypes = PropTypes.object;
+Post.propTypes = {
+  authorId: PropTypes.string,
+  authorName: PropTypes.string,
+  createdAt: PropTypes.string,
+  id: PropTypes.string,
+  picture: PropTypes.string,
+  title: PropTypes.string,
+};
 Post.defaultProps = {};
+
 export default function Post(props) {
   let { id, title, authorName, createdAt, picture, isManagePost } = props;
   console.log(props);
