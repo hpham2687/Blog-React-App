@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Icon } from "@ahaui/react";
 import { useDispatch, useSelector } from "react-redux";
 import Banner from "components/Banner/Banner";
 import Layout from "components/common/Layout";
@@ -11,6 +12,7 @@ import {
 } from "store/reducers/postsReducer";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { AddIcon } from "../AddPost/AddIcon";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -54,6 +56,12 @@ export default function Home() {
       {data && data.length > 0 ? <PostList data={data} /> : noPost2Show}
       {loading && <PostListSkeleton num={5} />}
       {canLoadMore && <LoadMoreBtn onLoadMore={onLoadMore} loading={loading} />}
+
+      <Link to="/add-post">
+        <AddIcon>
+          <Icon size="large" name="plus" />
+        </AddIcon>
+      </Link>
     </Layout>
   );
 }
