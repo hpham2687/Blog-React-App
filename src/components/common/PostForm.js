@@ -97,7 +97,7 @@ export default function PostForm({
                       placeholder="Enter content"
                       {...register("content", {
                         maxLength: {
-                          value: 150,
+                          value: 250,
                           message:
                             ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_EXCEED,
                         },
