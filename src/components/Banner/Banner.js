@@ -31,7 +31,7 @@ export default function Banner() {
     <StyledBanner>
       <img
         alt="banner"
-        src="https://res.cloudinary.com/practicaldev/image/fetch/s--8G3GSc8q--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vahl9yw6xgo1a2fedl0u.jpg"
+        src="http://localhost:3000/assets/images/banner.jpeg"
       ></img>
       <StyledSearchBox
         placeholder="Search..."
