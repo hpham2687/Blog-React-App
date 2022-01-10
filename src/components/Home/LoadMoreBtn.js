@@ -9,7 +9,7 @@ LoadMoreBtn.propTypes = {
 };
 export default function LoadMoreBtn({ loading, onLoadMore }) {
   return (
-    <div>
+    <div style={{ textAlign: "center" }}>
       <StyledButton onClick={onLoadMore} variant="primary">
         <Button.Label>
           Load more {loading && <Loader size="small" />}

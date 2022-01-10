@@ -9,52 +9,50 @@ import { getUserPostsAction } from "./userPostsReducer";
 export const createPostsAction = createAsyncThunk(
   "posts/createPosts",
   async (postData, thunkAPI) => {
-    try {
-      const response = await PostApi.createPost(postData);
-      notifyPositive({ message: ADD_POST_SUCCESS_MESSAGES.ADD_POST_SUCCESS });
-      return response;
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      notifyNegative({ message: message });
-      return thunkAPI.rejectWithValue(message);
-    }
+    return PostApi.createPost(postData)
+      .then((response) => {
+        notifyPositive({ message: ADD_POST_SUCCESS_MESSAGES.ADD_POST_SUCCESS });
+        return response;
+      })
+      .catch((error) => {
+        const message =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        notifyNegative({ message: message });
+        return thunkAPI.rejectWithValue(message);
+      });
   }
 );
 
 export const removePostAction = createAsyncThunk(
   "posts/removePost",
   async ({ postId }, thunkAPI) => {
-    try {
-      const response = await PostApi.removePost(postId);
-      notifyPositive({ message: `Delete post ${postId} sucessfully.` });
-      thunkAPI.dispatch(getUserPostsAction({ page: 1, items_per_page: 6 }));
-      return response;
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      notifyNegative({ message });
-      return thunkAPI.rejectWithValue(message);
-    }
+    return PostApi.removePost(postId)
+      .then((response) => {
+        notifyPositive({ message: `Delete post ${postId} sucessfully.` });
+        thunkAPI.dispatch(getUserPostsAction({ page: 1, items_per_page: 6 }));
+        return response;
+      })
+      .catch((error) => {
+        const message =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        notifyNegative({ message });
+        return thunkAPI.rejectWithValue(message);
+      });
   }
 );
 
 export const getPostsAction = createAsyncThunk(
   "posts/getPosts",
   async ({ page = 1, items_per_page = 6, search = null }, thunkAPI) => {
-    try {
-      const response = await UserApi.getPosts(page, items_per_page, search);
-      console.log({ response });
-      return response;
-    } catch (error) {
+    return UserApi.getPosts(page, items_per_page, search).catch((error) => {
       const message =
         (error.response &&
           error.response.data &&
@@ -62,21 +60,18 @@ export const getPostsAction = createAsyncThunk(
         error.message ||
         error.toString();
       return thunkAPI.rejectWithValue(message);
-    }
+    });
   }
 );
 
 export const loadMorePostsAction = createAsyncThunk(
   "posts/loadMorePostsAction",
   async ({}, thunkAPI) => {
-    try {
-      let {
-        posts: { items_per_page, page, search },
-      } = thunkAPI.getState();
-      let newPage = ++page;
-      const response = await UserApi.getPosts(newPage, items_per_page, search);
-      return response;
-    } catch (error) {
+    let {
+      posts: { items_per_page, page, search },
+    } = thunkAPI.getState();
+    let newPage = ++page;
+    return UserApi.getPosts(newPage, items_per_page, search).catch((error) => {
       const message =
         (error.response &&
           error.response.data &&
@@ -84,7 +79,7 @@ export const loadMorePostsAction = createAsyncThunk(
         error.message ||
         error.toString();
       return thunkAPI.rejectWithValue(message);
-    }
+    });
   }
 );
 

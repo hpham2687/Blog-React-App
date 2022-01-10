@@ -14,16 +14,22 @@ export default function AddPost(props) {
 
   const onSubmitAddPost = async ({ title, content, picture }) => {
     setLoadingEditPost(true);
-    await dispatch(
+    dispatch(
       createPostsAction({
         title,
         content,
         picture,
       })
-    ).unwrap();
-    setLoadingEditPost(false);
-
-    history("/manage");
+    )
+      .unwrap()
+      .then(() => {
+        setLoadingEditPost(false);
+        history("/manage");
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log(error.message);
+      });
   };
 
   return (

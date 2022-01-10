@@ -5,46 +5,35 @@ import * as UserApi from "api/userApi";
 export const getUserPostsAction = createAsyncThunk(
   "posts/getUserPosts",
   async ({ page = 1, items_per_page = 6, search = null }, thunkAPI) => {
-    try {
-      const response = await UserApi.getUserPosts(page, items_per_page, search);
-      return response;
-    } catch (error) {
+    return UserApi.getUserPosts(page, items_per_page, search).catch((error) => {
       const message =
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
         error.message ||
         error.toString();
-      // thunkAPI.dispatch(getPostsFailure(message));
       return thunkAPI.rejectWithValue(message);
-    }
+    });
   }
 );
 
 export const loadMoreUserPostsAction = createAsyncThunk(
   "posts/loadMoreUserPostsAction",
   async ({}, thunkAPI) => {
-    try {
-      let {
-        userPosts: { items_per_page, page, maximunNumOfPages },
-      } = thunkAPI.getState();
-      console.log({ maximunNumOfPages });
-      let newPage = ++page;
-      console.log("xuong day");
-      console.log({ newPage });
-      const response = await UserApi.getUserPosts(newPage, items_per_page);
-      console.log({ response });
-      return response;
-    } catch (error) {
+    let {
+      userPosts: { items_per_page, page },
+    } = thunkAPI.getState();
+    let newPage = ++page;
+
+    return UserApi.getUserPosts(newPage, items_per_page).catch((error) => {
       const message =
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
         error.message ||
         error.toString();
-      // thunkAPI.dispatch(getPostsFailure(message));
       return thunkAPI.rejectWithValue(message);
-    }
+    });
   }
 );
 
