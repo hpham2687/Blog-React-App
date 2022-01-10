@@ -9,7 +9,7 @@ export default function usePostDetail(postId) {
     async function fetchPostDetail() {
       setLoading(true);
       let response = await getPostDetail(postId);
-      setPostData(response.data);
+      setPostData(response);
       setLoading(false);
     }
 

@@ -24,7 +24,7 @@ export default function PostDetail() {
     async function fetchPostDetail() {
       setLoading(true);
       let response = await getPostDetail(postId);
-      setPostData(response.data);
+      setPostData(response);
       setLoading(false);
     }
 

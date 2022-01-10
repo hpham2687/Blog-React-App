@@ -7,8 +7,7 @@ export const getUserPostsAction = createAsyncThunk(
   async ({ page = 1, items_per_page = 6, search = null }, thunkAPI) => {
     try {
       const response = await UserApi.getUserPosts(page, items_per_page, search);
-      // console.log({ getUserPosts: response });
-      return response.data;
+      return response;
     } catch (error) {
       const message =
         (error.response &&
@@ -35,7 +34,7 @@ export const loadMoreUserPostsAction = createAsyncThunk(
       console.log({ newPage });
       const response = await UserApi.getUserPosts(newPage, items_per_page);
       console.log({ response });
-      return response.data;
+      return response;
     } catch (error) {
       const message =
         (error.response &&

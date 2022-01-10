@@ -12,7 +12,7 @@ export const createPostsAction = createAsyncThunk(
     try {
       const response = await PostApi.createPost(postData);
       notifyPositive({ message: ADD_POST_SUCCESS_MESSAGES.ADD_POST_SUCCESS });
-      return response.data;
+      return response;
     } catch (error) {
       const message =
         (error.response &&
@@ -33,7 +33,7 @@ export const removePostAction = createAsyncThunk(
       const response = await PostApi.removePost(postId);
       notifyPositive({ message: `Delete post ${postId} sucessfully.` });
       thunkAPI.dispatch(getUserPostsAction({ page: 1, items_per_page: 6 }));
-      return response.data;
+      return response;
     } catch (error) {
       const message =
         (error.response &&
@@ -52,7 +52,8 @@ export const getPostsAction = createAsyncThunk(
   async ({ page = 1, items_per_page = 6, search = null }, thunkAPI) => {
     try {
       const response = await UserApi.getPosts(page, items_per_page, search);
-      return response.data;
+      console.log({ response });
+      return response;
     } catch (error) {
       const message =
         (error.response &&
@@ -74,7 +75,7 @@ export const loadMorePostsAction = createAsyncThunk(
       } = thunkAPI.getState();
       let newPage = ++page;
       const response = await UserApi.getPosts(newPage, items_per_page, search);
-      return response.data;
+      return response;
     } catch (error) {
       const message =
         (error.response &&

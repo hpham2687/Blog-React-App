@@ -8,9 +8,10 @@ export const registerAction = createAsyncThunk(
   async ({ email, username, password }, thunkAPI) => {
     try {
       const response = await UserApi.register({ email, username, password });
-      localStorage.setItem("user", JSON.stringify(response.data));
+      console.log({ response });
+      localStorage.setItem("user", JSON.stringify(response));
       notifyPositive({ message: AUTH_SUCCESS_MESSAGES.REGISTER_SUCCESS });
-      return response.data;
+      return response;
     } catch (error) {
       const message = error?.response?.data?.message || "UNKNOWN ERROR";
       notifyNegative({ message: message });
@@ -24,10 +25,12 @@ export const loginAction = createAsyncThunk(
   async ({ username, password }, thunkAPI) => {
     try {
       const response = await UserApi.login({ username, password });
-      localStorage.setItem("user", JSON.stringify(response.data));
+
+      localStorage.setItem("user", JSON.stringify(response));
       notifyPositive({ message: AUTH_SUCCESS_MESSAGES.LOGIN_SUCCESS });
-      return response.data;
+      return response;
     } catch (error) {
+      console.log(error);
       const message = error?.response?.data?.message || "UNKNOWN ERROR";
       notifyNegative({ message: message });
       return thunkAPI.rejectWithValue(message);

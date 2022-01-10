@@ -1,15 +1,25 @@
 import { getHeadersWithToken } from "../utils/api";
-import { axiosClient } from "./axiosClient";
+import { client } from "./fetchClient";
 
 function login({ username, password }) {
-  return axiosClient.post("/login", { username, password });
+  return client("login", {
+    data: {
+      username,
+      password,
+    },
+  });
 }
 function register({ username, password }) {
-  return axiosClient.post("/register", { username, password });
+  return client("register", {
+    data: {
+      username,
+      password,
+    },
+  });
 }
 
 function getPosts(page, items_per_page, search = null) {
-  return axiosClient.get("/posts", {
+  return client("posts", {
     params: {
       page,
       items_per_page,
@@ -19,7 +29,7 @@ function getPosts(page, items_per_page, search = null) {
 }
 
 function getUserPosts(page, items_per_page, search = null) {
-  return axiosClient.get("user/posts", {
+  return client("user/posts", {
     params: {
       page,
       items_per_page,

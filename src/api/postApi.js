@@ -1,23 +1,26 @@
 import { getHeadersWithToken } from "../utils/api";
-import { axiosClient } from "./axiosClient";
+import { client } from "./fetchClient";
 
 function getPostDetail(postId) {
-  return axiosClient.get(`/posts/${postId}`);
+  return client(`posts/${postId}`);
 }
 function createPost(postData) {
-  return axiosClient.post("/posts", postData, {
+  return client("posts", {
+    data: postData,
     headers: getHeadersWithToken(),
   });
 }
 
 function editPost(postData) {
-  return axiosClient.put(`/posts/${postData.id}`, postData, {
+  return client(`posts/${postData.id}`, {
+    data: postData,
     headers: getHeadersWithToken(),
   });
 }
 
 function removePost(postId) {
-  return axiosClient.delete(`/posts/${postId}`, {
+  return client(`posts/${postId}`, {
+    method: "DELETE",
     headers: getHeadersWithToken(),
   });
 }
