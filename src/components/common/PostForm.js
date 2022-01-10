@@ -34,6 +34,7 @@ export default function PostForm({
     reset,
     formState: { errors },
   } = useForm({
+    mode: "onChange",
     defaultValues: useMemo(() => {
       return data ? data : {};
     }, [data]),

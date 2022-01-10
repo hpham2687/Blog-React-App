@@ -17,7 +17,9 @@ export default function Register() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: "onChange",
+  });
 
   const onSubmit = ({ email, username, password }) => {
     dispatch(
