@@ -2,10 +2,10 @@ import React from "react";
 import { Button, Separator, Avatar, Tag, Card } from "@ahaui/react";
 
 import { Link, useParams } from "react-router-dom";
-import Layout from "../components/common/Layout";
-import PostForm from "../components/Manage/PostForm";
+import Layout from "../common/Layout";
+import PostForm from "../Manage/PostForm";
 import styled from "styled-components";
-import PostDetailSkeleton from "../components/PostDetail/PostDetailSkeleton";
+import PostDetailSkeleton from "./PostDetailSkeleton";
 
 export default function PostDetail() {
   const { postId } = useParams();

@@ -2,8 +2,8 @@ import { Button } from "@ahaui/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import Layout from "../components/common/Layout";
-import PostForm from "../components/Manage/PostForm";
+import Layout from "../common/Layout";
+import PostForm from "../Manage/PostForm";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 

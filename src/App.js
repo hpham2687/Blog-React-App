@@ -7,13 +7,13 @@ import ErrorFallback from "./components/common/ErrorFallback";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import * as theme from "./config/theme";
 import { useTheme } from "./context/ThemeContext";
-import Home from "./screens/Home";
-import LoginPage from "./screens/Login";
-import ManagePage from "./screens/Manage";
-import RegisterPage from "./screens/Register";
-import AddPostPage from "./screens/AddPost";
-import EditPostPage from "./screens/EditPost";
-import PostDetail from "./screens/PostDetail";
+import Home from "./components/Home";
+import LoginPage from "./components/Login";
+import ManagePage from "./components/Manage";
+import RegisterPage from "./components/Register";
+import AddPostPage from "./components/AddPost";
+import EditPostPage from "./components/EditPost";
+import PostDetail from "./components/PostDetail";
 // TODO: Add not found page
 const GlobalStyle = createGlobalStyle`
 * {
