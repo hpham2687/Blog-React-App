@@ -128,14 +128,13 @@ const StyledCard = styled(Card)`
   }
   .Card-body {
     padding-bottom: 4px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
+
     margin-bottom: 16px;
     p {
       margin-bottom: 0;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
 `;
