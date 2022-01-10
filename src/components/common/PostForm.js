@@ -174,7 +174,7 @@ const PostFormWrapper = styled.div`
   justify-content: center;
   padding-top: 64px;
   height: calc(100vh - 88px);
-  background: url(https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?size=626&ext=jpg);
+  background: url(/assets/images/background.jpeg);
   background-repeat: no-repeat;
   background-size: cover;
 `;

@@ -29,10 +29,7 @@ export default function Banner() {
 
   return (
     <StyledBanner>
-      <img
-        alt="banner"
-        src="http://localhost:3000/assets/images/banner.jpeg"
-      ></img>
+      <img alt="banner" src="/assets/images/banner.jpeg"></img>
       <StyledSearchBox
         placeholder="Search..."
         value={searchText}
