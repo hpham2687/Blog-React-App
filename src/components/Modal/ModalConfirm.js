@@ -1,11 +1,19 @@
 import React from "react";
 import { Modal, Button } from "@ahaui/react";
 import reactDom from "react-dom";
+import PropTypes from "prop-types"; // ES6
 
 const callAll =
   (...fns) =>
   (...args) =>
     fns.forEach((fn) => fn && fn(...args));
+
+ModalConfirm.propTypes = {
+  show: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  setShow: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+};
 
 export default function ModalConfirm({
   show,

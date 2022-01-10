@@ -5,9 +5,13 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { removePostAction } from "../../../store/reducers/postsReducer";
 import ModalConfirm from "../../Modal/ModalConfirm";
+import PropTypes from "prop-types"; // ES6
 
+Post.propTypes = PropTypes.object;
+Post.defaultProps = {};
 export default function Post(props) {
   let { id, title, authorName, createdAt, picture, isManagePost } = props;
+  console.log(props);
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const handleClose = () => setShow(false);

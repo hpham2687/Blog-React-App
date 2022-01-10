@@ -3,8 +3,21 @@ import React, { useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { ADD_POST_ERROR_MESSAGES } from "../../constants/AddPost/Message";
-// TODO: fill all data to input - edit case
+import PropTypes from "prop-types"; // ES6
 
+PostForm.propTypes = {
+  submitText: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  data: PropTypes.shape({
+    authorId: PropTypes.string,
+    authorName: PropTypes.string,
+    content: PropTypes.string,
+    createdAt: PropTypes.string,
+    id: PropTypes.string,
+    picture: PropTypes.string,
+    title: PropTypes.string,
+  }),
+};
 export default function PostForm({
   submitText,
   onSubmit,
@@ -24,6 +37,7 @@ export default function PostForm({
     }, [data]),
   });
 
+  console.log({ data });
   useEffect(() => {
     if (!data) return;
     reset(data);

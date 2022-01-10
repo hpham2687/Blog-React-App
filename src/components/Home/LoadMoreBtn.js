@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 LoadMoreBtn.propTypes = {
   loading: PropTypes.bool,
+  onLoadMore: PropTypes.func,
 };
 export default function LoadMoreBtn({ loading, onLoadMore }) {
   return (

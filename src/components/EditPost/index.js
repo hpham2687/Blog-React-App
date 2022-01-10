@@ -8,6 +8,7 @@ import Layout from "../common/Layout";
 import PostForm from "../common/PostForm";
 import { editPost } from "./../../api/postApi";
 import EditPostSkeleton from "./EditPostSkeleton";
+
 export default function EditPost() {
   const { postId } = useParams();
 
