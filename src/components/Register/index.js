@@ -11,6 +11,7 @@ import {
   resetErrorAction,
 } from "../../store/reducers/authReducer";
 import Layout from "../common/Layout";
+
 export default function Register() {
   const { isLoggedIn, loading, error: errorApi } = useAuth();
   const dispatch = useDispatch();
