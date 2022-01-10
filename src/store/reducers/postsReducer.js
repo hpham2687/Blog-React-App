@@ -32,7 +32,7 @@ export const removePostAction = createAsyncThunk(
   async ({ postId }, thunkAPI) => {
     return PostApi.removePost(postId)
       .then((response) => {
-        notifyPositive({ message: `Delete post ${postId} sucessfully.` });
+        notifyPositive({ message: `Delete post ${postId} successfully.` });
         thunkAPI.dispatch(getUserPostsAction({ page: 1, items_per_page: 6 }));
         return response;
       })
