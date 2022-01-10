@@ -1,19 +1,17 @@
-import React, { useEffect } from "react";
 import { Icon } from "@ahaui/react";
-import { useDispatch, useSelector } from "react-redux";
 import Banner from "components/Banner/Banner";
 import Layout from "components/common/Layout";
-import LoadMoreBtn from "./LoadMoreBtn";
-import PostList from "./Post/PostList";
-import PostListSkeleton from "./Post/PostListSkeleton";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   getPostsAction,
   loadMorePostsAction,
 } from "store/reducers/postsReducer";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AddIcon } from "../AddPost/AddIcon";
-
+import LoadMoreBtn from "./LoadMoreBtn";
+import PostList from "./Post/PostList";
 export default function Home() {
   const dispatch = useDispatch();
   const { data, loading, error, page, maximunNumOfPages } = useSelector(
@@ -53,8 +51,18 @@ export default function Home() {
   return (
     <Layout>
       <Banner />
-      {data && data.length > 0 ? <PostList data={data} /> : noPost2Show}
-      {loading && <PostListSkeleton num={5} />}
+      {data && data.length > 0 ? (
+        <PostList data={data} />
+      ) : loading ? (
+        <img
+          style={{ width: "100px", height: "100px", margin: "100px auto" }}
+          alt="spinner"
+          src="/assets/images/spiner.gif"
+        />
+      ) : (
+        noPost2Show
+      )}
+
       {canLoadMore && <LoadMoreBtn onLoadMore={onLoadMore} loading={loading} />}
 
       <Link to="/add-post">
