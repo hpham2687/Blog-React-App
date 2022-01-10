@@ -1,7 +1,6 @@
 import { validatePostForm } from "../utils/post";
-const short = require("short-uuid");
+import short from "short-uuid";
 
-// const { hash, validateUserForm, sanitizeUser } = authUtils;
 const postsKey = "__all_post__";
 let allPosts = {};
 const persist = () =>
