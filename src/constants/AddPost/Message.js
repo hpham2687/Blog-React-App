@@ -7,6 +7,7 @@ const ADD_POST_ERROR_MESSAGES = {
   CONTENT_REQUIRED: "Content is required.",
   IMAGE_REQUIRED: "Image is required",
   INVALID_IMAGE_URL: "Image url is invalid",
+  ADD_POST_FAIL: "Add post fail",
 };
 const ADD_POST_SUCCESS_MESSAGES = {
   ADD_POST_SUCCESS: "Add post successfully",

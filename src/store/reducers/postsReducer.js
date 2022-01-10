@@ -5,6 +5,7 @@ import * as PostApi from "api/postApi";
 import * as UserApi from "api/userApi";
 import { ADD_POST_SUCCESS_MESSAGES } from "constants/AddPost/Message";
 import { getUserPostsAction } from "./userPostsReducer";
+import { ADD_POST_ERROR_MESSAGES } from "../../constants/AddPost/Message";
 
 export const createPostsAction = createAsyncThunk(
   "posts/createPosts",
@@ -21,7 +22,7 @@ export const createPostsAction = createAsyncThunk(
             error.response.data.message) ||
           error.message ||
           error.toString();
-        notifyNegative({ message: message });
+        notifyNegative({ message: ADD_POST_ERROR_MESSAGES.ADD_POST_FAIL });
         return thunkAPI.rejectWithValue(message);
       });
   }

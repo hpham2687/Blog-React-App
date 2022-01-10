@@ -20,19 +20,19 @@ export default function EditPost() {
   const [loadingEditPost, setLoadingEditPost] = useState(false);
 
   const onSubmitEditPost = async (postData) => {
-    try {
-      setLoadingEditPost(true);
-      const editedPost = await editPost({ ...postData, id: postId });
-      if (editedPost) {
+    setLoadingEditPost(true);
+    editPost({ ...postData, id: postId })
+      .then(() => {
         notifyPositive({
           message: EDIT_POST_SUCCESS_MESSAGES.EDIT_POST_SUCCESS,
         });
-      }
-      setLoadingEditPost(false);
-    } catch (error) {
-      setLoadingEditPost(false);
-      notifyNegative({ message: EDIT_POST_ERROR_MESSAGES.EDIT_POST_FAIL });
-    }
+      })
+      .catch((err) => {
+        notifyNegative({ message: EDIT_POST_ERROR_MESSAGES.EDIT_POST_FAIL });
+      })
+      .finally(() => {
+        setLoadingEditPost(false);
+      });
   };
 
   return (

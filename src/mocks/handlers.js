@@ -12,7 +12,6 @@ import { loginCtrl, registerCtrl } from "./controllers/user.controller";
 export const handlers = [
   rest.post("/login", loginCtrl),
   rest.post("/register", registerCtrl),
-
   rest.post("/posts", createUserPostCtrl),
   rest.get("/posts", getPostsCtrl),
   rest.get("/posts/:postId", getPostDetailCtrl),

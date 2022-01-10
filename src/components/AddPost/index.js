@@ -17,12 +17,10 @@ export default function AddPost(props) {
     dispatch(createPostsAction(postData))
       .unwrap()
       .then(() => {
-        setLoadingEditPost(false);
         history("/manage");
       })
-      .catch((error) => {
-        console.log(error);
-        console.log(error.message);
+      .finally(() => {
+        setLoadingEditPost(false);
       });
   };
 
