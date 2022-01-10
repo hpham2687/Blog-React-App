@@ -8,7 +8,7 @@ const AUTH_ERROR_MESSAGES = {
 };
 const AUTH_SUCCESS_MESSAGES = {
   REGISTER_SUCCESS: "Register Successfully",
-  LOGIN_SUCCESS: "LOGIN Successfully",
+  LOGIN_SUCCESS: "Login Successfully",
 };
 
 export { AUTH_ERROR_MESSAGES, AUTH_SUCCESS_MESSAGES };

@@ -54,9 +54,8 @@ function App() {
 
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <Router navigator={history}>
-            {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
             <Routes>
+              <Route path="*" element={<>Not found page</>}></Route>
               <Route path="/login" element={<LoginPage />}></Route>
               <Route path="/register" element={<RegisterPage />}></Route>
               <Route
@@ -91,7 +90,6 @@ function App() {
                 element={<PostDetail />}
               ></Route>
               <Route path="/" element={<Home />}></Route>
-              <Route element={<>Not found</>}></Route>
             </Routes>
           </Router>
         </ErrorBoundary>

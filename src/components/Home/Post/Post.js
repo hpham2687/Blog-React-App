@@ -8,13 +8,12 @@ import ModalConfirm from "../../Modal/ModalConfirm";
 
 export default function Post(props) {
   let { id, title, authorName, createdAt, picture, isManagePost } = props;
-  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const onSubmitRemove = async () => {
-    console.log("removing " + id);
     dispatch(removePostAction({ postId: id }));
   };
   return (
@@ -54,7 +53,6 @@ export default function Post(props) {
                 {isManagePost ? "Edit" : "View"}
               </StyledViewButton>
             </Link>
-            {/* <Button variant="primary">Button</Button> */}
           </CardFooterWrapper>
         </StyledCard.Body>
         {isManagePost && (

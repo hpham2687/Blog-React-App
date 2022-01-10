@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-pattern */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as UserApi from "./../../api/userApi";
 

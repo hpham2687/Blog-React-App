@@ -6,7 +6,6 @@ export default React.memo(function PostList({
   data,
   isManagePost = false,
 } = {}) {
-  console.log({ data });
   return (
     <PostListWrapper>
       {data.length > 0 &&
@@ -26,7 +25,6 @@ const PostListWrapper = styled.div`
 
   @media ${device.mobileL} {
     padding: 0;
-
     justify-content: center;
   }
 `;

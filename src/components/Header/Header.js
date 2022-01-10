@@ -31,7 +31,6 @@ export default function Header() {
       <StyledAhaHeader
         className={isDarkMode ? "u-backgroundDark" : "u-backgroundWhite"}
       >
-        {/* // TODO ko co cach nao override the a href */}
         <StyledAhaHeader.Brand>
           <Link to="/">
             <Logo

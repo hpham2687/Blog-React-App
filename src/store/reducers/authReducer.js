@@ -2,22 +2,18 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AUTH_SUCCESS_MESSAGES } from "../../constants/Auth/Message";
 import { notifyNegative, notifyPositive } from "../../utils/toast";
 import * as UserApi from "./../../api/userApi";
+
 export const registerAction = createAsyncThunk(
   "auth/register",
   async ({ email, username, password }, thunkAPI) => {
     try {
-      console.log(`onSubmit register thunk`, { email, username, password });
-
       const response = await UserApi.register({ email, username, password });
-      console.log(response.data);
-      console.log(response.data);
       localStorage.setItem("user", JSON.stringify(response.data));
       notifyPositive({ message: AUTH_SUCCESS_MESSAGES.REGISTER_SUCCESS });
       return response.data;
     } catch (error) {
       const message = error?.response?.data?.message || "UNKNOWN ERROR";
       notifyNegative({ message: message });
-      // thunkAPI.dispatch(registerFailure(message));
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -27,19 +23,13 @@ export const loginAction = createAsyncThunk(
   "auth/login",
   async ({ username, password }, thunkAPI) => {
     try {
-      console.log("vao thunk login");
-      // thunkAPI.dispatch(loginStart());
       const response = await UserApi.login({ username, password });
-      console.log("vao day login");
-      console.log(response.data);
       localStorage.setItem("user", JSON.stringify(response.data));
       notifyPositive({ message: AUTH_SUCCESS_MESSAGES.LOGIN_SUCCESS });
-
       return response.data;
     } catch (error) {
       const message = error?.response?.data?.message || "UNKNOWN ERROR";
       notifyNegative({ message: message });
-      // thunkAPI.dispatch(loginFailure(message));
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -49,7 +39,6 @@ const user = JSON.parse(localStorage.getItem("user"));
 const initialState = user
   ? { isLoggedIn: true, user }
   : { isLoggedIn: false, user: null };
-// const initialState = { isLoggedIn: true, user: { username: "sfs" } };
 
 const authSlice = createSlice({
   name: "auth",

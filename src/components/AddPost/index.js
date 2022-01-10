@@ -12,11 +12,6 @@ export default function AddPost(props) {
   const dispatch = useDispatch();
 
   const onSubmitAddPost = async ({ title, content, picture }) => {
-    console.log({
-      title,
-      content,
-      picture,
-    });
     await dispatch(
       createPostsAction({
         title,

@@ -9,13 +9,13 @@ import { device } from "../../utils/mediaQuery";
 export default function Banner() {
   const [searchText, setSearchText] = useState("");
   const dispatch = useDispatch();
-
   const { items_per_page } = useSelector((state) => state.posts);
+
   const debouncedCallApi = useRef(
     debounce(
-      (nextValue) =>
+      (searchValute) =>
         dispatch(
-          getPostsAction({ page: 1, items_per_page, search: nextValue })
+          getPostsAction({ page: 1, items_per_page, search: searchValute })
         ),
       400
     )

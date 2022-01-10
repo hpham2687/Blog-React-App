@@ -7,7 +7,7 @@ const ADD_POST_ERROR_MESSAGES = {
   INVALID_IMAGE_URL: "Image url is invalid",
 };
 const ADD_POST_SUCCESS_MESSAGES = {
-  ADD_POST_SUCCESS: "Add post successfully~",
+  ADD_POST_SUCCESS: "Add post successfully",
 };
 
 export { ADD_POST_ERROR_MESSAGES, ADD_POST_SUCCESS_MESSAGES };

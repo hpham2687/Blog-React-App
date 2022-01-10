@@ -24,7 +24,6 @@ export default function Manage() {
     dispatch(loadMoreUserPostsAction({}));
   };
   useEffect(() => {
-    // get posts list of user
     dispatch(getUserPostsAction({ page: 1, items_per_page: 6 }));
   }, [dispatch]);
 
@@ -89,7 +88,6 @@ const AddIcon = styled.div`
   }
   &:before {
     transition: all 0.2s ease-out;
-
     z-index: 1;
     content: "";
     border-radius: 50%;
