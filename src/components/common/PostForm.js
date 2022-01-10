@@ -44,7 +44,7 @@ export default function PostForm({
     reset(data);
   }, [data, reset]);
 
-  const isHasTitlenameError = errors?.title;
+  const isHasTitleNameError = errors?.title;
   const isHasContentError = errors?.content;
   const isHasPictureError = errors?.picture;
 
@@ -62,7 +62,7 @@ export default function PostForm({
                   render={({ field }) => (
                     <Form.Input
                       type="text"
-                      isInvalid={isHasTitlenameError}
+                      isInvalid={isHasTitleNameError}
                       placeholder="Enter title"
                       {...register("title", {
                         required: ADD_POST_ERROR_MESSAGES.TITLE_REQUIRED,
@@ -79,7 +79,7 @@ export default function PostForm({
                     />
                   )}
                 />
-                {isHasTitlenameError && (
+                {isHasTitleNameError && (
                   <Form.Feedback type="invalid">
                     {errors?.title.message}
                   </Form.Feedback>
