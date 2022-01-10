@@ -31,19 +31,11 @@ export default function PostForm({
     control,
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({
     mode: "onChange",
-    defaultValues: useMemo(() => {
-      return data ? data : {};
-    }, [data]),
+    defaultValues: data,
   });
-
-  useEffect(() => {
-    if (!data) return;
-    reset(data);
-  }, [data, reset]);
 
   const isHasTitleNameError = errors?.title;
   const isHasContentError = errors?.content;
