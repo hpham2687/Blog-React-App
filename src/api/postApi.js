@@ -14,6 +14,7 @@ function createPost(postData) {
 function editPost(postData) {
   return client(`posts/${postData.id}`, {
     data: postData,
+    method: "PUT",
     headers: getHeadersWithToken(),
   });
 }

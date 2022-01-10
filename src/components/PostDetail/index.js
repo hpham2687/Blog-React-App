@@ -12,9 +12,12 @@ export default function PostDetail() {
   const [postData, setPostData] = useState({});
   const [loading, setLoading] = useState({});
   const { postId } = useParams();
-  const {
-    user: { id: userId },
-  } = useAuth();
+  let userId = null;
+  const { user = null } = useAuth();
+  if (user) {
+    console.log("vao day");
+    userId = user?.id;
+  }
   let { title, content, picture, authorName, createdAt, authorId, id } =
     postData;
 
