@@ -1,10 +1,10 @@
 import { ToastContainer } from "@ahaui/react";
 import { ErrorBoundary } from "react-error-boundary";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
 import "./App.css";
 import AddPostPage from "./components/AddPost";
 import ErrorFallback from "./components/common/ErrorFallback";
+import { GlobalStyle } from "./components/common/GlobalStyle";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import EditPostPage from "./components/EditPost";
 import Home from "./components/Home";
@@ -15,33 +15,6 @@ import RegisterPage from "./components/Register";
 import * as theme from "./config/theme";
 import { useTheme } from "./context/ThemeContext";
 import { history } from "./utils/history";
-
-// TODO: Add not found page
-const GlobalStyle = createGlobalStyle`
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-:root {
-   
-
-    @media (min-width: 768px) {
-    }
-
-    @media (min-width: 1024px) {
-    }
-  }
-  body, #page-container-body, .Card, .Header {
-    background: ${({ theme }) => theme.body};
-    color: ${({ theme }) => theme.text};
-    transition: all 0.50s linear;
-  }
-a {
-  text-decoration: none;
-}
-`;
 
 function App() {
   const [isDarkMode] = useTheme();
