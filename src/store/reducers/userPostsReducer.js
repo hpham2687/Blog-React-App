@@ -1,6 +1,6 @@
 /* eslint-disable no-empty-pattern */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import * as UserApi from "./../../api/userApi";
+import * as UserApi from "api/userApi";
 
 export const getUserPostsAction = createAsyncThunk(
   "posts/getUserPosts",

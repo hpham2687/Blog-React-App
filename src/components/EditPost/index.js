@@ -5,12 +5,12 @@ import styled from "styled-components";
 import {
   EDIT_POST_ERROR_MESSAGES,
   EDIT_POST_SUCCESS_MESSAGES,
-} from "../../constants/EditPost/Message";
-import usePostDetail from "../../hooks/usePostDetail";
-import { notifyNegative, notifyPositive } from "../../utils/toast";
-import Layout from "../common/Layout";
-import PostForm from "../common/PostForm";
-import { editPost } from "./../../api/postApi";
+} from "constants/EditPost/Message";
+import usePostDetail from "hooks/usePostDetail";
+import { notifyNegative, notifyPositive } from "utils/toast";
+import Layout from "components/common/Layout";
+import PostForm from "components/common/PostForm";
+import { editPost } from "api/postApi";
 import EditPostSkeleton from "./EditPostSkeleton";
 
 export default function EditPost() {

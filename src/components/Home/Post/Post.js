@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { removePostAction } from "../../../store/reducers/postsReducer";
-import ModalConfirm from "../../Modal/ModalConfirm";
+import { removePostAction } from "store/reducers/postsReducer";
+import ModalConfirm from "components/Modal/ModalConfirm";
 import PropTypes from "prop-types"; // ES6
 
 Post.propTypes = {

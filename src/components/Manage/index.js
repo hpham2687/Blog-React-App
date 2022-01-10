@@ -6,12 +6,12 @@ import styled from "styled-components";
 import {
   getUserPostsAction,
   loadMoreUserPostsAction,
-} from "../../store/reducers/userPostsReducer";
-import { device } from "../../utils/mediaQuery";
-import Layout from "../common/Layout";
-import LoadMoreBtn from "../Home/LoadMoreBtn";
-import PostList from "../Home/Post/PostList";
-import PostListSkeleton from "../Home/Post/PostListSkeleton";
+} from "store/reducers/userPostsReducer";
+import { device } from "utils/mediaQuery";
+import Layout from "components/common/Layout";
+import LoadMoreBtn from "components/Home/LoadMoreBtn";
+import PostList from "components/Home/Post/PostList";
+import PostListSkeleton from "components/Home/Post/PostListSkeleton";
 
 export default function Manage() {
   const dispatch = useDispatch();

@@ -1,7 +1,7 @@
 import React from "react";
 import Post from "./Post";
 import styled from "styled-components";
-import { device } from "../../../utils/mediaQuery";
+import { device } from "utils/mediaQuery";
 import PropTypes from "prop-types"; // ES6
 
 const PostListWrap = React.memo(function PostList({

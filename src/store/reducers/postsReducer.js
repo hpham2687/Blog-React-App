@@ -1,9 +1,9 @@
 /* eslint-disable no-empty-pattern */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { notifyNegative, notifyPositive } from "../../utils/toast";
-import * as PostApi from "./../../api/postApi";
-import * as UserApi from "./../../api/userApi";
-import { ADD_POST_SUCCESS_MESSAGES } from "./../../constants/AddPost/Message";
+import { notifyNegative, notifyPositive } from "utils/toast";
+import * as PostApi from "api/postApi";
+import * as UserApi from "api/userApi";
+import { ADD_POST_SUCCESS_MESSAGES } from "constants/AddPost/Message";
 import { getUserPostsAction } from "./userPostsReducer";
 
 export const createPostsAction = createAsyncThunk(

@@ -3,8 +3,8 @@ import debounce from "lodash.debounce";
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { getPostsAction } from "../../store/reducers/postsReducer";
-import { device } from "../../utils/mediaQuery";
+import { getPostsAction } from "store/reducers/postsReducer";
+import { device } from "utils/mediaQuery";
 
 export default function Banner() {
   const [searchText, setSearchText] = useState("");

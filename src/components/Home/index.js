@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Banner from "./../Banner/Banner";
-import Layout from "../common/Layout";
+import Banner from "components/Banner/Banner";
+import Layout from "components/common/Layout";
 import LoadMoreBtn from "./LoadMoreBtn";
 import PostList from "./Post/PostList";
 import PostListSkeleton from "./Post/PostListSkeleton";
 import {
   getPostsAction,
   loadMorePostsAction,
-} from "../../store/reducers/postsReducer";
+} from "store/reducers/postsReducer";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 

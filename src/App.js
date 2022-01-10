@@ -14,7 +14,6 @@ import PostDetail from "./components/PostDetail";
 import RegisterPage from "./components/Register";
 import * as theme from "./config/theme";
 import { useTheme } from "./context/ThemeContext";
-import { history } from "./utils/history";
 
 function App() {
   const [isDarkMode] = useTheme();
@@ -26,7 +25,7 @@ function App() {
         <ToastContainer />
 
         <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Router navigator={history}>
+          <Router>
             <Routes>
               <Route path="*" element={<>Not found page</>}></Route>
               <Route path="/login" element={<LoginPage />}></Route>

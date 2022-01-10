@@ -2,10 +2,10 @@ import { Button, Card, Form, Loader } from "@ahaui/react";
 import React, { useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components";
-import { ADD_POST_ERROR_MESSAGES } from "../../constants/AddPost/Message";
+import { ADD_POST_ERROR_MESSAGES } from "constants/AddPost/Message";
 import PropTypes from "prop-types"; // ES6
-import { device } from "../../utils/mediaQuery";
-import { FORM_VALIDATOR } from "../../constants/common";
+import { device } from "utils/mediaQuery";
+import { FORM_VALIDATOR } from "constants/common";
 
 PostForm.propTypes = {
   submitText: PropTypes.string.isRequired,

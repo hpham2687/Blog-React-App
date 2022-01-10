@@ -1,8 +1,8 @@
 import { Toggle } from "@ahaui/react";
 import React from "react";
 import styled from "styled-components";
-import { toggleMode, useTheme } from "../../context/ThemeContext";
-import { device } from "../../utils/mediaQuery";
+import { toggleMode, useTheme } from "context/ThemeContext";
+import { device } from "utils/mediaQuery";
 
 export default function SwitchThemeButton() {
   const [isDarkMode, setIsDarkMode] = useTheme();

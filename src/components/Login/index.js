@@ -3,14 +3,11 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import styled from "styled-components";
-import Layout from "../common/Layout";
-import { useAuth } from "../../hooks/useAuth";
-import {
-  loginAction,
-  resetErrorAction,
-} from "../../store/reducers/authReducer";
+import Layout from "components/common/Layout";
+import { useAuth } from "hooks/useAuth";
+import { loginAction, resetErrorAction } from "store/reducers/authReducer";
 import { useForm } from "react-hook-form";
-import { AUTH_ERROR_MESSAGES } from "../../constants/Auth/Message";
+import { AUTH_ERROR_MESSAGES } from "constants/Auth/Message";
 
 export default function Login() {
   const { isLoggedIn, loading, error: errorApi } = useAuth();

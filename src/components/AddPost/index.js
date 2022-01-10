@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { createPostsAction } from "../../store/reducers/postsReducer";
-import Layout from "../common/Layout";
-import PostForm from "../common/PostForm";
+import { createPostsAction } from "store/reducers/postsReducer";
+import Layout from "components/common/Layout";
+import PostForm from "components/common/PostForm";
 
 export default function AddPost(props) {
   let history = useNavigate();

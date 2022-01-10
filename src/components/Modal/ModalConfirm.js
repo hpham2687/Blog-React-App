@@ -3,7 +3,7 @@ import { Modal, Button } from "@ahaui/react";
 import reactDom from "react-dom";
 import PropTypes from "prop-types"; // ES6
 import styled from "styled-components";
-import { device } from "../../utils/mediaQuery";
+import { device } from "utils/mediaQuery";
 
 const callAll =
   (...fns) =>

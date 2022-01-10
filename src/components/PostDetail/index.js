@@ -3,9 +3,9 @@ import React from "react";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getPostDetail } from "../../api/postApi";
-import { useAuth } from "../../hooks/useAuth";
-import Layout from "../common/Layout";
+import { getPostDetail } from "api/postApi";
+import { useAuth } from "hooks/useAuth";
+import Layout from "components/common/Layout";
 import PostDetailSkeleton from "./PostDetailSkeleton";
 
 export default function PostDetail() {

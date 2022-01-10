@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { AUTH_SUCCESS_MESSAGES } from "../../constants/Auth/Message";
-import { notifyNegative, notifyPositive } from "../../utils/toast";
-import * as UserApi from "./../../api/userApi";
+import { AUTH_SUCCESS_MESSAGES } from "constants/Auth/Message";
+import { notifyNegative, notifyPositive } from "utils/toast";
+import * as UserApi from "api/userApi";
 
 export const registerAction = createAsyncThunk(
   "auth/register",
