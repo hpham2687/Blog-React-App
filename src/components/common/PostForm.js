@@ -4,6 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { ADD_POST_ERROR_MESSAGES } from "../../constants/AddPost/Message";
 import PropTypes from "prop-types"; // ES6
+import { device } from "../../utils/mediaQuery";
 
 PostForm.propTypes = {
   submitText: PropTypes.string.isRequired,
@@ -174,4 +175,7 @@ const PostFormWrapper = styled.div`
 const StyledCard = styled(Card)`
   min-width: 400px;
   height: fit-content;
+  @media ${device.mobileL} {
+    min-width: 80%;
+  }
 `;
