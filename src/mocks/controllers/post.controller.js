@@ -70,7 +70,7 @@ export const createUserPostCtrl = async (req, res, ctx) => {
       user,
       title,
       content,
-      picture,
+      picture: picture ? picture : "/assets/images/default_thumbnail.png",
     });
     return res(
       ctx.status(200),

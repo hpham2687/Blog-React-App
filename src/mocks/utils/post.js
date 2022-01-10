@@ -1,4 +1,4 @@
-function validatePostForm({ title, content, picture }) {
+function validatePostForm({ title, content }) {
   if (!title) {
     const error = new Error("A title is required");
     error.status = 400;
@@ -6,11 +6,6 @@ function validatePostForm({ title, content, picture }) {
   }
   if (!content) {
     const error = new Error("A content is required");
-    error.status = 400;
-    throw error;
-  }
-  if (!picture) {
-    const error = new Error("A picture is required");
     error.status = 400;
     throw error;
   }

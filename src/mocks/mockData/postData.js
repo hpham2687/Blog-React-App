@@ -17,7 +17,7 @@ try {
 }
 
 async function create({ user, title, content, picture }) {
-  validatePostForm({ title, content, picture });
+  validatePostForm({ title, content });
   const id = short.generate();
   allPosts[id] = {
     id,
@@ -33,7 +33,7 @@ async function create({ user, title, content, picture }) {
 }
 
 async function edit({ id, title, content, picture }) {
-  validatePostForm({ title, content, picture });
+  validatePostForm({ title, content });
   allPosts[id] = {
     ...allPosts[id],
     title,

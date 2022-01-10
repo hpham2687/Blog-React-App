@@ -12,15 +12,9 @@ export default function AddPost(props) {
   const dispatch = useDispatch();
   const [loadingEditPost, setLoadingEditPost] = useState(false);
 
-  const onSubmitAddPost = async ({ title, content, picture }) => {
+  const onSubmitAddPost = async (postData) => {
     setLoadingEditPost(true);
-    dispatch(
-      createPostsAction({
-        title,
-        content,
-        picture,
-      })
-    )
+    dispatch(createPostsAction(postData))
       .unwrap()
       .then(() => {
         setLoadingEditPost(false);

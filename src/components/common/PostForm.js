@@ -134,7 +134,6 @@ export default function PostForm({
                       isInvalid={isHasPictureError}
                       placeholder="Enter image url"
                       {...register("picture", {
-                        required: ADD_POST_ERROR_MESSAGES.IMAGE_REQUIRED,
                         pattern: {
                           value:
                             /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
