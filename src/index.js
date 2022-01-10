@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 import "@ahaui/css/dist/index.min.css";
 import { ThemeProvider } from "./context/ThemeContext";

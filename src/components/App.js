@@ -1,19 +1,18 @@
 import { ToastContainer } from "@ahaui/react";
 import { ErrorBoundary } from "react-error-boundary";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "./App.css";
-import AddPostPage from "./components/AddPost";
-import ErrorFallback from "./components/common/ErrorFallback";
-import { GlobalStyle } from "./components/common/GlobalStyle";
-import ProtectedRoute from "./components/common/ProtectedRoute";
-import EditPostPage from "./components/EditPost";
-import Home from "./components/Home";
-import LoginPage from "./components/Login";
-import ManagePage from "./components/Manage";
-import PostDetail from "./components/PostDetail";
-import RegisterPage from "./components/Register";
-import * as theme from "./config/theme";
-import { useTheme } from "./context/ThemeContext";
+import AddPostPage from "./AddPost";
+import ErrorFallback from "./common/ErrorFallback";
+import { GlobalStyle } from "./common/GlobalStyle";
+import ProtectedRoute from "./common/ProtectedRoute";
+import EditPostPage from "./EditPost";
+import Home from "./Home";
+import LoginPage from "./Login";
+import ManagePage from "./Manage";
+import PostDetail from "./PostDetail";
+import RegisterPage from "./Register";
+import * as theme from "../config/theme";
+import { useTheme } from "../context/ThemeContext";
 
 function App() {
   const [isDarkMode] = useTheme();
