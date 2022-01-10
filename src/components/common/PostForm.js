@@ -22,10 +22,10 @@ PostForm.propTypes = {
 export default function PostForm({
   submitText,
   onSubmit,
+  loading,
   data = null,
   ...rest
 }) {
-  let loading;
   const {
     control,
     register,
@@ -38,7 +38,6 @@ export default function PostForm({
     }, [data]),
   });
 
-  console.log({ data });
   useEffect(() => {
     if (!data) return;
     reset(data);

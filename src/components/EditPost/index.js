@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getPostDetail } from "../../api/postApi";
+import usePostDetail from "../../hooks/usePostDetail";
 import { notifyNegative, notifyPositive } from "../../utils/toast";
 import Layout from "../common/Layout";
 import PostForm from "../common/PostForm";
@@ -12,27 +13,19 @@ import EditPostSkeleton from "./EditPostSkeleton";
 export default function EditPost() {
   const { postId } = useParams();
 
-  const [postData, setPostData] = useState({});
-  const [loading, setLoading] = useState({});
-
-  React.useEffect(() => {
-    async function fetchPostDetail() {
-      setLoading(true);
-      let response = await getPostDetail(postId);
-      setPostData(response.data);
-      setLoading(false);
-    }
-
-    fetchPostDetail();
-  }, [postId]);
+  const { postData, loading } = usePostDetail(postId);
+  const [loadingEditPost, setLoadingEditPost] = useState(false);
 
   const onSubmitEditPost = async (postData) => {
     try {
+      setLoadingEditPost(true);
       const editedPost = await editPost({ ...postData, id: postId });
       if (editedPost) {
         notifyPositive({ message: "Edit post sucessfully." });
       }
+      setLoadingEditPost(false);
     } catch (error) {
+      setLoadingEditPost(false);
       notifyNegative({ message: `Cannot edit post with id ${postId} ` });
     }
   };
@@ -44,7 +37,12 @@ export default function EditPost() {
           Back
         </Link>
       </BackButton>
-      <PostForm submitText="Save" data={postData} onSubmit={onSubmitEditPost} />
+      <PostForm
+        loading={loadingEditPost}
+        submitText="Save"
+        data={postData}
+        onSubmit={onSubmitEditPost}
+      />
       {loading && <EditPostSkeleton />}
     </Layout>
   );

@@ -1,5 +1,5 @@
 import { Button } from "@ahaui/react";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -10,8 +10,10 @@ import PostForm from "../common/PostForm";
 export default function AddPost(props) {
   let history = useNavigate();
   const dispatch = useDispatch();
+  const [loadingEditPost, setLoadingEditPost] = useState(false);
 
   const onSubmitAddPost = async ({ title, content, picture }) => {
+    setLoadingEditPost(true);
     await dispatch(
       createPostsAction({
         title,
@@ -19,6 +21,8 @@ export default function AddPost(props) {
         picture,
       })
     ).unwrap();
+    setLoadingEditPost(false);
+
     history("/manage");
   };
 
@@ -29,7 +33,11 @@ export default function AddPost(props) {
           Back
         </Link>
       </BackButton>
-      <PostForm submitText="Add" onSubmit={onSubmitAddPost} />
+      <PostForm
+        loading={loadingEditPost}
+        submitText="Add"
+        onSubmit={onSubmitAddPost}
+      />
     </Layout>
   );
 }
