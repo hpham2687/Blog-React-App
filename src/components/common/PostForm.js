@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { ADD_POST_ERROR_MESSAGES } from "../../constants/AddPost/Message";
 import PropTypes from "prop-types"; // ES6
 import { device } from "../../utils/mediaQuery";
+import { FORM_VALIDATOR } from "../../constants/common";
 
 PostForm.propTypes = {
   submitText: PropTypes.string.isRequired,
@@ -66,8 +67,12 @@ export default function PostForm({
                       {...register("title", {
                         required: ADD_POST_ERROR_MESSAGES.TITLE_REQUIRED,
                         maxLength: {
-                          value: 50,
+                          value: FORM_VALIDATOR.MAX_TITLE_LENGTH,
                           message: ADD_POST_ERROR_MESSAGES.TITLE_LENGTH_EXCEED,
+                        },
+                        minLength: {
+                          value: FORM_VALIDATOR.MIN_TITLE_LENGTH,
+                          message: ADD_POST_ERROR_MESSAGES.TITLE_LENGTH_SHORT,
                         },
                       })}
                       {...field}
@@ -77,7 +82,6 @@ export default function PostForm({
                 {isHasTitlenameError && (
                   <Form.Feedback type="invalid">
                     {errors?.title.message}
-                    {/* {errorApi?.username || errors?.username.message} */}
                   </Form.Feedback>
                 )}
               </Form.Group>
@@ -96,9 +100,13 @@ export default function PostForm({
                       placeholder="Enter content"
                       {...register("content", {
                         maxLength: {
-                          value: 250,
+                          value: FORM_VALIDATOR.MAX_CONTENT_LENGTH,
                           message:
                             ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_EXCEED,
+                        },
+                        minLength: {
+                          value: FORM_VALIDATOR.MIN_CONTENT_LENGTH,
+                          message: ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_SHORT,
                         },
                         required: ADD_POST_ERROR_MESSAGES.CONTENT_REQUIRED,
                       })}

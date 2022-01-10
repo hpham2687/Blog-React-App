@@ -2,7 +2,10 @@ import { Button } from "@ahaui/react";
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getPostDetail } from "../../api/postApi";
+import {
+  EDIT_POST_ERROR_MESSAGES,
+  EDIT_POST_SUCCESS_MESSAGES,
+} from "../../constants/EditPost/Message";
 import usePostDetail from "../../hooks/usePostDetail";
 import { notifyNegative, notifyPositive } from "../../utils/toast";
 import Layout from "../common/Layout";
@@ -21,12 +24,14 @@ export default function EditPost() {
       setLoadingEditPost(true);
       const editedPost = await editPost({ ...postData, id: postId });
       if (editedPost) {
-        notifyPositive({ message: "Edit post sucessfully." });
+        notifyPositive({
+          message: EDIT_POST_SUCCESS_MESSAGES.EDIT_POST_SUCCESS,
+        });
       }
       setLoadingEditPost(false);
     } catch (error) {
       setLoadingEditPost(false);
-      notifyNegative({ message: `Cannot edit post with id ${postId} ` });
+      notifyNegative({ message: EDIT_POST_ERROR_MESSAGES.EDIT_POST_FAIL });
     }
   };
 
