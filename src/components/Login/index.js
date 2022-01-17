@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "components/common/Layout";
 import { useAuth } from "hooks/useAuth";
-import { loginAction, resetErrorAction } from "store/reducers/authReducer";
+import { loginAction, resetErrorAction } from "store/authSlice";
 import { useForm } from "react-hook-form";
 import { AUTH_ERROR_MESSAGES } from "constants/Auth/Message";
 

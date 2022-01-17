@@ -2,7 +2,7 @@ import { screen, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { rest, server } from "mocks/test-server";
 import * as React from "react";
-import { resetState } from "store/reducers/postsReducer";
+import { resetState } from "store/postsSlice";
 import { renderWithWrapper, store } from "utils/test-utils";
 import PostDetail from "../PostDetail";
 jest.mock("react-router-dom", () => ({

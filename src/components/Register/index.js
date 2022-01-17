@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom";
 import styled from "styled-components";
 import { AUTH_ERROR_MESSAGES } from "constants/Auth/Message";
 import { useAuth } from "hooks/useAuth";
-import { registerAction, resetErrorAction } from "store/reducers/authReducer";
+import { registerAction, resetErrorAction } from "store/authSlice";
 import Layout from "components/common/Layout";
 
 export default function Register() {

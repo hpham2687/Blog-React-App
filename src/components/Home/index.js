@@ -4,10 +4,7 @@ import Layout from "components/common/Layout";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  getPostsAction,
-  loadMorePostsAction,
-} from "store/reducers/postsReducer";
+import { getPostsAction, loadMorePostsAction } from "store/postsSlice";
 import styled from "styled-components";
 import { AddIcon } from "../AddPost/AddIcon";
 import LoadMoreBtn from "../common/LoadMoreBtn";

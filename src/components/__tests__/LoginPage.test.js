@@ -1,7 +1,7 @@
 import { act, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { rest, server } from "mocks/test-server";
-import { logout } from "store/reducers/authReducer";
+import { logout } from "store/authSlice";
 import { renderApp, store } from "../../utils/test-utils";
 const apiURL = process.env.REACT_APP_API_ENDPOINT;
 

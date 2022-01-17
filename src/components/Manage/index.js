@@ -6,7 +6,7 @@ import styled from "styled-components";
 import {
   getUserPostsAction,
   loadMoreUserPostsAction,
-} from "store/reducers/userPostsReducer";
+} from "store/userPostsSlice";
 import Layout from "components/common/Layout";
 import LoadMoreBtn from "components/common/LoadMoreBtn";
 import PostList from "components/Home/Post/PostList";

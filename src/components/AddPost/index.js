@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { createPostsAction } from "store/reducers/postsReducer";
+import { createPostsAction } from "store/postsSlice";
 import Layout from "components/common/Layout";
 import PostForm from "components/common/PostForm";
 

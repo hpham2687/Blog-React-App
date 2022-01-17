@@ -2,8 +2,8 @@ import { act, screen, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { rest, server } from "mocks/test-server";
 import { renderApp, store } from "utils/test-utils";
-import { resetState as resetPostsState } from "store/reducers/postsReducer";
-import { resetState as resetUserPostsState } from "store/reducers/userPostsReducer";
+import { resetState as resetPostsState } from "store/postsSlice";
+import { resetState as resetUserPostsState } from "store/userPostsSlice";
 
 const apiURL = process.env.REACT_APP_API_ENDPOINT;
 jest.setTimeout(30000);
