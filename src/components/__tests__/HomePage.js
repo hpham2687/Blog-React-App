@@ -6,13 +6,17 @@ import { resetState } from "store/reducers/postsReducer";
 import { renderWithWrapper, store } from "utils/test-utils";
 import Home from "../Home";
 const apiURL = process.env.REACT_APP_API_ENDPOINT;
+const endpoint = "posts";
 
 afterEach(() => {
   store.dispatch(resetState());
 });
 
+afterEach(() => {
+  jest.useRealTimers();
+});
+
 test("show message no post to show when posts are empty", async () => {
-  const endpoint = "posts";
   const mockResult = {
     posts: [],
     page: 1,
@@ -34,7 +38,6 @@ test("show message no post to show when posts are empty", async () => {
 });
 
 test("show posts list to view", async () => {
-  const endpoint = "posts";
   const mockResult = {
     posts: [
       {
@@ -67,7 +70,6 @@ test("show posts list to view", async () => {
 });
 
 test("show load more button when page less than maximum number of pages", async () => {
-  const endpoint = "posts";
   const mockResult = {
     posts: [
       {
@@ -105,7 +107,6 @@ test("show load more button when page less than maximum number of pages", async 
 test("load more posts when click load more button", async () => {
   window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
-  const endpoint = "posts";
   const mockPostsInitial = {
     posts: [
       {
@@ -181,8 +182,69 @@ test("load more posts when click load more button", async () => {
   expect(window.HTMLElement.prototype.scrollIntoView).toBeCalled();
 });
 
+test("execute search when type in search box", async () => {
+  const mockPostsInitial = {
+    posts: [
+      {
+        id: "2GwKhwp68KgFnJ5K322Zjg",
+        authorId: "4113925073",
+        authorName: "krisspham133",
+        title: "post title demo ",
+        content:
+          "post content demo post content demo post content demo post content demo ",
+        picture: "https://picsum.photos/seed/picsum/300/250",
+        createdAt: "1/10/2022",
+      },
+    ],
+    page: 1,
+    maximumNumOfPages: 2,
+    items_per_page: 1,
+  };
+  const mockPostsSearch = {
+    posts: [
+      {
+        id: "2GwKhw368KgFnJ5K322Zjg",
+        authorId: "4113925073",
+        authorName: "krisspham133",
+        title: "post title demo mockPostsSearch",
+        content:
+          "post content demo post content demo post content demo post content demo ",
+        picture: "https://picsum.photos/seed/picsum/300/250",
+        createdAt: "1/10/2022",
+      },
+    ],
+    page: 2,
+    maximumNumOfPages: 2,
+    items_per_page: 1,
+  };
+
+  server.use(
+    rest.get(`${apiURL}/${endpoint}`, async (req, res, ctx) => {
+      let search = req.url.searchParams.get("search");
+      console.log({ search });
+      if (!search) {
+        return res(ctx.json(mockPostsInitial));
+      }
+      return res(ctx.json(mockPostsSearch));
+    })
+  );
+
+  renderWithWrapper(<Home />);
+  const searchBox = screen.getByRole("searchbox");
+  // assert loading to be removed
+  expect(screen.getByLabelText(/loading/i)).toBeInTheDocument();
+  await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
+
+  userEvent.type(searchBox, "title 1");
+  console.log(searchBox.value);
+  // assert new post to be added
+  expect(
+    await screen.findByText(mockPostsSearch.posts[0].title)
+  ).toBeInTheDocument();
+  screen.debug(undefined, 3000000);
+});
+
 test("click add post icon and redirect to add post page", async () => {
-  const endpoint = "posts";
   const mockResult = {
     posts: [
       {
