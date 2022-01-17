@@ -33,7 +33,7 @@ export default function Post(props) {
         <ModalConfirm
           onConfirm={onSubmitRemove}
           show={show}
-          onClose={handleClose}
+          handleClose={handleClose}
           setShow={setShow}
         />
       )}
@@ -67,7 +67,12 @@ export default function Post(props) {
           </CardFooterWrapper>
         </StyledCard.Body>
         {isManagePost && (
-          <RemoveIcon onClick={handleShow} size="medium" name="closeCircle" />
+          <RemoveIcon
+            className="remove-icon"
+            onClick={handleShow}
+            size="medium"
+            name="closeCircle"
+          />
         )}
       </StyledCard>
     </PostListWrapper>

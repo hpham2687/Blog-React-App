@@ -40,7 +40,7 @@ export default function Manage() {
 
   return (
     <Layout>
-      {loading && <PostListSkeleton num={5} />}
+      {loading && <PostListSkeleton aria-label="loading" num={5} />}
       {data && data.length > 0 ? (
         <PostList isManagePost={true} data={data} />
       ) : (
@@ -49,7 +49,7 @@ export default function Manage() {
       {canLoadMore && <LoadMoreBtn onLoadMore={onLoadMore} loading={loading} />}
 
       <Link to="/add-post">
-        <AddIcon>
+        <AddIcon data-testid="add-icon-btn">
           <Icon size="large" name="plus" />
         </AddIcon>
       </Link>

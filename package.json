@@ -56,5 +56,16 @@
   },
   "msw": {
     "workerDirectory": "public"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!<rootDir>/node_modules/",
+      "!src/mocks/**",
+      "!src/hooks/**",
+      "!src/components/common/ErrorFallback.js",
+      "!src/GlobalStyle.js",
+      "!src/reportWebVitals.js"
+    ]
   }
 }

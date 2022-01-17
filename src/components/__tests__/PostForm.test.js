@@ -26,25 +26,25 @@ function buildPostForm() {
   };
 }
 
-// test("should display error message when input is too short", async () => {
-//   let submitText = "Add";
-//   const onSubmitAdd = jest.fn();
+test("should display error message when input is too short", async () => {
+  let submitText = "Add";
+  const onSubmitAdd = jest.fn();
 
-//   render(<PostForm submitText={submitText} onSubmit={onSubmitAdd} />);
-//   const titleTextBox = screen.getByRole("textbox", { name: /title/i });
-//   const contentTextBox = screen.getByRole("textbox", { name: /content/i });
-//   userEvent.type(titleTextBox, "df");
-//   userEvent.type(contentTextBox, "dsf");
-//   userEvent.click(screen.getByText(/Add/i));
+  render(<PostForm submitText={submitText} onSubmit={onSubmitAdd} />);
+  const titleTextBox = screen.getByRole("textbox", { name: /title/i });
+  const contentTextBox = screen.getByRole("textbox", { name: /content/i });
+  userEvent.type(titleTextBox, "df");
+  userEvent.type(contentTextBox, "dsf");
+  userEvent.click(screen.getByText(/Add/i));
 
-//   expect(
-//     (await screen.findByTestId("error-title-msg")).textContent
-//   ).toMatchInlineSnapshot(`"Title is too short."`);
+  expect(
+    (await screen.findByTestId("error-title-msg")).textContent
+  ).toMatchInlineSnapshot(`"Title is too short."`);
 
-//   expect(
-//     (await screen.findByTestId("error-content-msg")).textContent
-//   ).toMatchInlineSnapshot(`"Content is too short."`);
-// });
+  expect(
+    (await screen.findByTestId("error-content-msg")).textContent
+  ).toMatchInlineSnapshot(`"Content is too short."`);
+});
 
 test("should call onSubmit function when click Add button", async () => {
   let submitText = "Add";
@@ -62,22 +62,22 @@ test("should call onSubmit function when click Add button", async () => {
   expect(onSubmitAdd).toBeCalled();
 });
 
-// test("should display error message when picture url is in wrong format", async () => {
-//   let submitText = "Add";
-//   const pictureUrl = "http://dsf";
-//   const onSubmitAdd = jest.fn();
+test("should display error message when picture url is in wrong format", async () => {
+  let submitText = "Add";
+  const pictureUrl = "http://dsf";
+  const onSubmitAdd = jest.fn();
 
-//   render(<PostForm submitText={submitText} onSubmit={onSubmitAdd} />);
-//   const pictureTextBox = screen.getByRole("textbox", {
-//     name: /image/i,
-//   });
-//   userEvent.type(pictureTextBox, pictureUrl);
-//   userEvent.click(screen.getByText(/Add/i));
+  render(<PostForm submitText={submitText} onSubmit={onSubmitAdd} />);
+  const pictureTextBox = screen.getByRole("textbox", {
+    name: /image/i,
+  });
+  userEvent.type(pictureTextBox, pictureUrl);
+  userEvent.click(screen.getByText(/Add/i));
 
-//   expect(
-//     (await screen.findByTestId("error-picture-msg")).textContent
-//   ).toMatchInlineSnapshot(`"Image url is invalid"`);
-// });
+  expect(
+    (await screen.findByTestId("error-picture-msg")).textContent
+  ).toMatchInlineSnapshot(`"Image url is invalid"`);
+});
 
 // test("should display loading", async () => {
 //   let submitText = "Add";

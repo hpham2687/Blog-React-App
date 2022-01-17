@@ -2,14 +2,16 @@ import { screen, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { rest, server } from "mocks/test-server";
 import * as React from "react";
-import { resetState } from "store/reducers/postsReducer";
+import { resetState as resetPostsState } from "store/reducers/postsReducer";
+import { resetState as resetUserPostsState } from "store/reducers/userPostsReducer";
 import { renderWithWrapper, store } from "utils/test-utils";
 import Home from "../Home";
 const apiURL = process.env.REACT_APP_API_ENDPOINT;
 const endpoint = "posts";
 
 afterEach(() => {
-  store.dispatch(resetState());
+  store.dispatch(resetPostsState());
+  store.dispatch(resetUserPostsState());
 });
 
 afterEach(() => {
@@ -241,7 +243,6 @@ test("execute search when type in search box", async () => {
   expect(
     await screen.findByText(mockPostsSearch.posts[0].title)
   ).toBeInTheDocument();
-  screen.debug(undefined, 3000000);
 });
 
 test("click add post icon and redirect to add post page", async () => {

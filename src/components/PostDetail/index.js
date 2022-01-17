@@ -14,8 +14,8 @@ export default function PostDetail() {
   const { postId } = useParams();
   let userId = null;
   const { user = null } = useAuth();
+  console.log({ postId });
   if (user) {
-    console.log("vao day");
     userId = user?.id;
   }
   let { title, content, picture, authorName, createdAt, authorId, id } =

@@ -43,7 +43,6 @@ export const loginAction = createAsyncThunk(
 );
 
 const user = JSON.parse(localStorage.getItem("user"));
-console.log(user);
 const initialState = user
   ? { isLoggedIn: true, user }
   : { isLoggedIn: false, user: null };

@@ -13,10 +13,10 @@ import PostDetail from "./PostDetail";
 import RegisterPage from "./Register";
 import * as theme from "../config/theme";
 import { useTheme } from "../context/ThemeContext";
+import { useAuth } from "hooks/useAuth";
 
 function App() {
   const [isDarkMode] = useTheme();
-
   return (
     <>
       <GlobalStyle theme={isDarkMode ? theme.darkTheme : theme.lightTheme} />

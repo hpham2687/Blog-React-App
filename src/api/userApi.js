@@ -30,6 +30,7 @@ function getPosts(page, items_per_page, search = null) {
 }
 
 function getUserPosts(page, items_per_page, search = null) {
+  console.log("calling getUserPosts.. ");
   return client("user/posts", {
     params: {
       page,

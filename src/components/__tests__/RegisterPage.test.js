@@ -8,6 +8,8 @@ const apiURL = process.env.REACT_APP_API_ENDPOINT;
 afterEach(() => {
   store.dispatch(logout());
 });
+
+jest.setTimeout(30000);
 const buildLoginForm = () => {
   return {
     email: "kriss@abc.com",

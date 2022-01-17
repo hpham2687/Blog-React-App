@@ -29,5 +29,4 @@ test("switch to the dark styles when toggle button", async () => {
   await act(async () => await userEvent.click(SwitchButton));
   const header = screen.getByTestId("header");
   expect(header).toHaveClass("u-backgroundDark");
-  screen.debug();
 });
