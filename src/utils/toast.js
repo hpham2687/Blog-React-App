@@ -9,7 +9,7 @@ const notifyNegative = ({ title = "Alert", message }) =>
         </div>
         <div className="u-flexGrow1">
           <div className="u-fontMedium u-marginBottomExtraSmall">{title}</div>
-          <div>{message}</div>
+          <div data-testid="toast-alert">{message}</div>
         </div>
       </div>
     ),
@@ -25,7 +25,7 @@ const notifyPositive = ({ title = "Alert", message }) =>
         </div>
         <div className="u-flexGrow1">
           <div className="u-fontMedium u-marginBottomExtraSmall">{title}</div>
-          <div>{message}</div>
+          <div data-testid="toast-alert">{message}</div>
         </div>
       </div>
     ),

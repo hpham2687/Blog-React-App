@@ -104,7 +104,7 @@ export default function Login() {
                 >
                   <Button.Label>
                     {loading ? (
-                      <Loader aria-label="Loading..." size="small" />
+                      <Loader aria-label="Loading" size="small" />
                     ) : (
                       "Login"
                     )}

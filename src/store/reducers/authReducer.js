@@ -14,6 +14,7 @@ export const registerAction = createAsyncThunk(
         return response;
       })
       .catch((error) => {
+        console.log(error);
         const message = error?.response?.data?.message || "UNKNOWN ERROR";
         notifyNegative({ message: message });
         return thunkAPI.rejectWithValue(message);
@@ -42,6 +43,7 @@ export const loginAction = createAsyncThunk(
 );
 
 const user = JSON.parse(localStorage.getItem("user"));
+console.log(user);
 const initialState = user
   ? { isLoggedIn: true, user }
   : { isLoggedIn: false, user: null };

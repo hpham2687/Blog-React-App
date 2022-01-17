@@ -128,7 +128,11 @@ export default function Register() {
                   data-testid="register-btn"
                 >
                   <Button.Label>
-                    {loading ? <Loader size="small" /> : "Register"}
+                    {loading ? (
+                      <Loader aria-label="Loading" size="small" />
+                    ) : (
+                      "Register"
+                    )}
                   </Button.Label>
                 </StyledSubmitBtn>
               </FormGroupWrapper>
