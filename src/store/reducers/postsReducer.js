@@ -53,15 +53,19 @@ export const removePostAction = createAsyncThunk(
 export const getPostsAction = createAsyncThunk(
   "posts/getPosts",
   async ({ page = 1, items_per_page = 6, search = null }, thunkAPI) => {
-    return UserApi.getPosts(page, items_per_page, search).catch((error) => {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    });
+    return UserApi.getPosts(page, items_per_page, search)
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        const message =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        return thunkAPI.rejectWithValue(message);
+      });
   }
 );
 
@@ -83,34 +87,36 @@ export const loadMorePostsAction = createAsyncThunk(
     });
   }
 );
-
+const initialState = {
+  data: [],
+  items_per_page: 6,
+  page: 1,
+  search: null,
+  maximumNumOfPages: null,
+  error: null,
+  loading: false,
+};
 const postsSlice = createSlice({
   name: "posts",
-  initialState: {
-    data: [],
-    items_per_page: 6,
-    page: 1,
-    search: null,
-    maximunNumOfPages: null,
-    error: null,
-    loading: false,
+  initialState,
+  reducers: {
+    resetState(state) {
+      Object.assign(state, initialState);
+    },
   },
-
   extraReducers: {
     [getPostsAction.pending]: (state, action) => {
       state.loading = true;
     },
     [getPostsAction.fulfilled]: (state, action) => {
-      state.isLoggedIn = true;
       state.loading = false;
       state.data = action.payload.posts;
       state.items_per_page = action.payload.items_per_page;
       state.page = action.payload.page;
       state.search = action.payload.search;
-      state.maximunNumOfPages = action.payload.maximunNumOfPages;
+      state.maximumNumOfPages = action.payload.maximumNumOfPages;
     },
     [getPostsAction.rejected]: (state, action) => {
-      state.isLoggedIn = false;
       state.loading = false;
       state.data = null;
     },
@@ -133,6 +139,6 @@ const postsSlice = createSlice({
 });
 
 const { actions } = postsSlice;
-export const {} = actions;
+export const { resetState } = actions;
 
 export default postsSlice.reducer;

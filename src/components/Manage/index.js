@@ -8,7 +8,7 @@ import {
   loadMoreUserPostsAction,
 } from "store/reducers/userPostsReducer";
 import Layout from "components/common/Layout";
-import LoadMoreBtn from "components/Home/LoadMoreBtn";
+import LoadMoreBtn from "components/common/LoadMoreBtn";
 import PostList from "components/Home/Post/PostList";
 import PostListSkeleton from "components/Home/Post/PostListSkeleton";
 import { AddIcon } from "../AddPost/AddIcon";
@@ -16,10 +16,10 @@ import { AddIcon } from "../AddPost/AddIcon";
 export default function Manage() {
   const dispatch = useDispatch();
 
-  const { data, loading, error, page, maximunNumOfPages } = useSelector(
+  const { data, loading, error, page, maximumNumOfPages } = useSelector(
     (state) => state.userPosts
   );
-  const canLoadMore = page < maximunNumOfPages;
+  const canLoadMore = page < maximumNumOfPages;
   const onLoadMore = () => {
     dispatch(loadMoreUserPostsAction({}));
   };

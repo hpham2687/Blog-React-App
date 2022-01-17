@@ -2,6 +2,7 @@ import { getHeadersWithToken } from "../utils/api";
 import { client } from "./fetchClient";
 
 function login({ username, password }) {
+  console.log("userAPi/login");
   return client("login", {
     data: {
       username,

@@ -36,9 +36,6 @@ export default function Register() {
   }
 
   const isHasEmailError = errorApi?.email || errors?.email;
-  if (isHasEmailError) {
-    console.log("vao day isHasEmailError");
-  }
   const isHasUsernameError = errorApi?.username || errors?.username;
   const isHasPasswordError = errorApi?.password || errors?.password;
 
@@ -48,7 +45,7 @@ export default function Register() {
         <Card style={{ height: "fit-content" }} size={"medium"}>
           <Card.Body>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div>
+              <FormGroupWrapper>
                 <Form.Group controlId="registerForm.email">
                   <Form.Label>Email</Form.Label>
                   <Form.Input
@@ -67,7 +64,7 @@ export default function Register() {
                     })}
                   />
                   {isHasEmailError && (
-                    <Form.Feedback type="invalid">
+                    <Form.Feedback data-testid="error-email-msg" type="invalid">
                       {errorApi?.email || errors?.email.message}
                     </Form.Feedback>
                   )}
@@ -90,7 +87,10 @@ export default function Register() {
                     })}
                   />
                   {isHasUsernameError && (
-                    <Form.Feedback type="invalid">
+                    <Form.Feedback
+                      data-testid="error-username-msg"
+                      type="invalid"
+                    >
                       {errorApi?.username || errors?.username.message}
                     </Form.Feedback>
                   )}
@@ -113,21 +113,25 @@ export default function Register() {
                     })}
                   />
                   {isHasPasswordError && (
-                    <Form.Feedback type="invalid">
+                    <Form.Feedback
+                      data-testid="error-password-msg"
+                      type="invalid"
+                    >
                       {errorApi?.password || errors?.password.message}
                     </Form.Feedback>
                   )}
                 </Form.Group>
-                <Button
+                <StyledSubmitBtn
                   size={"small"}
                   variant="primary"
                   className="u-marginRightSmall"
+                  data-testid="register-btn"
                 >
                   <Button.Label>
                     {loading ? <Loader size="small" /> : "Register"}
                   </Button.Label>
-                </Button>
-              </div>
+                </StyledSubmitBtn>
+              </FormGroupWrapper>
             </form>
           </Card.Body>
         </Card>
@@ -135,6 +139,16 @@ export default function Register() {
     </Layout>
   );
 }
+
+const FormGroupWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledSubmitBtn = styled(Button)`
+  margin-left: auto;
+  margin-right: 0;
+`;
 
 const RegisterWrapper = styled.div`
   display: flex;

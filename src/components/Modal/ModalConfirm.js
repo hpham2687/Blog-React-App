@@ -25,6 +25,7 @@ export default function ModalConfirm({
 }) {
   return reactDom.createPortal(
     <Modal
+      data-testid="modal-confirm"
       style={{ width: "80%", margin: "0 auto" }}
       show={show}
       size="small"

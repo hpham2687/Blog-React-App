@@ -12,7 +12,6 @@ import { AUTH_ERROR_MESSAGES } from "constants/Auth/Message";
 export default function Login() {
   const { isLoggedIn, loading, error: errorApi } = useAuth();
   const dispatch = useDispatch();
-
   const {
     register,
     handleSubmit,
@@ -22,6 +21,7 @@ export default function Login() {
   });
 
   const onSubmit = ({ username, password }) => {
+    console.log("click submit");
     dispatch(
       loginAction({
         username,
@@ -42,7 +42,7 @@ export default function Login() {
         <Card style={{ height: "fit-content" }} size={"medium"}>
           <Card.Body>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div>
+              <FormGroupWrapper>
                 <Form.Group controlId="loginForm.username">
                   <Form.Label>Username</Form.Label>
                   <Form.Input
@@ -61,7 +61,10 @@ export default function Login() {
                     })}
                   />
                   {isHasUsernameError && (
-                    <Form.Feedback type="invalid">
+                    <Form.Feedback
+                      data-testid="error-username-msg"
+                      type="invalid"
+                    >
                       {errorApi?.username || errors?.username.message}
                     </Form.Feedback>
                   )}
@@ -84,22 +87,30 @@ export default function Login() {
                     })}
                   />
                   {isHasPasswordError && (
-                    <Form.Feedback type="invalid">
+                    <Form.Feedback
+                      data-testid="error-password-msg"
+                      type="invalid"
+                    >
                       {errorApi?.password || errors?.password.message}
                     </Form.Feedback>
                   )}
                 </Form.Group>
-                <Button
+                <StyledSubmitBtn
+                  data-testid="login-btn"
                   size={"small"}
                   type="submit"
                   variant="primary"
                   className="u-marginRightSmall"
                 >
                   <Button.Label>
-                    {loading ? <Loader size="small" /> : "Login"}
+                    {loading ? (
+                      <Loader aria-label="Loading..." size="small" />
+                    ) : (
+                      "Login"
+                    )}
                   </Button.Label>
-                </Button>
-              </div>
+                </StyledSubmitBtn>
+              </FormGroupWrapper>
             </form>
           </Card.Body>
         </Card>
@@ -107,6 +118,16 @@ export default function Login() {
     </Layout>
   );
 }
+
+const StyledSubmitBtn = styled(Button)`
+  margin-left: auto;
+  margin-right: 0;
+`;
+
+const FormGroupWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const LoginWrapper = styled.div`
   display: flex;

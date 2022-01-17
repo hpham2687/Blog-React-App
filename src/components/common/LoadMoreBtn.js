@@ -12,7 +12,7 @@ export default function LoadMoreBtn({ loading, onLoadMore }) {
     <div style={{ textAlign: "center" }}>
       <StyledButton onClick={onLoadMore} variant="primary">
         <Button.Label>
-          Load more {loading && <Loader size="small" />}
+          Load more {loading && <Loader aria-label="Loading..." size="small" />}
         </Button.Label>
       </StyledButton>
     </div>

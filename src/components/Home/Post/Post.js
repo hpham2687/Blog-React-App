@@ -19,7 +19,6 @@ Post.defaultProps = {};
 
 export default function Post(props) {
   let { id, title, authorName, createdAt, picture, isManagePost } = props;
-  console.log(props);
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const handleClose = () => setShow(false);

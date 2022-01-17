@@ -43,7 +43,7 @@ const userPostsSlice = createSlice({
     data: [],
     items_per_page: 6,
     page: 1,
-    maximunNumOfPages: null,
+    maximumNumOfPages: null,
     loading: false,
     error: null,
   },
@@ -52,15 +52,13 @@ const userPostsSlice = createSlice({
       state.loading = true;
     },
     [getUserPostsAction.fulfilled]: (state, action) => {
-      state.isLoggedIn = true;
       state.loading = false;
       state.data = action.payload.posts;
       state.items_per_page = action.payload.items_per_page;
       state.page = action.payload.page;
-      state.maximunNumOfPages = action.payload.maximunNumOfPages;
+      state.maximumNumOfPages = action.payload.maximumNumOfPages;
     },
     [getUserPostsAction.rejected]: (state, action) => {
-      state.isLoggedIn = false;
       state.loading = false;
       state.data = null;
     },

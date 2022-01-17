@@ -26,16 +26,19 @@ async function client(
     if (!params.search) delete params.search;
     url.search = new URLSearchParams(params).toString();
   }
-  console.log(url);
-
-  return window.fetch(url, config).then(async (response) => {
-    const data = await response.json();
-    if (response.ok) {
-      return data;
-    } else {
-      return Promise.reject(data);
-    }
-  });
+  return window
+    .fetch(url, config)
+    .then(async (response) => {
+      const data = await response.json();
+      if (response.ok) {
+        return data;
+      } else {
+        return Promise.reject(data);
+      }
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
 }
 
 export { client };
