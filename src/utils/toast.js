@@ -1,6 +1,6 @@
 import { toast, Icon } from "@ahaui/react";
 
-const notifyNegative = ({ title = "Alert", message }) =>
+const notifyNegative = ({ title = "Notification", message }) =>
   toast.error(
     () => (
       <div className="u-flex u-flexGrow1">
@@ -16,7 +16,7 @@ const notifyNegative = ({ title = "Alert", message }) =>
     {}
   );
 
-const notifyPositive = ({ title = "Alert", message }) =>
+const notifyPositive = ({ title = "Notification", message }) =>
   toast.info(
     () => (
       <div className="u-flex u-flexGrow1">
