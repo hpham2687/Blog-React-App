@@ -1,17 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 import "@ahaui/css/dist/index.min.css";
 import { ThemeProvider } from "./context/ThemeContext";
-import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import rootReducer from "./store/reducers";
-
-const store = configureStore({
-  reducer: rootReducer,
-});
+import { store } from "./store";
 
 if (process.env.NODE_ENV === "development") {
   const { worker } = require("./mocks/browser");

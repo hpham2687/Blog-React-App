@@ -1,43 +1,47 @@
+import { Avatar, Button, Card, Separator, Tag } from "@ahaui/react";
 import React from "react";
-import { Button, Separator, Avatar, Tag, Card } from "@ahaui/react";
-
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import Layout from "../common/Layout";
-import PostForm from "../Manage/PostForm";
 import styled from "styled-components";
+import { getPostDetail } from "api/postApi";
+import { useAuth } from "hooks/useAuth";
+import Layout from "components/common/Layout";
 import PostDetailSkeleton from "./PostDetailSkeleton";
 
 export default function PostDetail() {
+  const [postData, setPostData] = useState({});
+  const [loading, setLoading] = useState({});
   const { postId } = useParams();
-  let loading;
+  let userId = null;
+  const { user = null } = useAuth();
+  if (user) {
+    console.log("vao day");
+    userId = user?.id;
+  }
+  let { title, content, picture, authorName, createdAt, authorId, id } =
+    postData;
+
+  const isUserPost = userId === authorId;
+
   React.useEffect(() => {
-    // TODO: fetch post detail
-  });
-  let { title, content, picture } = {
-    _id: "lorem lorme lorem mot hai ba boon nam sau",
-    title: "lorem lorme lorem mot hai ba boon nam sau",
-    content:
-      "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator. Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.Reference site about Lorem Ipsum,    ",
-    picture:
-      "https://huwng.files.wordpress.com/2017/10/qxf2-gun-decorator1.jpg",
-  };
-  console.log(postId);
+    async function fetchPostDetail() {
+      setLoading(true);
+      let response = await getPostDetail(postId);
+      setPostData(response);
+      setLoading(false);
+    }
+
+    fetchPostDetail();
+  }, [postId]);
+
   const ThumbnailBackground = styled.div`
     width: 100%;
     min-height: 200px;
     background: url(${picture});
-    background-size: contain;
-    background-repeat: none;
+    background-size: cover;
+    background-repeat: no-repeat;
     position: absolute;
     filter: blur(1px);
-  `;
-  const ThumbnailWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    width: 100%;
-    min-height: 200px;
   `;
   return (
     <Layout>
@@ -66,9 +70,16 @@ export default function PostDetail() {
                   text="KT"
                 />
                 <div className="Card-footer__desc">
-                  <span className="u-block">Kriss pham</span>
-                  <Tag variant="primary">27/2/2021</Tag>
+                  <span className="u-block">{authorName}</span>
+                  <Tag variant="primary">{createdAt}</Tag>
                 </div>
+                {isUserPost && (
+                  <Link style={{ marginLeft: "auto" }} to={`/edit-post/${id}`}>
+                    <StyledViewButton size={"small"} variant="primary">
+                      {"Edit"}
+                    </StyledViewButton>
+                  </Link>
+                )}
               </CardFooterWrapper>
             </StyledCard.Body>
           </StyledCard>
@@ -105,7 +116,7 @@ const CardFooterWrapper = styled.div`
 const PostListWrapper = styled.div`
   flex: 1;
   max-width: 275px;
-  min-width: 275px;
+  min-width: 500px;
   margin: 0 auto;
   max-width: 700px;
 `;
@@ -132,7 +143,23 @@ const StyledCard = styled(Card)`
   }
   .Card-body {
     padding-bottom: 0;
-
     margin-bottom: 16px;
+    p {
+      text-align: left;
+    }
   }
+`;
+
+const ThumbnailWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+`;
+
+const StyledViewButton = styled(Button)`
+  align-self: center;
+  margin-left: auto;
 `;

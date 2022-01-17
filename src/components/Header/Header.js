@@ -2,10 +2,10 @@ import { Header as AhaHeader, Logo, SafeAnchor, Icon } from "@ahaui/react";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useTheme } from "../../context/ThemeContext";
-import { useAuth } from "../../hooks/useAuth";
-import { device } from "../../utils/mediaQuery";
-import SwitchThemeButton from "../Home/SwitchThemeButton";
+import { useTheme } from "context/ThemeContext";
+import { useAuth } from "hooks/useAuth";
+import { device } from "utils/mediaQuery";
+import SwitchThemeButton from "components/Home/SwitchThemeButton";
 import AuthenticatedHeaderRight from "./AuthenticatedHeaderRight";
 import MobileMenu from "./MobileMenu";
 import UnAuthenticatedHeaderRight from "./UnAuthenticatedHeaderRight";
@@ -31,7 +31,6 @@ export default function Header() {
       <StyledAhaHeader
         className={isDarkMode ? "u-backgroundDark" : "u-backgroundWhite"}
       >
-        {/* // TODO ko co cach nao override the a href */}
         <StyledAhaHeader.Brand>
           <Link to="/">
             <Logo

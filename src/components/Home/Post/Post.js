@@ -1,26 +1,38 @@
+import { Avatar, Button, Card, Icon, Separator, Tag } from "@ahaui/react";
 import React, { useState } from "react";
-import { Card, Icon, Separator, Button } from "@ahaui/react";
-import styled from "styled-components";
-import { Tag } from "@ahaui/react";
-import { Avatar } from "@ahaui/react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import ModalConfirm from "../../Modal/ModalConfirm";
+import styled from "styled-components";
+import { removePostAction } from "store/reducers/postsReducer";
+import ModalConfirm from "components/Modal/ModalConfirm";
+import PropTypes from "prop-types"; // ES6
+
+Post.propTypes = {
+  authorId: PropTypes.string,
+  authorName: PropTypes.string,
+  createdAt: PropTypes.string,
+  id: PropTypes.string,
+  picture: PropTypes.string,
+  title: PropTypes.string,
+};
+Post.defaultProps = {};
 
 export default function Post(props) {
-  let { _id, title, content, picture, isManagePost } = props;
-
+  let { id, title, authorName, createdAt, picture, isManagePost } = props;
+  console.log(props);
   const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const onSubmitRemove = () => {
-    console.log("removing " + _id);
+  const onSubmitRemove = async () => {
+    dispatch(removePostAction({ postId: id }));
   };
   return (
     <PostListWrapper>
       {show && (
         <ModalConfirm
-          onSubmitRemove={onSubmitRemove}
+          onConfirm={onSubmitRemove}
           show={show}
           onClose={handleClose}
           setShow={setShow}
@@ -29,7 +41,7 @@ export default function Post(props) {
       <StyledCard>
         <img className="u-maxWidthFull" sizes={"small"} src={picture} alt="" />
         <StyledCard.Body className="Card-body">
-          <p>{content}</p>
+          <p>{title}</p>
         </StyledCard.Body>
         <Separator />
         <StyledCard.Body className="Card-footer">
@@ -37,23 +49,22 @@ export default function Post(props) {
             {!isManagePost && (
               <Avatar
                 className="u-backgroundPrimaryLight u-text200"
-                text="KT"
+                text={authorName.substring(0, 2).toUpperCase()}
               />
             )}
             <div className="Card-footer__desc">
-              {!isManagePost && <span className="u-block">Kriss pham</span>}
-              <Tag variant="primary">27/2/2021</Tag>
+              {!isManagePost && <span className="u-block">{authorName}</span>}
+              <Tag variant="primary">{createdAt}</Tag>
             </div>
 
             <Link
               style={{ marginLeft: "auto" }}
-              to={isManagePost ? `/edit-post/${_id}` : `posts/${_id}`}
+              to={isManagePost ? `/edit-post/${id}` : `posts/${id}`}
             >
               <StyledViewButton size={"small"} variant="primary">
                 {isManagePost ? "Edit" : "View"}
               </StyledViewButton>
             </Link>
-            {/* <Button variant="primary">Button</Button> */}
           </CardFooterWrapper>
         </StyledCard.Body>
         {isManagePost && (
@@ -81,6 +92,7 @@ const CardFooterWrapper = styled.div`
 `;
 
 const PostListWrapper = styled.div`
+  display: flex;
   flex: 1;
   min-width: 275px;
   max-width: 300px;
@@ -93,28 +105,37 @@ const StyledCard = styled(Card)`
   overflow: hidden;
   margin: 16px;
 
+  display: flex;
+  flex-direction: column;
+
   a {
     text-decoration: none;
   }
   img {
     width: 100%;
-
     display: block;
+
+    height: 70%;
   }
   .Card-footer {
     padding: 8px 12px;
   }
   .Card-footer__desc {
     margin: 0px 0px 0px 8px;
+    span {
+      text-align: left;
+    }
   }
   .Card-body {
-    padding-bottom: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    padding-bottom: 4px;
+
     margin-bottom: 16px;
+    p {
+      margin-bottom: 0;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
   }
 `;
 

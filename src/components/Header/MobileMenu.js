@@ -3,7 +3,13 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { logout } from "../../store/reducers/authReducer";
+import { logout } from "store/reducers/authReducer";
+import PropTypes from "prop-types";
+
+MobileMenu.propTypes = {
+  onClose: PropTypes.func,
+  isLoggedIn: PropTypes.bool,
+};
 
 export default function MobileMenu({ onClose, isLoggedIn }) {
   const dispatch = useDispatch();

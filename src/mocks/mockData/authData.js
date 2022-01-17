@@ -28,19 +28,17 @@ async function authenticate({ username, password }) {
   throw error;
 }
 
-async function create({ username, password }) {
+async function create({ email, username, password }) {
   validateUserForm({ username, password });
   const id = hash(username);
   const passwordHash = hash(password);
   if (users[id]) {
-    const error = new Error(
-      `Cannot create a new user with the username "${username}"`
-    );
+    const error = new Error(`User with the username "${username}" is existed`);
     error.status = 400;
     error.custom = 123;
     throw error;
   }
-  users[id] = { id, username, passwordHash };
+  users[id] = { id, email, username, passwordHash };
   persist();
   return read(id);
 }
@@ -58,4 +56,26 @@ function validateUser(id) {
     throw error;
   }
 }
-export { authenticate, create };
+
+const getToken = (req) =>
+  req.headers.get("Authorization")?.replace("Bearer ", "");
+
+async function getUser(req) {
+  const token = getToken(req);
+  if (!token) {
+    const error = new Error("A token must be provided");
+    error.status = 401;
+    throw error;
+  }
+  let userId;
+  try {
+    userId = atob(token);
+  } catch (e) {
+    const error = new Error("Invalid token. Please login again.");
+    error.status = 401;
+    throw error;
+  }
+  const user = await read(userId);
+  return user;
+}
+export { authenticate, create, getUser };

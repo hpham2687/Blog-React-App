@@ -3,25 +3,24 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import styled from "styled-components";
-import Layout from "../common/Layout";
-import { useAuth } from "../../hooks/useAuth";
-import {
-  loginAction,
-  resetErrorAction,
-} from "../../store/reducers/authReducer";
+import Layout from "components/common/Layout";
+import { useAuth } from "hooks/useAuth";
+import { loginAction, resetErrorAction } from "store/reducers/authReducer";
 import { useForm } from "react-hook-form";
-import { AUTH_ERROR_MESSAGES } from "../../constants/Auth/Message";
+import { AUTH_ERROR_MESSAGES } from "constants/Auth/Message";
 
 export default function Login() {
   const { isLoggedIn, loading, error: errorApi } = useAuth();
   const dispatch = useDispatch();
-  console.log({ errorApi });
+
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: "onChange",
+  });
+
   const onSubmit = ({ username, password }) => {
     dispatch(
       loginAction({
@@ -52,6 +51,10 @@ export default function Login() {
                     placeholder="Enter text"
                     {...register("username", {
                       required: AUTH_ERROR_MESSAGES.USERNAME_REQUIRED,
+                      minLength: {
+                        value: 6,
+                        message: AUTH_ERROR_MESSAGES.USERNAME_INVALID_LENGTH,
+                      },
                       onChange: () => {
                         dispatch(resetErrorAction());
                       },
@@ -71,6 +74,10 @@ export default function Login() {
                     placeholder="Enter password"
                     {...register("password", {
                       required: AUTH_ERROR_MESSAGES.PASSWORD_REQUIRED,
+                      minLength: {
+                        value: 6,
+                        message: AUTH_ERROR_MESSAGES.PASSWORD_INVALID_LENGTH,
+                      },
                       onChange: () => {
                         dispatch(resetErrorAction());
                       },

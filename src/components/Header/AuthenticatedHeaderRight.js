@@ -2,7 +2,7 @@ import { Button } from "@ahaui/react";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../../store/reducers/authReducer";
+import { logout } from "store/reducers/authReducer";
 
 export default function AuthenticatedHeaderRight() {
   const dispatch = useDispatch();

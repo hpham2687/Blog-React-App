@@ -1,35 +1,27 @@
 import { Button } from "@ahaui/react";
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import Layout from "../common/Layout";
-import PostForm from "../Manage/PostForm";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { createPostsAction } from "store/reducers/postsReducer";
+import Layout from "components/common/Layout";
+import PostForm from "components/common/PostForm";
 
-export default function AddPost() {
-  let loading;
+export default function AddPost(props) {
+  let history = useNavigate();
   const dispatch = useDispatch();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const [loadingEditPost, setLoadingEditPost] = useState(false);
 
-  const onSubmitAddPost = ({ title, content, image }) => {
-    console.log({
-      title,
-      content,
-      image,
-    });
-    // TODO: Add dispatch action
-    // dispatch(
-    //   loginAction({
-    //     title,
-    //     content,
-    //   })
-    // );
+  const onSubmitAddPost = async (postData) => {
+    setLoadingEditPost(true);
+    dispatch(createPostsAction(postData))
+      .unwrap()
+      .then(() => {
+        history("/manage");
+      })
+      .finally(() => {
+        setLoadingEditPost(false);
+      });
   };
 
   return (
@@ -39,7 +31,11 @@ export default function AddPost() {
           Back
         </Link>
       </BackButton>
-      <PostForm submitText="Add" onSubmit={onSubmitAddPost} />
+      <PostForm
+        loading={loadingEditPost}
+        submitText="Add"
+        onSubmit={onSubmitAddPost}
+      />
     </Layout>
   );
 }

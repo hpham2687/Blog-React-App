@@ -1,22 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { AUTH_SUCCESS_MESSAGES } from "../../constants/Auth/Message";
-import { notifyNegative, notifyPositive } from "../../utils/toast";
-import * as UserApi from "./../../api/userApi";
+import { AUTH_SUCCESS_MESSAGES } from "constants/Auth/Message";
+import { notifyNegative, notifyPositive } from "utils/toast";
+import * as UserApi from "api/userApi";
+
 export const registerAction = createAsyncThunk(
   "auth/register",
-  async ({ username, password }, thunkAPI) => {
+  async ({ email, username, password }, thunkAPI) => {
     try {
-      console.log(`onSubmit register thunk`, { username, password });
-
-      const response = await UserApi.register({ username, password });
-      console.log(response.data);
-      localStorage.setItem("user", JSON.stringify(response.data));
+      const response = await UserApi.register({ email, username, password });
+      console.log({ response });
+      localStorage.setItem("user", JSON.stringify(response));
       notifyPositive({ message: AUTH_SUCCESS_MESSAGES.REGISTER_SUCCESS });
-      return response.data;
+      return response;
     } catch (error) {
       const message = error?.response?.data?.message || "UNKNOWN ERROR";
       notifyNegative({ message: message });
-      // thunkAPI.dispatch(registerFailure(message));
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -26,19 +24,15 @@ export const loginAction = createAsyncThunk(
   "auth/login",
   async ({ username, password }, thunkAPI) => {
     try {
-      console.log("vao thunk login");
-      // thunkAPI.dispatch(loginStart());
       const response = await UserApi.login({ username, password });
-      console.log("vao day login");
-      console.log(response.data);
-      localStorage.setItem("user", JSON.stringify(response.data));
-      notifyPositive({ message: AUTH_SUCCESS_MESSAGES.LOGIN_SUCCESS });
 
-      return response.data;
+      localStorage.setItem("user", JSON.stringify(response));
+      notifyPositive({ message: AUTH_SUCCESS_MESSAGES.LOGIN_SUCCESS });
+      return response;
     } catch (error) {
+      console.log(error);
       const message = error?.response?.data?.message || "UNKNOWN ERROR";
       notifyNegative({ message: message });
-      // thunkAPI.dispatch(loginFailure(message));
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -48,7 +42,6 @@ const user = JSON.parse(localStorage.getItem("user"));
 const initialState = user
   ? { isLoggedIn: true, user }
   : { isLoggedIn: false, user: null };
-// const initialState = { isLoggedIn: true, user: { username: "sfs" } };
 
 const authSlice = createSlice({
   name: "auth",
@@ -75,7 +68,7 @@ const authSlice = createSlice({
       console.log(action.payload);
       state.isLoggedIn = true;
       state.loading = false;
-      state.user = action.payload.user;
+      state.user = action.payload;
     },
     [registerAction.rejected]: (state, action) => {
       state.isLoggedIn = false;
@@ -87,7 +80,7 @@ const authSlice = createSlice({
     [loginAction.fulfilled]: (state, action) => {
       state.isLoggedIn = true;
       state.loading = false;
-      state.user = action.payload.user;
+      state.user = action.payload;
     },
     [loginAction.rejected]: (state, action) => {
       console.log({ actionPayload: action.payload });

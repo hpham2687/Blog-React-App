@@ -1,32 +1,38 @@
-import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import Layout from "../common/Layout";
-import PostForm from "../Manage/PostForm";
 import { Button } from "@ahaui/react";
+import React, { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
+import {
+  EDIT_POST_ERROR_MESSAGES,
+  EDIT_POST_SUCCESS_MESSAGES,
+} from "constants/EditPost/Message";
+import usePostDetail from "hooks/usePostDetail";
+import { notifyNegative, notifyPositive } from "utils/toast";
+import Layout from "components/common/Layout";
+import PostForm from "components/common/PostForm";
+import { editPost } from "api/postApi";
+import EditPostSkeleton from "./EditPostSkeleton";
 
 export default function EditPost() {
   const { postId } = useParams();
-  console.log(postId);
-  let postData = {
-    title: "abcd",
-  };
-  useEffect(() => {
-    // TODO: fetch post detail
-  }, [postId]);
-  const onSubmitEditPost = ({ title, content, image }) => {
-    console.log({
-      title,
-      content,
-      image,
-    });
-    // TODO: Add dispatch action edit
-    // dispatch(
-    //   loginAction({
-    //     title,
-    //     content,
-    //   })
-    // );
+
+  const { postData, loading } = usePostDetail(postId);
+  const [loadingEditPost, setLoadingEditPost] = useState(false);
+
+  const onSubmitEditPost = async (postData) => {
+    setLoadingEditPost(true);
+    editPost({ ...postData, id: postId })
+      .then(() => {
+        notifyPositive({
+          message: EDIT_POST_SUCCESS_MESSAGES.EDIT_POST_SUCCESS,
+        });
+      })
+      .catch((err) => {
+        notifyNegative({ message: EDIT_POST_ERROR_MESSAGES.EDIT_POST_FAIL });
+      })
+      .finally(() => {
+        setLoadingEditPost(false);
+      });
   };
 
   return (
@@ -36,7 +42,13 @@ export default function EditPost() {
           Back
         </Link>
       </BackButton>
-      <PostForm submitText="Edit" data={postData} onSubmit={onSubmitEditPost} />
+      <PostForm
+        loading={loadingEditPost}
+        submitText="Save"
+        data={postData}
+        onSubmit={onSubmitEditPost}
+      />
+      {loading && <EditPostSkeleton />}
     </Layout>
   );
 }
