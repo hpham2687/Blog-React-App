@@ -7,6 +7,7 @@ import { getPostDetail } from "api/postApi";
 import { useAuth } from "hooks/useAuth";
 import Layout from "components/common/Layout";
 import PostDetailSkeleton from "./PostDetailSkeleton";
+import { device } from "utils/mediaQuery";
 
 export default function PostDetail() {
   const [postData, setPostData] = useState({});
@@ -118,6 +119,10 @@ const PostListWrapper = styled.div`
   min-width: 500px;
   margin: 0 auto;
   max-width: 700px;
+  @media ${device.mobileL} {
+    min-width: 70%;
+    margin: 0;
+  }
 `;
 
 const StyledCard = styled(Card)`

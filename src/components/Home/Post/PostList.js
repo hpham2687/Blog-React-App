@@ -41,7 +41,7 @@ const PostListWrapper = styled.div`
   margin-left: -16px;
 
   @media ${device.mobileL} {
-    padding: 0;
+    padding: 4px 12px;
     justify-content: center;
   }
 `;

@@ -173,6 +173,7 @@ export default function PostForm({
 const PostFormWrapper = styled.div`
   display: flex;
   justify-content: center;
+  padding: 12px 8px;
   padding-top: 64px;
   height: calc(100vh - 88px);
   background: url(/assets/images/background.jpeg);

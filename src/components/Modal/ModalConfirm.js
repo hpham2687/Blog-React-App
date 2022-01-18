@@ -56,6 +56,6 @@ export default function ModalConfirm({
 
 const StyledModalHeader = styled(Modal.Header)`
   @media ${device.mobileL} {
-    padding: 10px !important;
+    padding: 10px;
   }
 `;
