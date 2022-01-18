@@ -17,7 +17,5 @@ export const handlers = [
   rest.get("/posts/:postId", getPostDetailCtrl),
   rest.put("/posts/:postId", editUserPostCtrl),
   rest.delete("/posts/:postId", removeUserPostCtrl),
-
-  // Get posts of specific user
   rest.get("/user/posts", getUserPosts),
 ];

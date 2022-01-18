@@ -67,7 +67,6 @@ function validatePost(id) {
 function getArrayFromObjectPosts() {
   load();
   return Object.keys(allPosts).map((key) => ({ ...allPosts[key], id: key }));
-  // return Object.keys(allPosts).map((key) => ({ [key]: allPosts[key] }));
 }
 async function getUserPosts(
   page = 1,
@@ -138,8 +137,4 @@ async function getPosts(page = 1, items_per_page = 6, search = null) {
     maximumNumOfPages,
   };
 }
-// async function read(id) {
-//   validateUser(id);
-//   return sanitizeUser(users[id]);
-// }
 export { getPosts, create, getUserPosts, read, edit, remove };

@@ -35,7 +35,6 @@ test(`logging in displays the manage option, success login message`, async () =>
 
   server.use(
     rest.post(`${apiURL}/${loginEndpoint}`, async (req, res, ctx) => {
-      console.log(req.body);
       return res(ctx.json(mockLoginResult));
     })
   );
@@ -90,7 +89,6 @@ test(`dispay error login message when server is down`, async () => {
 
   server.use(
     rest.post(`${apiURL}/${loginEndpoint}`, async (req, res, ctx) => {
-      console.log(req.body);
       return res(ctx.status(400), ctx.json(mockLoginResult));
     })
   );

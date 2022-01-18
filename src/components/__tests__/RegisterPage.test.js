@@ -1,4 +1,4 @@
-import { act, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { rest, server } from "mocks/test-server";
 import { logout } from "store/authSlice";
@@ -41,7 +41,6 @@ const mockApi = () => {
 
   server.use(
     rest.post(`${apiURL}/${registerEndpoint}`, async (req, res, ctx) => {
-      console.log(req.body);
       return res(ctx.json(mockLoginResult));
     })
   );
@@ -91,7 +90,6 @@ test(`display error register message when server is down`, async () => {
 
   server.use(
     rest.post(`${apiURL}/${registerEndpoint}`, async (req, res, ctx) => {
-      console.log(req.body);
       return res(ctx.status(400), ctx.json(mockLoginResult));
     })
   );

@@ -1,22 +1,7 @@
-import {
-  act,
-  render,
-  screen,
-  waitForElementToBeRemoved,
-} from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import faker from "faker";
 import * as React from "react";
 import PostForm from "../common/PostForm";
-
-// const originalWarn = console.error.bind(console.error);
-
-// beforeAll(() => {
-//   console.error = (msg) => null;
-// });
-// afterAll(() => {
-//   console.error = originalWarn;
-// });
 
 function buildPostForm() {
   return {
@@ -78,22 +63,3 @@ test("should display error message when picture url is in wrong format", async (
     (await screen.findByTestId("error-picture-msg")).textContent
   ).toMatchInlineSnapshot(`"Image url is invalid"`);
 });
-
-// test("should display loading", async () => {
-//   let submitText = "Add";
-//   let loading = false;
-//   const onSubmitAdd = jest.fn();
-//   render(<PostForm  submitText={submitText} onSubmit={onSubmitAdd} />);
-
-//   const titleTextBox = screen.getByRole("textbox", { name: /title/i });
-//   const contentTextBox = screen.getByRole("textbox", { name: /content/i });
-
-//   const { title, content } = buildPostForm();
-//   await act(() => userEvent.type(titleTextBox, title));
-//   await act(() => userEvent.type(contentTextBox, content));
-//   await act(async () => await userEvent.click(screen.getByText(/Add/i)));
-//   screen.debug();
-//   expect(screen.getByLabelText(/loading/i)).toBeInTheDocument();
-
-//   // await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
-// });

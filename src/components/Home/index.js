@@ -15,11 +15,7 @@ export default function Home() {
   const { data, loading, error, page, maximumNumOfPages } = useSelector(
     (state) => state.posts
   );
-  if (data[0]?.title == "post title demo show load more btn") {
-    console.log({ data, loading, page, maximumNumOfPages });
-  }
   const { isLoggedIn } = useSelector((state) => state.auth);
-
   const canLoadMore = page < maximumNumOfPages;
   const onLoadMore = () => {
     dispatch(loadMorePostsAction({}));

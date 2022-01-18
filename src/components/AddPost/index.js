@@ -27,6 +27,7 @@ export default function AddPost(props) {
         notifyPositive({ message: ADD_POST_SUCCESS_MESSAGES.ADD_POST_SUCCESS });
       })
       .catch((error) => {
+        setLoadingEditPost(false);
         notifyNegative({ message: ADD_POST_ERROR_MESSAGES.ADD_POST_FAIL });
       });
   };

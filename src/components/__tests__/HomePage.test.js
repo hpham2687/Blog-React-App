@@ -223,7 +223,6 @@ test("execute search when type in search box", async () => {
   server.use(
     rest.get(`${apiURL}/${endpoint}`, async (req, res, ctx) => {
       let search = req.url.searchParams.get("search");
-      console.log({ search });
       if (!search) {
         return res(ctx.json(mockPostsInitial));
       }
@@ -238,7 +237,6 @@ test("execute search when type in search box", async () => {
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
 
   userEvent.type(searchBox, "title 1");
-  console.log(searchBox.value);
   // assert new post to be added
   expect(
     await screen.findByText(mockPostsSearch.posts[0].title)

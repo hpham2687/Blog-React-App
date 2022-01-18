@@ -37,7 +37,6 @@ export default function PostForm({
     mode: "onChange",
     defaultValues: data,
   });
-  console.log({ data });
 
   useEffect(() => {
     reset(data);

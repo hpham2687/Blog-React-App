@@ -64,8 +64,7 @@ const Logo = styled.span`
   font-weight: 400;
   ${({ isDarkMode }) =>
     isDarkMode &&
-    `
-    color: white!important;
+    `color: white;
   `}
 `;
 const StyledAhaHeader = styled(AhaHeader)`

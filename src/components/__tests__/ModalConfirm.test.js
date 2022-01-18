@@ -129,20 +129,3 @@ test("Success message notification when  click confirm remove post button", asyn
 
   expect(await screen.findByText(/delete post/i)).toBeInTheDocument();
 });
-
-// test("hide the modal when show props equal false", async () => {
-//   let show = false;
-//   const handleClose = jest.fn();
-//   const onSubmitRemove = jest.fn();
-
-//   render(
-//     <ModalConfirm
-//       show={show}
-//       handleClose={handleClose}
-//       onConfirm={onSubmitRemove}
-//       setShow={() => {}}
-//     />
-//   );
-//   expect(screen.queryByTestId("modal-confirm")).not.toBeInTheDocument();
-//   // screen.debug();
-// });

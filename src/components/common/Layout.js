@@ -28,6 +28,7 @@ export default function Layout({ children }) {
 const StyledPageFooter = styled(PageLayout.Footer)`
   .footer-content {
     text-align: center;
+    color: var(--colorPrimary);
   }
 `;
 const StyledPageLayoutBody = styled(PageLayout.Body)`

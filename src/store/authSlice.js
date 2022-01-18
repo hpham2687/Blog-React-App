@@ -1,13 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { AUTH_SUCCESS_MESSAGES } from "constants/Auth/Message";
-import { notifyNegative, notifyPositive } from "utils/toast";
 import * as UserApi from "api/userApi";
 
 export const registerAction = createAsyncThunk(
   "auth/register",
   async ({ email, username, password }, thunkAPI) => {
     return UserApi.register({ email, username, password }).catch((error) => {
-      console.log(error);
       const message =
         error?.response?.data?.message || error?.message || "UNKNOWN ERROR";
       return thunkAPI.rejectWithValue(message);
@@ -53,7 +50,6 @@ const authSlice = createSlice({
       state.loading = true;
     },
     [registerAction.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.isLoggedIn = true;
       state.loading = false;
       state.user = action.payload;
@@ -71,7 +67,6 @@ const authSlice = createSlice({
       state.user = action.payload;
     },
     [loginAction.rejected]: (state, action) => {
-      console.log({ actionPayload: action.payload });
       state.isLoggedIn = false;
       state.loading = false;
       state.error = action.payload;
