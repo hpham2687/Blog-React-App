@@ -210,10 +210,10 @@ test("create new post", async () => {
   expect(
     (await screen.findByTestId("toast-alert")).textContent
   ).toMatchInlineSnapshot(`"Login Successfully"`);
-  // expect page to be redirected to /
-  // expect alert manage button to be show
+  // expect loading to be removed
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
   userEvent.click(await screen.findByText(/manage posts/i));
+  // expect page to be redirected to /
   expect(global.window.location.pathname).toEqual("/manage");
   expect(await screen.findByText("post title user posts")).toBeInTheDocument();
 

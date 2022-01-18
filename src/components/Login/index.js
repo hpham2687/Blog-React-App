@@ -7,7 +7,11 @@ import Layout from "components/common/Layout";
 import { useAuth } from "hooks/useAuth";
 import { loginAction, resetErrorAction } from "store/authSlice";
 import { useForm } from "react-hook-form";
-import { AUTH_ERROR_MESSAGES } from "constants/Auth/Message";
+import {
+  AUTH_ERROR_MESSAGES,
+  AUTH_SUCCESS_MESSAGES,
+} from "constants/Auth/Message";
+import { notifyNegative, notifyPositive } from "utils/toast";
 
 export default function Login() {
   const { isLoggedIn, loading, error: errorApi } = useAuth();
@@ -21,13 +25,19 @@ export default function Login() {
   });
 
   const onSubmit = ({ username, password }) => {
-    console.log("click submit");
     dispatch(
       loginAction({
         username,
         password,
       })
-    );
+    ).then((response) => {
+      const isError = response?.type !== "auth/login/fulfilled";
+      if (isError) {
+        return notifyNegative({ message: response?.payload });
+      }
+      localStorage.setItem("user", JSON.stringify(response.payload));
+      notifyPositive({ message: AUTH_SUCCESS_MESSAGES.LOGIN_SUCCESS });
+    });
   };
 
   if (isLoggedIn) {

@@ -1,30 +1,22 @@
 /* eslint-disable no-empty-pattern */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { notifyNegative, notifyPositive } from "utils/toast";
 import * as PostApi from "api/postApi";
 import * as UserApi from "api/userApi";
-import { ADD_POST_SUCCESS_MESSAGES } from "constants/AddPost/Message";
+import { notifyNegative, notifyPositive } from "utils/toast";
 import { getUserPostsAction } from "./userPostsSlice";
-import { ADD_POST_ERROR_MESSAGES } from "../constants/AddPost/Message";
 
 export const createPostsAction = createAsyncThunk(
   "posts/createPosts",
   async (postData, thunkAPI) => {
-    return PostApi.createPost(postData)
-      .then((response) => {
-        notifyPositive({ message: ADD_POST_SUCCESS_MESSAGES.ADD_POST_SUCCESS });
-        return response;
-      })
-      .catch((error) => {
-        const message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        notifyNegative({ message: ADD_POST_ERROR_MESSAGES.ADD_POST_FAIL });
-        return thunkAPI.rejectWithValue(message);
-      });
+    return PostApi.createPost(postData).catch((error) => {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    });
   }
 );
 
@@ -33,7 +25,6 @@ export const removePostAction = createAsyncThunk(
   async ({ postId }, thunkAPI) => {
     return PostApi.removePost(postId)
       .then((response) => {
-        notifyPositive({ message: `Delete post ${postId} successfully.` });
         thunkAPI.dispatch(getUserPostsAction({ page: 1, items_per_page: 6 }));
         return response;
       })
@@ -44,7 +35,6 @@ export const removePostAction = createAsyncThunk(
             error.response.data.message) ||
           error.message ||
           error.toString();
-        notifyNegative({ message });
         return thunkAPI.rejectWithValue(message);
       });
   }
@@ -87,6 +77,7 @@ export const loadMorePostsAction = createAsyncThunk(
     });
   }
 );
+
 const initialState = {
   data: [],
   items_per_page: 6,
@@ -96,6 +87,7 @@ const initialState = {
   error: null,
   loading: false,
 };
+
 const postsSlice = createSlice({
   name: "posts",
   initialState,

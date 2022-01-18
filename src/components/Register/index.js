@@ -4,10 +4,14 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import styled from "styled-components";
-import { AUTH_ERROR_MESSAGES } from "constants/Auth/Message";
+import {
+  AUTH_ERROR_MESSAGES,
+  AUTH_SUCCESS_MESSAGES,
+} from "constants/Auth/Message";
 import { useAuth } from "hooks/useAuth";
 import { registerAction, resetErrorAction } from "store/authSlice";
 import Layout from "components/common/Layout";
+import { notifyNegative, notifyPositive } from "utils/toast";
 
 export default function Register() {
   const { isLoggedIn, loading, error: errorApi } = useAuth();
@@ -28,7 +32,14 @@ export default function Register() {
         username,
         password,
       })
-    );
+    ).then((response) => {
+      const isError = response?.type !== "auth/register/fulfilled";
+      if (isError) {
+        return notifyNegative({ message: response?.payload });
+      }
+      localStorage.setItem("user", JSON.stringify(response.payload));
+      notifyPositive({ message: AUTH_SUCCESS_MESSAGES.REGISTER_SUCCESS });
+    });
   };
 
   if (isLoggedIn) {

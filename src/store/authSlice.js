@@ -6,39 +6,23 @@ import * as UserApi from "api/userApi";
 export const registerAction = createAsyncThunk(
   "auth/register",
   async ({ email, username, password }, thunkAPI) => {
-    return UserApi.register({ email, username, password })
-      .then((response) => {
-        console.log(response);
-        localStorage.setItem("user", JSON.stringify(response));
-        notifyPositive({ message: AUTH_SUCCESS_MESSAGES.REGISTER_SUCCESS });
-        return response;
-      })
-      .catch((error) => {
-        console.log(error);
-        const message = error?.response?.data?.message || "UNKNOWN ERROR";
-        notifyNegative({ message: message });
-        return thunkAPI.rejectWithValue(message);
-      });
+    return UserApi.register({ email, username, password }).catch((error) => {
+      console.log(error);
+      const message =
+        error?.response?.data?.message || error?.message || "UNKNOWN ERROR";
+      return thunkAPI.rejectWithValue(message);
+    });
   }
 );
 
 export const loginAction = createAsyncThunk(
   "auth/login",
   async ({ username, password }, thunkAPI) => {
-    return UserApi.login({ username, password })
-      .then((response) => {
-        console.log("vao login");
-        console.log({ response });
-        localStorage.setItem("user", JSON.stringify(response));
-        notifyPositive({ message: AUTH_SUCCESS_MESSAGES.LOGIN_SUCCESS });
-        return response;
-      })
-      .catch((error) => {
-        console.log("vao error");
-        const message = error?.response?.data?.message || "UNKNOWN ERROR";
-        notifyNegative({ message: message });
-        return thunkAPI.rejectWithValue(message);
-      });
+    return UserApi.login({ username, password }).catch((error) => {
+      const message =
+        error?.response?.data?.message || error?.message || "UNKNOWN ERROR";
+      return thunkAPI.rejectWithValue(message);
+    });
   }
 );
 

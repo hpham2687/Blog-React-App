@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { removePostAction } from "store/postsSlice";
 import ModalConfirm from "components/Modal/ModalConfirm";
 import PropTypes from "prop-types"; // ES6
+import { notifyNegative, notifyPositive } from "utils/toast";
 
 Post.propTypes = {
   authorId: PropTypes.string,
@@ -25,7 +26,13 @@ export default function Post(props) {
   const handleShow = () => setShow(true);
 
   const onSubmitRemove = async () => {
-    dispatch(removePostAction({ postId: id }));
+    dispatch(removePostAction({ postId: id })).then((response) => {
+      const isError = response?.type !== "posts/removePost/fulfilled";
+      if (isError) {
+        return notifyNegative({ message: response?.payload });
+      }
+      notifyPositive({ message: `Delete post ${id} successfully.` });
+    });
   };
   return (
     <PostListWrapper>
