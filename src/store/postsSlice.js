@@ -2,7 +2,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as PostApi from "api/postApi";
 import * as UserApi from "api/userApi";
-import { notifyNegative, notifyPositive } from "utils/toast";
 import { getUserPostsAction } from "./userPostsSlice";
 
 export const createPostsAction = createAsyncThunk(
