@@ -30,14 +30,15 @@ export default function Login() {
         username,
         password,
       })
-    ).then((response) => {
-      const isError = response?.type !== "auth/login/fulfilled";
-      if (isError) {
-        return notifyNegative({ message: response?.payload });
-      }
-      localStorage.setItem("user", JSON.stringify(response.payload));
-      notifyPositive({ message: AUTH_SUCCESS_MESSAGES.LOGIN_SUCCESS });
-    });
+    )
+      .unwrap()
+      .then((response) => {
+        localStorage.setItem("user", JSON.stringify(response.payload));
+        notifyPositive({ message: AUTH_SUCCESS_MESSAGES.LOGIN_SUCCESS });
+      })
+      .catch((error) => {
+        return notifyNegative({ message: error });
+      });
   };
 
   if (isLoggedIn) {
