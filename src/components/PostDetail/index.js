@@ -1,38 +1,26 @@
 import { Avatar, Button, Card, Separator, Tag } from "@ahaui/react";
+import Layout from "components/common/Layout";
+import { useAuth } from "hooks/useAuth";
+import usePostDetail from "hooks/usePostDetail";
 import React from "react";
-import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getPostDetail } from "api/postApi";
-import { useAuth } from "hooks/useAuth";
-import Layout from "components/common/Layout";
-import PostDetailSkeleton from "./PostDetailSkeleton";
 import { device } from "utils/mediaQuery";
+import PostDetailSkeleton from "./PostDetailSkeleton";
 
 export default function PostDetail() {
-  const [postData, setPostData] = useState({});
-  const [loading, setLoading] = useState({});
   const { postId } = useParams();
+  const { postData, loading } = usePostDetail(postId);
+
   let userId = null;
   const { user = null } = useAuth();
   if (user) {
     userId = user?.id;
   }
   let { title, content, picture, authorName, createdAt, authorId, id } =
-    postData;
+    postData || {};
 
   const isUserPost = userId === authorId;
-
-  React.useEffect(() => {
-    async function fetchPostDetail() {
-      setLoading(true);
-      let response = await getPostDetail(postId);
-      setPostData(response);
-      setLoading(false);
-    }
-
-    fetchPostDetail();
-  }, [postId]);
 
   const ThumbnailBackground = styled.div`
     width: 100%;
@@ -43,6 +31,7 @@ export default function PostDetail() {
     position: absolute;
     filter: blur(1px);
   `;
+
   return (
     <Layout>
       <BackButton variant="primary">
@@ -53,7 +42,7 @@ export default function PostDetail() {
       <PostListWrapper>
         {loading ? (
           <PostDetailSkeleton />
-        ) : (
+        ) : postData ? (
           <StyledCard>
             <ThumbnailWrapper>
               <ThumbnailBackground></ThumbnailBackground>
@@ -83,16 +72,21 @@ export default function PostDetail() {
               </CardFooterWrapper>
             </StyledCard.Body>
           </StyledCard>
+        ) : (
+          <StyledNotExist>Post does not exist!</StyledNotExist>
         )}
       </PostListWrapper>
     </Layout>
   );
 }
-
+const StyledNotExist = styled.p`
+  margin: 12px auto;
+  text-align: center;
+`;
 const ThumbnailTitle = styled.div`
   font-weight: 500;
   font-size: 1.6rem;
-  z-index: 100;
+  z-index: 30;
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.6); /* Black w/opacity/see-through */
   border: 3px solid #f1f1f1;
