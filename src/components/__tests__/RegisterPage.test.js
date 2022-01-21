@@ -67,15 +67,15 @@ test(`register in displays the manage option, success register message`, async (
   userEvent.click(screen.getByTestId("register-btn"));
 
   // expect loading to be show
-  expect(
-    await screen.findByRole("button", {
-      name: /loading/i,
-    })
-  ).toBeInTheDocument();
+
+  await screen.findByRole("button", {
+    name: /loading/i,
+  });
+
   // expect alert success message to be show
-  expect(
-    (await screen.findByTestId("toast-alert")).textContent
-  ).toMatchInlineSnapshot(`"Register Successfully"`);
+  expect((await screen.findByTestId("toast-alert")).textContent).toBe(
+    "Register Successfully"
+  );
   // expect page to be redirected to /
   expect(global.window.location.pathname).toEqual("/");
   // expect alert manage button to be show
@@ -113,11 +113,11 @@ test(`display error register message when server is down`, async () => {
   userEvent.click(screen.getByTestId("register-btn"));
 
   // expect loading to be show
-  expect(
-    await screen.findByRole("button", {
-      name: /loading/i,
-    })
-  ).toBeInTheDocument();
+
+  await screen.findByRole("button", {
+    name: /loading/i,
+  });
+
   // expect alert success message to be show
   expect(
     (await screen.findByTestId("toast-alert")).textContent

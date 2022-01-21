@@ -101,31 +101,31 @@ test("Success message notification when  click confirm remove post button", asyn
   act(() => userEvent.click(screen.getByTestId("login-btn")));
 
   // expect loading to be show
-  expect(
-    await screen.findByRole("button", {
-      name: /loading/i,
-    })
-  ).toBeInTheDocument();
+
+  await screen.findByRole("button", {
+    name: /loading/i,
+  });
+
   // expect alert success message to be show
-  expect(
-    (await screen.findByTestId("toast-alert")).textContent
-  ).toMatchInlineSnapshot(`"Login Successfully"`);
+  expect((await screen.findByTestId("toast-alert")).textContent).toBe(
+    "Login Successfully"
+  );
   // expect page to be redirected to /
   // expect alert manage button to be show
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
   userEvent.click(await screen.findByText(/manage posts/i));
   expect(global.window.location.pathname).toEqual("/manage");
-  expect(await screen.findByText("post title user posts")).toBeInTheDocument();
+  await screen.findByText("post title user posts");
   const removeIcon = container.querySelector(
     "#page-container-body .remove-icon"
   );
   userEvent.click(removeIcon);
-  expect(await screen.findByTestId("modal-confirm")).toBeInTheDocument();
+  await screen.findByTestId("modal-confirm");
 
   const yesButton = screen.getByRole("button", {
     name: /yes/i,
   });
   userEvent.click(yesButton);
 
-  expect(await screen.findByText(/delete post/i)).toBeInTheDocument();
+  await screen.findByText(/delete post/i);
 });

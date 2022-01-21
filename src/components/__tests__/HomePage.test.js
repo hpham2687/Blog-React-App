@@ -36,7 +36,7 @@ test("show message no post to show when posts are empty", async () => {
 
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
 
-  expect(screen.getByText("No posts to show.")).toBeInTheDocument();
+  screen.getByText("No posts to show.");
 });
 
 test("show posts list to view", async () => {
@@ -68,7 +68,7 @@ test("show posts list to view", async () => {
 
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
 
-  expect(screen.getByText("post title demo")).toBeInTheDocument();
+  screen.getByText("post title demo");
 });
 
 test("show load more button when page less than maximum number of pages", async () => {
@@ -99,11 +99,9 @@ test("show load more button when page less than maximum number of pages", async 
   renderWithWrapper(<Home />);
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
 
-  expect(
-    screen.getByRole("button", {
-      name: /load more/i,
-    })
-  ).toBeInTheDocument();
+  screen.getByRole("button", {
+    name: /load more/i,
+  });
 });
 
 test("load more posts when click load more button", async () => {
@@ -156,15 +154,14 @@ test("load more posts when click load more button", async () => {
 
   renderWithWrapper(<Home />);
   // assert loading to be removed
-  expect(screen.getByLabelText(/loading/i)).toBeInTheDocument();
+  screen.getByLabelText(/loading/i);
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
 
   // assert load more button to be existed
-  expect(
-    screen.getByRole("button", {
-      name: /load more/i,
-    })
-  ).toBeInTheDocument();
+
+  screen.getByRole("button", {
+    name: /load more/i,
+  });
 
   userEvent.click(
     screen.getByRole("button", {
@@ -173,13 +170,12 @@ test("load more posts when click load more button", async () => {
   );
 
   // assert loading icon in load more button to be removed
-  expect(screen.getByLabelText(/loading/i)).toBeInTheDocument();
+  screen.getByLabelText(/loading/i);
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
 
   // assert new post to be added
-  expect(
-    await screen.findByText(mockPostsLoadMore.posts[0].title)
-  ).toBeInTheDocument();
+
+  await screen.findByText(mockPostsLoadMore.posts[0].title);
 
   expect(window.HTMLElement.prototype.scrollIntoView).toBeCalled();
 });
@@ -233,14 +229,13 @@ test("execute search when type in search box", async () => {
   renderWithWrapper(<Home />);
   const searchBox = screen.getByRole("searchbox");
   // assert loading to be removed
-  expect(screen.getByLabelText(/loading/i)).toBeInTheDocument();
+  screen.getByLabelText(/loading/i);
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
 
   userEvent.type(searchBox, "title 1");
   // assert new post to be added
-  expect(
-    await screen.findByText(mockPostsSearch.posts[0].title)
-  ).toBeInTheDocument();
+
+  await screen.findByText(mockPostsSearch.posts[0].title);
 });
 
 test("click add post icon and redirect to add post page", async () => {
@@ -271,7 +266,7 @@ test("click add post icon and redirect to add post page", async () => {
   // assert loading to be removed
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
 
-  expect(screen.getByLabelText(/add-icon-btn/i)).toBeInTheDocument();
+  screen.getByLabelText(/add-icon-btn/i);
   userEvent.click(screen.getByLabelText(/add-icon-btn/i));
   expect(global.window.location.pathname).toEqual("/add-post");
 });

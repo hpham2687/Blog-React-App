@@ -52,15 +52,15 @@ test(`logging in displays the manage option, success login message`, async () =>
   act(() => userEvent.click(screen.getByTestId("login-btn")));
 
   // expect loading to be show
-  expect(
-    await screen.findByRole("button", {
-      name: /loading/i,
-    })
-  ).toBeInTheDocument();
+
+  await screen.findByRole("button", {
+    name: /loading/i,
+  });
+
   // expect alert success message to be show
-  expect(
-    (await screen.findByTestId("toast-alert")).textContent
-  ).toMatchInlineSnapshot(`"Login Successfully"`);
+  expect((await screen.findByTestId("toast-alert")).textContent).toBe(
+    "Login Successfully"
+  );
   // expect page to be redirected to /
   expect(global.window.location.pathname).toEqual("/");
   // expect alert manage button to be show
@@ -106,11 +106,9 @@ test(`dispay error login message when server is down`, async () => {
   act(() => userEvent.click(screen.getByTestId("login-btn")));
 
   // expect loading to be show
-  expect(
-    await screen.findByRole("button", {
-      name: /loading/i,
-    })
-  ).toBeInTheDocument();
+  await screen.findByRole("button", {
+    name: /loading/i,
+  });
   // expect alert success message to be show
   expect(
     (await screen.findByTestId("toast-alert")).textContent

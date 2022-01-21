@@ -127,21 +127,20 @@ test("show list post of user", async () => {
   act(() => userEvent.click(screen.getByTestId("login-btn")));
 
   // expect loading to be show
-  expect(
-    await screen.findByRole("button", {
-      name: /loading/i,
-    })
-  ).toBeInTheDocument();
+
+  await screen.findByRole("button", {
+    name: /loading/i,
+  });
   // expect alert success message to be show
-  expect(
-    (await screen.findByTestId("toast-alert")).textContent
-  ).toMatchInlineSnapshot(`"Login Successfully"`);
+  expect((await screen.findByTestId("toast-alert")).textContent).toBe(
+    "Login Successfully"
+  );
   // expect page to be redirected to /
-  // expect alert manage button to be show
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
+  // expect manage button to be show
   userEvent.click(await screen.findByText(/manage posts/i));
   expect(global.window.location.pathname).toEqual("/manage");
-  expect(await screen.findByText("post title user posts")).toBeInTheDocument();
+  await screen.findByText("post title user posts");
 
   userEvent.click(
     screen.getByRole("button", {
@@ -150,12 +149,12 @@ test("show list post of user", async () => {
   );
 
   // assert loading icon in load more button to be removed
-  expect(screen.getByLabelText(/loading/i)).toBeInTheDocument();
+  screen.getByLabelText(/loading/i);
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
   // assert new post to be added
-  expect(
-    await screen.findByText("post title user posts load more 2")
-  ).toBeInTheDocument();
+
+  await screen.findByText("post title user posts load more 2");
+
   screen.debug(undefined, 3000000);
 });
 
@@ -201,21 +200,20 @@ test("create new post", async () => {
   act(() => userEvent.click(screen.getByTestId("login-btn")));
 
   // expect loading to be show
-  expect(
-    await screen.findByRole("button", {
-      name: /loading/i,
-    })
-  ).toBeInTheDocument();
+  await screen.findByRole("button", {
+    name: /loading/i,
+  });
+
   // expect alert success message to be show
-  expect(
-    (await screen.findByTestId("toast-alert")).textContent
-  ).toMatchInlineSnapshot(`"Login Successfully"`);
+  expect((await screen.findByTestId("toast-alert")).textContent).toBe(
+    "Login Successfully"
+  );
   // expect loading to be removed
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
   userEvent.click(await screen.findByText(/manage posts/i));
   // expect page to be redirected to /
   expect(global.window.location.pathname).toEqual("/manage");
-  expect(await screen.findByText("post title user posts")).toBeInTheDocument();
+  await screen.findByText("post title user posts");
 
   userEvent.click(
     screen.getByRole("button", {
@@ -224,15 +222,13 @@ test("create new post", async () => {
   );
 
   // assert loading icon in load more button to be removed
-  expect(screen.getByLabelText(/loading/i)).toBeInTheDocument();
+  screen.getByLabelText(/loading/i);
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
   userEvent.click(screen.getByTestId("add-icon-btn"));
 
-  expect(
-    await screen.findByRole("button", {
-      name: /add/i,
-    })
-  ).toBeInTheDocument();
+  await screen.findByRole("button", {
+    name: /add/i,
+  });
 
   const titleTextBox = await screen.findByRole("textbox", { name: /title/i });
   const contentTextBox = await screen.findByRole("textbox", {
@@ -243,7 +239,7 @@ test("create new post", async () => {
   userEvent.type(contentTextBox, mockCreatePostResult.post.content);
   userEvent.click(screen.getByText(/Add/i));
 
-  expect(await screen.findByText(/add post successfully/i)).toBeInTheDocument();
+  await screen.findByText(/add post successfully/i);
 });
 
 test("show success message when edit post of user", async () => {
@@ -305,21 +301,21 @@ test("show success message when edit post of user", async () => {
   act(() => userEvent.click(screen.getByTestId("login-btn")));
 
   // expect loading to be show
-  expect(
-    await screen.findByRole("button", {
-      name: /loading/i,
-    })
-  ).toBeInTheDocument();
+
+  await screen.findByRole("button", {
+    name: /loading/i,
+  });
+
   // expect alert success message to be show
-  expect(
-    (await screen.findByTestId("toast-alert")).textContent
-  ).toMatchInlineSnapshot(`"Login Successfully"`);
+  expect((await screen.findByTestId("toast-alert")).textContent).toBe(
+    "Login Successfully"
+  );
   // expect page to be redirected to /
-  // expect alert manage button to be show
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
+  // expect manage button to be show
   userEvent.click(await screen.findByText(/manage posts/i));
   expect(global.window.location.pathname).toEqual("/manage");
-  expect(await screen.findByText("post title user posts")).toBeInTheDocument();
+  await screen.findByText("post title user posts");
 
   userEvent.click(
     screen.getByRole("button", {
@@ -328,21 +324,21 @@ test("show success message when edit post of user", async () => {
   );
 
   // assert loading icon in load more button to be removed
-  expect(screen.getByLabelText(/loading/i)).toBeInTheDocument();
+  screen.getByLabelText(/loading/i);
+
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
   // assert new post to be added
-  expect(
-    await screen.findByText("post title user posts load more 2")
-  ).toBeInTheDocument();
+
+  await screen.findByText("post title user posts load more 2");
 
   const editBtn = screen.getAllByRole("button", { name: /edit/i })[0];
   userEvent.click(editBtn);
-  expect(await screen.findByLabelText(/loading/i)).toBeInTheDocument();
+  await screen.findByLabelText(/loading/i);
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i));
   // expect initial post data is loaded
-  expect(
-    screen.getByText(/post content demo post content demo post /i)
-  ).toBeInTheDocument();
+
+  screen.getByText(/post content demo post content demo post /i);
+
   // change the title
   const newTitle = "post title demo to edited";
   userEvent.type(screen.getByRole("textbox", { name: /title/i }), newTitle);
@@ -352,7 +348,7 @@ test("show success message when edit post of user", async () => {
     })
   );
 
-  expect(
-    (await screen.findByText(/edit post successfully/i)).textContent
-  ).toMatchInlineSnapshot(`"Edit post successfully"`);
+  expect((await screen.findByText(/edit post successfully/i)).textContent).toBe(
+    "Edit post successfully"
+  );
 });

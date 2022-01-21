@@ -22,13 +22,13 @@ test("should display error message when input is too short", async () => {
   userEvent.type(contentTextBox, "dsf");
   userEvent.click(screen.getByText(/Add/i));
 
-  expect(
-    (await screen.findByTestId("error-title-msg")).textContent
-  ).toMatchInlineSnapshot(`"Title is too short."`);
+  expect((await screen.findByTestId("error-title-msg")).textContent).toBe(
+    "Title is too short."
+  );
 
-  expect(
-    (await screen.findByTestId("error-content-msg")).textContent
-  ).toMatchInlineSnapshot(`"Content is too short."`);
+  expect((await screen.findByTestId("error-content-msg")).textContent).toBe(
+    "Content is too short."
+  );
 });
 
 test("should call onSubmit function when click Add button", async () => {
@@ -59,7 +59,7 @@ test("should display error message when picture url is in wrong format", async (
   userEvent.type(pictureTextBox, pictureUrl);
   userEvent.click(screen.getByText(/Add/i));
 
-  expect(
-    (await screen.findByTestId("error-picture-msg")).textContent
-  ).toMatchInlineSnapshot(`"Image url is invalid"`);
+  expect((await screen.findByTestId("error-picture-msg")).textContent).toBe(
+    "Image url is invalid"
+  );
 });

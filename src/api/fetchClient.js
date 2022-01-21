@@ -38,7 +38,15 @@ async function client(
       }
     })
     .catch((error) => {
-      return Promise.reject(error);
+      console.log("vao error");
+      console.log({ error });
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        "UNKNOWN ERROR";
+      return Promise.reject(message);
     });
 }
 
