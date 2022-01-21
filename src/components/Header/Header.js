@@ -22,12 +22,11 @@ export default function Header() {
   );
   return (
     <>
-      {isOpenMobileMenu && (
-        <MobileMenu
-          onClose={() => setIsOpenMobileMenu(false)}
-          isLoggedIn={isLoggedIn}
-        />
-      )}
+      <MobileMenu
+        isOpenMobileMenu={isOpenMobileMenu}
+        onClose={() => setIsOpenMobileMenu(false)}
+        isLoggedIn={isLoggedIn}
+      />
       <StyledAhaHeader
         data-testid="header"
         className={isDarkMode ? "u-backgroundDark" : "u-backgroundWhite"}
