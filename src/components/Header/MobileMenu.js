@@ -51,6 +51,7 @@ const CloseMenuIcon = styled(Icon)`
   right: 10px;
   top: 10px;
   cursor: pointer;
+  color: black;
 `;
 
 const MobileMenuWrapper = styled.div`
