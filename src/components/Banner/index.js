@@ -13,9 +13,9 @@ export default function Banner() {
 
   const debouncedCallApi = useRef(
     debounce(
-      (searchValute) =>
+      (searchValue) =>
         dispatch(
-          getPostsAction({ page: 1, items_per_page, search: searchValute })
+          getPostsAction({ page: 1, items_per_page, search: searchValue })
         ),
       400
     )
