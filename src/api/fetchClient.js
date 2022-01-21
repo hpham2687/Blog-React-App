@@ -22,10 +22,11 @@ async function client(
     ...customConfig,
   };
   var url = new URL(`${apiURL}/${endpoint}`);
+
   if (params) {
-    if (!params.search) delete params.search;
     url.search = new URLSearchParams(params).toString();
   }
+
   return window
     .fetch(url, config)
     .then(async (response) => {
