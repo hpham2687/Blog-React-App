@@ -154,8 +154,6 @@ test("show list post of user", async () => {
   // assert new post to be added
 
   await screen.findByText("post title user posts load more 2");
-
-  screen.debug(undefined, 3000000);
 });
 
 test("create new post", async () => {
