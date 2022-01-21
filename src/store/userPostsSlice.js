@@ -38,7 +38,7 @@ export const loadMoreUserPostsAction = createAsyncThunk(
 );
 const initialState = {
   data: [],
-  items_per_page: 6,
+  items_per_page: 10,
   page: 1,
   maximumNumOfPages: null,
   loading: false,
