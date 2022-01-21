@@ -8,6 +8,7 @@ import ModalConfirm from "components/Modal/ModalConfirm";
 import PropTypes from "prop-types"; // ES6
 import { notifyNegative, notifyPositive } from "utils/toast";
 import { useTheme } from "context/ThemeContext";
+import { getUserPostsAction } from "store/userPostsSlice";
 
 Post.propTypes = {
   authorId: PropTypes.string,
@@ -31,10 +32,11 @@ export default function Post(props) {
     dispatch(removePostAction({ postId: id }))
       .unwrap()
       .then((response) => {
+        dispatch(getUserPostsAction({ page: 1, items_per_page: 10 }));
         notifyPositive({ message: `Delete post ${id} successfully.` });
       })
       .catch((error) => {
-        notifyNegative({ message: error });
+        notifyNegative({ message: error.message });
       });
   };
   return (
@@ -102,6 +104,7 @@ const RemoveIcon = styled(Icon)`
   &:hover {
     transform: scale(1.05);
   }
+  color: var(--colorNegative);
 `;
 const CardFooterWrapper = styled.div`
   display: flex;

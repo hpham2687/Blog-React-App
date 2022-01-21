@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getPostsAction, loadMorePostsAction } from "store/postsSlice";
 import styled from "styled-components";
+import { notifyNegative } from "utils/toast";
 import { AddIcon } from "../AddPost/AddIcon";
 import LoadMoreBtn from "../common/LoadMoreBtn";
 import PostList from "./Post/PostList";
@@ -18,7 +19,11 @@ export default function Home() {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const canLoadMore = page < maximumNumOfPages;
   const onLoadMore = () => {
-    dispatch(loadMorePostsAction({}));
+    dispatch(loadMorePostsAction({}))
+      .unwrap()
+      .catch((error) => {
+        return notifyNegative({ message: error.message });
+      });
   };
 
   useEffect(() => {
@@ -26,7 +31,11 @@ export default function Home() {
   }, [page]);
 
   useEffect(() => {
-    dispatch(getPostsAction({ page: 1, items_per_page: 10 }));
+    dispatch(getPostsAction({ page: 1, items_per_page: 10 }))
+      .unwrap()
+      .catch((error) => {
+        return notifyNegative({ message: error.message });
+      });
   }, [dispatch]);
 
   if (error) {
@@ -35,7 +44,7 @@ export default function Home() {
 
   const noPost2Show = (
     <NoPostToShowWrapper>
-      <h4>No posts{search && ` with keyword "${search}" `}to show.</h4>
+      <h4>No posts {search && `with keyword "${search}" `}to show.</h4>
       {!isLoggedIn ? (
         <p>
           <Link to="/login">Login</Link> to create posts
