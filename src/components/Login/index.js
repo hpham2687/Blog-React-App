@@ -37,7 +37,7 @@ export default function Login() {
         notifyPositive({ message: AUTH_SUCCESS_MESSAGES.LOGIN_SUCCESS });
       })
       .catch((error) => {
-        return notifyNegative({ message: error });
+        return notifyNegative({ message: error.message });
       });
   };
 

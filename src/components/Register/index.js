@@ -39,7 +39,7 @@ export default function Register() {
         notifyPositive({ message: AUTH_SUCCESS_MESSAGES.REGISTER_SUCCESS });
       })
       .catch((error) => {
-        return notifyNegative({ message: error });
+        return notifyNegative({ message: error.message });
       });
   };
 
