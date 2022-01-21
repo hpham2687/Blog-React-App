@@ -1,5 +1,5 @@
 import { Icon } from "@ahaui/react";
-import Banner from "components/Banner";
+import Banner from "components/common/Banner";
 import Layout from "components/common/Layout";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +9,7 @@ import styled from "styled-components";
 import { notifyNegative } from "utils/toast";
 import { AddIcon } from "../AddPost/AddIcon";
 import LoadMoreBtn from "../common/LoadMoreBtn";
-import PostList from "./Post/PostList";
+import PostList from "../common/Post/PostList";
 export default function Home() {
   const dispatch = useDispatch();
   const pageEndRef = useRef(null);

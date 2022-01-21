@@ -1,5 +1,5 @@
 import { Header as AhaHeader, Icon } from "@ahaui/react";
-import SwitchThemeButton from "components/Header/SwitchThemeButton";
+import SwitchThemeButton from "components/common/Header/SwitchThemeButton";
 import { useTheme } from "context/ThemeContext";
 import { useAuth } from "hooks/useAuth";
 import React from "react";

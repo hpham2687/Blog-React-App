@@ -1,6 +1,6 @@
 import { PageLayout } from "@ahaui/react";
 import React from "react";
-import Header from "components/Header/Header";
+import Header from "components/common/Header/Header";
 import styled from "styled-components";
 
 export default function Layout({ children }) {

@@ -9,8 +9,8 @@ import {
 } from "store/userPostsSlice";
 import Layout from "components/common/Layout";
 import LoadMoreBtn from "components/common/LoadMoreBtn";
-import PostList from "components/Home/Post/PostList";
-import PostListSkeleton from "components/Home/Post/PostListSkeleton";
+import PostList from "components/common/Post/PostList";
+import PostListSkeleton from "components/common/Post/PostListSkeleton";
 import { AddIcon } from "../AddPost/AddIcon";
 import { notifyNegative } from "utils/toast";
 
