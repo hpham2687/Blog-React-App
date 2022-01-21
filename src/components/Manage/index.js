@@ -6,9 +6,9 @@ import styled from "styled-components";
 import {
   getUserPostsAction,
   loadMoreUserPostsAction,
-} from "store/reducers/userPostsReducer";
+} from "store/userPostsSlice";
 import Layout from "components/common/Layout";
-import LoadMoreBtn from "components/Home/LoadMoreBtn";
+import LoadMoreBtn from "components/common/LoadMoreBtn";
 import PostList from "components/Home/Post/PostList";
 import PostListSkeleton from "components/Home/Post/PostListSkeleton";
 import { AddIcon } from "../AddPost/AddIcon";
@@ -16,10 +16,10 @@ import { AddIcon } from "../AddPost/AddIcon";
 export default function Manage() {
   const dispatch = useDispatch();
 
-  const { data, loading, error, page, maximunNumOfPages } = useSelector(
+  const { data, loading, error, page, maximumNumOfPages } = useSelector(
     (state) => state.userPosts
   );
-  const canLoadMore = page < maximunNumOfPages;
+  const canLoadMore = page < maximumNumOfPages;
   const onLoadMore = () => {
     dispatch(loadMoreUserPostsAction({}));
   };
@@ -40,7 +40,7 @@ export default function Manage() {
 
   return (
     <Layout>
-      {loading && <PostListSkeleton num={5} />}
+      {loading && <PostListSkeleton aria-label="loading" num={5} />}
       {data && data.length > 0 ? (
         <PostList isManagePost={true} data={data} />
       ) : (
@@ -49,7 +49,7 @@ export default function Manage() {
       {canLoadMore && <LoadMoreBtn onLoadMore={onLoadMore} loading={loading} />}
 
       <Link to="/add-post">
-        <AddIcon>
+        <AddIcon data-testid="add-icon-btn">
           <Icon size="large" name="plus" />
         </AddIcon>
       </Link>

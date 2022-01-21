@@ -1,11 +1,11 @@
-import { Header as AhaHeader, Logo, SafeAnchor, Icon } from "@ahaui/react";
+import { Header as AhaHeader, Icon } from "@ahaui/react";
+import SwitchThemeButton from "components/Header/SwitchThemeButton";
+import { useTheme } from "context/ThemeContext";
+import { useAuth } from "hooks/useAuth";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useTheme } from "context/ThemeContext";
-import { useAuth } from "hooks/useAuth";
 import { device } from "utils/mediaQuery";
-import SwitchThemeButton from "components/Home/SwitchThemeButton";
 import AuthenticatedHeaderRight from "./AuthenticatedHeaderRight";
 import MobileMenu from "./MobileMenu";
 import UnAuthenticatedHeaderRight from "./UnAuthenticatedHeaderRight";
@@ -29,17 +29,12 @@ export default function Header() {
         />
       )}
       <StyledAhaHeader
+        data-testid="header"
         className={isDarkMode ? "u-backgroundDark" : "u-backgroundWhite"}
       >
         <StyledAhaHeader.Brand>
           <Link to="/">
-            <Logo
-              href="/"
-              as={SafeAnchor}
-              src="https://raw.githubusercontent.com/gotitinc/aha-assets/master/origin/ahaui-logo-with-text.svg"
-              variant="original"
-              height={32}
-            />
+            <Logo isDarkMode={isDarkMode}>KRISS BLOG</Logo>
           </Link>
         </StyledAhaHeader.Brand>
         <StyledAhaHeader.Main className="">
@@ -62,6 +57,16 @@ export default function Header() {
   );
 }
 
+const Logo = styled.span`
+  color: black;
+  display: inline-block;
+  font-size: 1.4rem;
+  font-weight: 400;
+  ${({ isDarkMode }) =>
+    isDarkMode &&
+    `color: white;
+  `}
+`;
 const StyledAhaHeader = styled(AhaHeader)`
   position: fixed;
   top: 0;

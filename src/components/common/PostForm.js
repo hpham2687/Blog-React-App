@@ -1,11 +1,11 @@
 import { Button, Card, Form, Loader } from "@ahaui/react";
-import React, { useEffect, useMemo } from "react";
+import { ADD_POST_ERROR_MESSAGES } from "constants/AddPost/Message";
+import { FORM_VALIDATOR } from "constants/common";
+import PropTypes from "prop-types"; // ES6
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components";
-import { ADD_POST_ERROR_MESSAGES } from "constants/AddPost/Message";
-import PropTypes from "prop-types"; // ES6
 import { device } from "utils/mediaQuery";
-import { FORM_VALIDATOR } from "constants/common";
 
 PostForm.propTypes = {
   submitText: PropTypes.string.isRequired,
@@ -30,12 +30,17 @@ export default function PostForm({
   const {
     control,
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm({
     mode: "onChange",
     defaultValues: data,
   });
+
+  useEffect(() => {
+    reset(data);
+  }, [data, reset]);
 
   const isHasTitleNameError = errors?.title;
   const isHasContentError = errors?.content;
@@ -73,7 +78,7 @@ export default function PostForm({
                   )}
                 />
                 {isHasTitleNameError && (
-                  <Form.Feedback type="invalid">
+                  <Form.Feedback data-testid="error-title-msg" type="invalid">
                     {errors?.title.message}
                   </Form.Feedback>
                 )}
@@ -108,7 +113,7 @@ export default function PostForm({
                   )}
                 />
                 {isHasContentError && (
-                  <Form.Feedback type="invalid">
+                  <Form.Feedback data-testid="error-content-msg" type="invalid">
                     {errors?.content.message}
                     {/* {errorApi?.password || errors?.password.message} */}
                   </Form.Feedback>
@@ -137,7 +142,7 @@ export default function PostForm({
                 />
 
                 {isHasPictureError && (
-                  <Form.Feedback type="invalid">
+                  <Form.Feedback data-testid="error-picture-msg" type="invalid">
                     {errors?.picture.message}
                     {/* {errorApi?.password || errors?.password.message} */}
                   </Form.Feedback>
@@ -150,7 +155,11 @@ export default function PostForm({
                 className="u-marginRightSmall"
               >
                 <Button.Label>
-                  {loading ? <Loader size="small" /> : submitText}
+                  {loading ? (
+                    <Loader aria-label="loading..." size="small" />
+                  ) : (
+                    submitText
+                  )}
                 </Button.Label>
               </Button>
             </div>
@@ -164,6 +173,7 @@ export default function PostForm({
 const PostFormWrapper = styled.div`
   display: flex;
   justify-content: center;
+  padding: 12px 8px;
   padding-top: 64px;
   height: calc(100vh - 88px);
   background: url(/assets/images/background.jpeg);

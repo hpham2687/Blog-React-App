@@ -67,7 +67,6 @@ function validatePost(id) {
 function getArrayFromObjectPosts() {
   load();
   return Object.keys(allPosts).map((key) => ({ ...allPosts[key], id: key }));
-  // return Object.keys(allPosts).map((key) => ({ [key]: allPosts[key] }));
 }
 async function getUserPosts(
   page = 1,
@@ -75,15 +74,15 @@ async function getUserPosts(
   search = null,
   authorId
 ) {
-  let posts = [...getArrayFromObjectPosts()];
-  let { filteredPosts, maximunNumOfPages } = postFilter(
+  let posts = [...getArrayFromObjectPosts()].reverse();
+  let { filteredPosts, maximumNumOfPages } = postFilter(
     posts,
     page,
     items_per_page,
     search,
     authorId
   );
-  return { posts: filteredPosts, items_per_page, page, maximunNumOfPages };
+  return { posts: filteredPosts, items_per_page, page, maximumNumOfPages };
 }
 
 function postFilter(
@@ -106,9 +105,9 @@ function postFilter(
     filteredPosts = filteredPosts.filter((post) => post.title.includes(search));
   }
 
-  let maximunNumOfPages = Math.ceil(filteredPosts.length / items_per_page);
+  let maximumNumOfPages = Math.ceil(filteredPosts.length / items_per_page);
 
-  if (page > maximunNumOfPages) {
+  if (page > maximumNumOfPages) {
     return { filteredPosts: [], items_per_page };
   }
   const indexFrom = (page - 1) * items_per_page;
@@ -119,12 +118,12 @@ function postFilter(
       : maximunIndex;
   filteredPosts = filteredPosts.slice(indexFrom, indexTo + 1);
 
-  return { filteredPosts, maximunNumOfPages };
+  return { filteredPosts, maximumNumOfPages };
 }
 
 async function getPosts(page = 1, items_per_page = 6, search = null) {
-  let posts = [...getArrayFromObjectPosts()];
-  let { filteredPosts, maximunNumOfPages } = postFilter(
+  let posts = [...getArrayFromObjectPosts()].reverse();
+  let { filteredPosts, maximumNumOfPages } = postFilter(
     posts,
     page,
     items_per_page,
@@ -135,11 +134,7 @@ async function getPosts(page = 1, items_per_page = 6, search = null) {
     items_per_page,
     page,
     search,
-    maximunNumOfPages,
+    maximumNumOfPages,
   };
 }
-// async function read(id) {
-//   validateUser(id);
-//   return sanitizeUser(users[id]);
-// }
 export { getPosts, create, getUserPosts, read, edit, remove };

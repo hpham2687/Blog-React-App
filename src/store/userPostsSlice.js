@@ -36,31 +36,34 @@ export const loadMoreUserPostsAction = createAsyncThunk(
     });
   }
 );
-
+const initialState = {
+  data: [],
+  items_per_page: 6,
+  page: 1,
+  maximumNumOfPages: null,
+  loading: false,
+  error: null,
+};
 const userPostsSlice = createSlice({
   name: "userPosts",
-  initialState: {
-    data: [],
-    items_per_page: 6,
-    page: 1,
-    maximunNumOfPages: null,
-    loading: false,
-    error: null,
+  initialState,
+  reducers: {
+    resetState(state) {
+      Object.assign(state, initialState);
+    },
   },
   extraReducers: {
     [getUserPostsAction.pending]: (state, action) => {
       state.loading = true;
     },
     [getUserPostsAction.fulfilled]: (state, action) => {
-      state.isLoggedIn = true;
       state.loading = false;
       state.data = action.payload.posts;
       state.items_per_page = action.payload.items_per_page;
       state.page = action.payload.page;
-      state.maximunNumOfPages = action.payload.maximunNumOfPages;
+      state.maximumNumOfPages = action.payload.maximumNumOfPages;
     },
     [getUserPostsAction.rejected]: (state, action) => {
-      state.isLoggedIn = false;
       state.loading = false;
       state.data = null;
     },
@@ -82,6 +85,6 @@ const userPostsSlice = createSlice({
 });
 
 const { actions } = userPostsSlice;
-export const {} = actions;
+export const { resetState } = actions;
 
 export default userPostsSlice.reducer;

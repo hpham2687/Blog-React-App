@@ -10,6 +10,7 @@ export default function SwitchThemeButton() {
   return (
     <ToggleWrapper>
       <Toggle
+        data-testid="theme-toggle-btn"
         textLabelOn="Dark Mode On"
         textLabelOff="Dark Mode Off"
         className="u-marginRightSmall"

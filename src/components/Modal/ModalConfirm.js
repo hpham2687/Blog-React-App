@@ -25,6 +25,7 @@ export default function ModalConfirm({
 }) {
   return reactDom.createPortal(
     <Modal
+      data-testid="modal-confirm"
       style={{ width: "80%", margin: "0 auto" }}
       show={show}
       size="small"
@@ -55,6 +56,6 @@ export default function ModalConfirm({
 
 const StyledModalHeader = styled(Modal.Header)`
   @media ${device.mobileL} {
-    padding: 10px !important;
+    padding: 10px;
   }
 `;

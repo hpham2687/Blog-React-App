@@ -3,9 +3,14 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { createPostsAction } from "store/reducers/postsReducer";
+import { createPostsAction } from "store/postsSlice";
 import Layout from "components/common/Layout";
 import PostForm from "components/common/PostForm";
+import { notifyNegative, notifyPositive } from "utils/toast";
+import {
+  ADD_POST_ERROR_MESSAGES,
+  ADD_POST_SUCCESS_MESSAGES,
+} from "constants/AddPost/Message";
 
 export default function AddPost(props) {
   let history = useNavigate();
@@ -16,11 +21,14 @@ export default function AddPost(props) {
     setLoadingEditPost(true);
     dispatch(createPostsAction(postData))
       .unwrap()
-      .then(() => {
-        history("/manage");
-      })
-      .finally(() => {
+      .then((response) => {
         setLoadingEditPost(false);
+        history("/manage");
+        notifyPositive({ message: ADD_POST_SUCCESS_MESSAGES.ADD_POST_SUCCESS });
+      })
+      .catch((error) => {
+        setLoadingEditPost(false);
+        notifyNegative({ message: ADD_POST_ERROR_MESSAGES.ADD_POST_FAIL });
       });
   };
 

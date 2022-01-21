@@ -9,8 +9,6 @@
     "@testing-library/jest-dom": "^5.16.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "axios": "^0.24.0",
-    "history": "^5.2.0",
     "lodash.debounce": "^4.0.8",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
@@ -49,9 +47,21 @@
     ]
   },
   "devDependencies": {
-    "msw": "^0.36.0"
+    "msw": "^0.36.0",
+    "prettier": "^2.5.1"
   },
   "msw": {
     "workerDirectory": "public"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!<rootDir>/node_modules/",
+      "!src/mocks/**",
+      "!src/hooks/**",
+      "!src/components/common/ErrorFallback.js",
+      "!src/GlobalStyle.js",
+      "!src/reportWebVitals.js"
+    ]
   }
 }

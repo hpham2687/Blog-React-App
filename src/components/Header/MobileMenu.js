@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { logout } from "store/reducers/authReducer";
+import { logout } from "store/authSlice";
 import PropTypes from "prop-types";
 
 MobileMenu.propTypes = {
@@ -72,8 +72,13 @@ const MobileMenuWrapper = styled.div`
       height: 100%;
       justify-content: center;
       align-items: center;
-      a {
-        display: block;
+      a,
+      span {
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        display: flex;
         text-decoration: none;
         color: black;
       }

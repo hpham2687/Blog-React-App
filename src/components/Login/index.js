@@ -5,14 +5,17 @@ import { Navigate } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "components/common/Layout";
 import { useAuth } from "hooks/useAuth";
-import { loginAction, resetErrorAction } from "store/reducers/authReducer";
+import { loginAction, resetErrorAction } from "store/authSlice";
 import { useForm } from "react-hook-form";
-import { AUTH_ERROR_MESSAGES } from "constants/Auth/Message";
+import {
+  AUTH_ERROR_MESSAGES,
+  AUTH_SUCCESS_MESSAGES,
+} from "constants/Auth/Message";
+import { notifyNegative, notifyPositive } from "utils/toast";
 
 export default function Login() {
   const { isLoggedIn, loading, error: errorApi } = useAuth();
   const dispatch = useDispatch();
-
   const {
     register,
     handleSubmit,
@@ -27,7 +30,15 @@ export default function Login() {
         username,
         password,
       })
-    );
+    )
+      .unwrap()
+      .then((response) => {
+        localStorage.setItem("user", JSON.stringify(response));
+        notifyPositive({ message: AUTH_SUCCESS_MESSAGES.LOGIN_SUCCESS });
+      })
+      .catch((error) => {
+        return notifyNegative({ message: error });
+      });
   };
 
   if (isLoggedIn) {
@@ -42,7 +53,7 @@ export default function Login() {
         <Card style={{ height: "fit-content" }} size={"medium"}>
           <Card.Body>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div>
+              <FormGroupWrapper>
                 <Form.Group controlId="loginForm.username">
                   <Form.Label>Username</Form.Label>
                   <Form.Input
@@ -61,7 +72,10 @@ export default function Login() {
                     })}
                   />
                   {isHasUsernameError && (
-                    <Form.Feedback type="invalid">
+                    <Form.Feedback
+                      data-testid="error-username-msg"
+                      type="invalid"
+                    >
                       {errorApi?.username || errors?.username.message}
                     </Form.Feedback>
                   )}
@@ -84,22 +98,30 @@ export default function Login() {
                     })}
                   />
                   {isHasPasswordError && (
-                    <Form.Feedback type="invalid">
+                    <Form.Feedback
+                      data-testid="error-password-msg"
+                      type="invalid"
+                    >
                       {errorApi?.password || errors?.password.message}
                     </Form.Feedback>
                   )}
                 </Form.Group>
-                <Button
+                <StyledSubmitBtn
+                  data-testid="login-btn"
                   size={"small"}
                   type="submit"
                   variant="primary"
                   className="u-marginRightSmall"
                 >
                   <Button.Label>
-                    {loading ? <Loader size="small" /> : "Login"}
+                    {loading ? (
+                      <Loader aria-label="Loading" size="small" />
+                    ) : (
+                      "Login"
+                    )}
                   </Button.Label>
-                </Button>
-              </div>
+                </StyledSubmitBtn>
+              </FormGroupWrapper>
             </form>
           </Card.Body>
         </Card>
@@ -108,12 +130,22 @@ export default function Login() {
   );
 }
 
+const StyledSubmitBtn = styled(Button)`
+  margin-left: auto;
+  margin-right: 0;
+`;
+
+const FormGroupWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const LoginWrapper = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 64px;
   height: calc(100vh - 88px);
-  background: url(https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?size=626&ext=jpg);
+  background: url(/assets/images/background.jpeg);
   background-repeat: no-repeat;
   background-size: cover;
 `;

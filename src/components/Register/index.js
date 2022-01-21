@@ -4,10 +4,14 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import styled from "styled-components";
-import { AUTH_ERROR_MESSAGES } from "constants/Auth/Message";
+import {
+  AUTH_ERROR_MESSAGES,
+  AUTH_SUCCESS_MESSAGES,
+} from "constants/Auth/Message";
 import { useAuth } from "hooks/useAuth";
-import { registerAction, resetErrorAction } from "store/reducers/authReducer";
+import { registerAction, resetErrorAction } from "store/authSlice";
 import Layout from "components/common/Layout";
+import { notifyNegative, notifyPositive } from "utils/toast";
 
 export default function Register() {
   const { isLoggedIn, loading, error: errorApi } = useAuth();
@@ -28,7 +32,15 @@ export default function Register() {
         username,
         password,
       })
-    );
+    )
+      .unwrap()
+      .then((response) => {
+        localStorage.setItem("user", JSON.stringify(response));
+        notifyPositive({ message: AUTH_SUCCESS_MESSAGES.REGISTER_SUCCESS });
+      })
+      .catch((error) => {
+        return notifyNegative({ message: error });
+      });
   };
 
   if (isLoggedIn) {
@@ -36,9 +48,6 @@ export default function Register() {
   }
 
   const isHasEmailError = errorApi?.email || errors?.email;
-  if (isHasEmailError) {
-    console.log("vao day isHasEmailError");
-  }
   const isHasUsernameError = errorApi?.username || errors?.username;
   const isHasPasswordError = errorApi?.password || errors?.password;
 
@@ -48,7 +57,7 @@ export default function Register() {
         <Card style={{ height: "fit-content" }} size={"medium"}>
           <Card.Body>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div>
+              <FormGroupWrapper>
                 <Form.Group controlId="registerForm.email">
                   <Form.Label>Email</Form.Label>
                   <Form.Input
@@ -67,7 +76,7 @@ export default function Register() {
                     })}
                   />
                   {isHasEmailError && (
-                    <Form.Feedback type="invalid">
+                    <Form.Feedback data-testid="error-email-msg" type="invalid">
                       {errorApi?.email || errors?.email.message}
                     </Form.Feedback>
                   )}
@@ -90,7 +99,10 @@ export default function Register() {
                     })}
                   />
                   {isHasUsernameError && (
-                    <Form.Feedback type="invalid">
+                    <Form.Feedback
+                      data-testid="error-username-msg"
+                      type="invalid"
+                    >
                       {errorApi?.username || errors?.username.message}
                     </Form.Feedback>
                   )}
@@ -113,21 +125,29 @@ export default function Register() {
                     })}
                   />
                   {isHasPasswordError && (
-                    <Form.Feedback type="invalid">
+                    <Form.Feedback
+                      data-testid="error-password-msg"
+                      type="invalid"
+                    >
                       {errorApi?.password || errors?.password.message}
                     </Form.Feedback>
                   )}
                 </Form.Group>
-                <Button
+                <StyledSubmitBtn
                   size={"small"}
                   variant="primary"
                   className="u-marginRightSmall"
+                  data-testid="register-btn"
                 >
                   <Button.Label>
-                    {loading ? <Loader size="small" /> : "Register"}
+                    {loading ? (
+                      <Loader aria-label="Loading" size="small" />
+                    ) : (
+                      "Register"
+                    )}
                   </Button.Label>
-                </Button>
-              </div>
+                </StyledSubmitBtn>
+              </FormGroupWrapper>
             </form>
           </Card.Body>
         </Card>
@@ -136,12 +156,22 @@ export default function Register() {
   );
 }
 
+const FormGroupWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledSubmitBtn = styled(Button)`
+  margin-left: auto;
+  margin-right: 0;
+`;
+
 const RegisterWrapper = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 64px;
   height: calc(100vh - 88px);
-  background: url(https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?size=626&ext=jpg);
+  background: url(/assets/images/background.jpeg);
   background-repeat: no-repeat;
   background-size: cover;
 `;

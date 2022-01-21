@@ -1,40 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { AUTH_SUCCESS_MESSAGES } from "constants/Auth/Message";
-import { notifyNegative, notifyPositive } from "utils/toast";
 import * as UserApi from "api/userApi";
 
 export const registerAction = createAsyncThunk(
   "auth/register",
   async ({ email, username, password }, thunkAPI) => {
-    try {
-      const response = await UserApi.register({ email, username, password });
-      console.log({ response });
-      localStorage.setItem("user", JSON.stringify(response));
-      notifyPositive({ message: AUTH_SUCCESS_MESSAGES.REGISTER_SUCCESS });
-      return response;
-    } catch (error) {
-      const message = error?.response?.data?.message || "UNKNOWN ERROR";
-      notifyNegative({ message: message });
+    return UserApi.register({ email, username, password }).catch((error) => {
+      const message =
+        error?.response?.data?.message || error?.message || "UNKNOWN ERROR";
       return thunkAPI.rejectWithValue(message);
-    }
+    });
   }
 );
 
 export const loginAction = createAsyncThunk(
   "auth/login",
   async ({ username, password }, thunkAPI) => {
-    try {
-      const response = await UserApi.login({ username, password });
-
-      localStorage.setItem("user", JSON.stringify(response));
-      notifyPositive({ message: AUTH_SUCCESS_MESSAGES.LOGIN_SUCCESS });
-      return response;
-    } catch (error) {
-      console.log(error);
-      const message = error?.response?.data?.message || "UNKNOWN ERROR";
-      notifyNegative({ message: message });
+    return UserApi.login({ username, password }).catch((error) => {
+      const message =
+        error?.response?.data?.message || error?.message || "UNKNOWN ERROR";
       return thunkAPI.rejectWithValue(message);
-    }
+    });
   }
 );
 
@@ -65,7 +50,6 @@ const authSlice = createSlice({
       state.loading = true;
     },
     [registerAction.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.isLoggedIn = true;
       state.loading = false;
       state.user = action.payload;
@@ -83,7 +67,6 @@ const authSlice = createSlice({
       state.user = action.payload;
     },
     [loginAction.rejected]: (state, action) => {
-      console.log({ actionPayload: action.payload });
       state.isLoggedIn = false;
       state.loading = false;
       state.error = action.payload;

@@ -11,17 +11,26 @@ export default function Layout({ children }) {
       </PageLayout.Header>
       <StyledPageLayoutBody
         id="page-container-body"
+        style={{ paddingTop: "62px" }}
         className={`u-backgroundLightest u-flexColumn`}
       >
         {children}
       </StyledPageLayoutBody>
-      <PageLayout.Footer className="u-backgroundPositiveLight">
-        <div className="Container">Footer</div>
-      </PageLayout.Footer>
+      <StyledPageFooter className="u-backgroundPositiveLight">
+        <div className="footer-content">
+          Contact us - <a href="http://facebook.com/krysspham">Kriss Pham</a>
+        </div>
+      </StyledPageFooter>
     </PageLayout>
   );
 }
 
+const StyledPageFooter = styled(PageLayout.Footer)`
+  .footer-content {
+    text-align: center;
+    color: var(--colorPrimary);
+  }
+`;
 const StyledPageLayoutBody = styled(PageLayout.Body)`
   padding-top: 64px;
 `;

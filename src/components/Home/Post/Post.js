@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { removePostAction } from "store/reducers/postsReducer";
+import { removePostAction } from "store/postsSlice";
 import ModalConfirm from "components/Modal/ModalConfirm";
 import PropTypes from "prop-types"; // ES6
+import { notifyNegative, notifyPositive } from "utils/toast";
+import { useTheme } from "context/ThemeContext";
 
 Post.propTypes = {
   authorId: PropTypes.string,
@@ -19,14 +21,21 @@ Post.defaultProps = {};
 
 export default function Post(props) {
   let { id, title, authorName, createdAt, picture, isManagePost } = props;
-  console.log(props);
+  const [isDarkMode] = useTheme();
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const onSubmitRemove = async () => {
-    dispatch(removePostAction({ postId: id }));
+    dispatch(removePostAction({ postId: id }))
+      .unwrap()
+      .then((response) => {
+        notifyPositive({ message: `Delete post ${id} successfully.` });
+      })
+      .catch((error) => {
+        notifyNegative({ message: error });
+      });
   };
   return (
     <PostListWrapper>
@@ -34,7 +43,7 @@ export default function Post(props) {
         <ModalConfirm
           onConfirm={onSubmitRemove}
           show={show}
-          onClose={handleClose}
+          handleClose={handleClose}
           setShow={setShow}
         />
       )}
@@ -48,7 +57,9 @@ export default function Post(props) {
           <CardFooterWrapper>
             {!isManagePost && (
               <Avatar
-                className="u-backgroundPrimaryLight u-text200"
+                className={`${
+                  isDarkMode ? "" : "u-backgroundPrimaryLight"
+                } u-text200`}
                 text={authorName.substring(0, 2).toUpperCase()}
               />
             )}
@@ -58,6 +69,7 @@ export default function Post(props) {
             </div>
 
             <Link
+              data-testid="action-btn"
               style={{ marginLeft: "auto" }}
               to={isManagePost ? `/edit-post/${id}` : `posts/${id}`}
             >
@@ -68,7 +80,12 @@ export default function Post(props) {
           </CardFooterWrapper>
         </StyledCard.Body>
         {isManagePost && (
-          <RemoveIcon onClick={handleShow} size="medium" name="closeCircle" />
+          <RemoveIcon
+            className="remove-icon"
+            onClick={handleShow}
+            size="medium"
+            name="closeCircle"
+          />
         )}
       </StyledCard>
     </PostListWrapper>
@@ -122,6 +139,8 @@ const StyledCard = styled(Card)`
   }
   .Card-footer__desc {
     margin: 0px 0px 0px 8px;
+
+    cursor: default;
     span {
       text-align: left;
     }
@@ -129,6 +148,7 @@ const StyledCard = styled(Card)`
   .Card-body {
     padding-bottom: 4px;
 
+    cursor: default;
     margin-bottom: 16px;
     p {
       margin-bottom: 0;

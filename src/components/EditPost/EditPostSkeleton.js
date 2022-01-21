@@ -3,13 +3,13 @@ import { Skeleton } from "@ahaui/react";
 
 export default function EditPostSkeleton() {
   return (
-    <>
+    <div aria-label="loading">
       <Skeleton width={500} height={200} />
       <div className=" u-flexGrow1 u-paddingSmall">
         <Skeleton width="60%" />
         <Skeleton />
         <Skeleton />
       </div>
-    </>
+    </div>
   );
 }
