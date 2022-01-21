@@ -12,6 +12,7 @@ import LoadMoreBtn from "components/common/LoadMoreBtn";
 import PostList from "components/Home/Post/PostList";
 import PostListSkeleton from "components/Home/Post/PostListSkeleton";
 import { AddIcon } from "../AddPost/AddIcon";
+import { notifyNegative } from "utils/toast";
 
 export default function Manage() {
   const dispatch = useDispatch();
@@ -20,11 +21,21 @@ export default function Manage() {
     (state) => state.userPosts
   );
   const canLoadMore = page < maximumNumOfPages;
+
   const onLoadMore = () => {
-    dispatch(loadMoreUserPostsAction({}));
+    dispatch(loadMoreUserPostsAction({}))
+      .unwrap()
+      .catch((error) => {
+        return notifyNegative({ message: error.message });
+      });
   };
+
   useEffect(() => {
-    dispatch(getUserPostsAction({ page: 1, items_per_page: 6 }));
+    dispatch(getUserPostsAction({ page: 1, items_per_page: 10 }))
+      .unwrap()
+      .catch((error) => {
+        return notifyNegative({ message: error.message });
+      });
   }, [dispatch]);
 
   if (error) {
