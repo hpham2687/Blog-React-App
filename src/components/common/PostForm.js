@@ -51,7 +51,7 @@ export default function PostForm({
       <StyledCard size={"medium"}>
         <Card.Body>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
               <Form.Group controlId="addPostForm.title">
                 <Form.Label>Title</Form.Label>
                 <Controller
@@ -152,7 +152,7 @@ export default function PostForm({
                 size={"small"}
                 type="submit"
                 variant="primary"
-                className="u-marginRightSmall"
+                style={{ marginLeft: "auto" }}
               >
                 <Button.Label>
                   {loading ? (

@@ -2,7 +2,7 @@ import { Button, Card, Form, Loader } from "@ahaui/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import {
   AUTH_ERROR_MESSAGES,
@@ -184,6 +184,11 @@ export default function Register() {
                     )}
                   </Button.Label>
                 </StyledSubmitBtn>
+                <Form.Group>
+                  <HasAccountContainer>
+                    Already have an account? <Link to="/login">Login</Link>
+                  </HasAccountContainer>
+                </Form.Group>
               </FormGroupWrapper>
             </form>
           </Card.Body>
@@ -192,6 +197,15 @@ export default function Register() {
     </Layout>
   );
 }
+
+const HasAccountContainer = styled.p`
+  margin: 0;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  a {
+    color: blue;
+  }
+`;
 
 const FormGroupWrapper = styled.div`
   display: flex;
