@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "store/authSlice";
+import { notifyPositive } from "utils/toast";
 
 export default function AuthenticatedHeaderRight() {
   const dispatch = useDispatch();
@@ -15,7 +16,10 @@ export default function AuthenticatedHeaderRight() {
         </Button>
       </Link>
       <Button
-        onClick={() => dispatch(logout())}
+        onClick={() => {
+          dispatch(logout());
+          notifyPositive({ message: "Log out successfully." });
+        }}
         size={"small"}
         variant="primary"
         className="u-marginRightSmall"
