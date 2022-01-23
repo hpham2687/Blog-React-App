@@ -207,7 +207,7 @@ const RegisterWrapper = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 64px;
-  height: calc(100vh - 88px);
+  height: calc(100vh - 112px);
   background: url(/assets/images/background.jpeg);
   background-repeat: no-repeat;
   background-size: cover;

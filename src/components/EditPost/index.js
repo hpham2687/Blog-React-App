@@ -37,11 +37,6 @@ export default function EditPost() {
 
   return (
     <Layout>
-      {/* <BackButton variant="primary">
-        <Link style={{ display: "block", width: "100%" }} to={`/manage`}>
-          Back
-        </Link>
-      </BackButton> */}
       <Breadcrumb style={{ padding: "10px 12px", margin: "0 auto" }}>
         <Breadcrumb.Item>
           <Link to={`/`}>Home</Link>
@@ -62,10 +57,3 @@ export default function EditPost() {
     </Layout>
   );
 }
-
-const BackButton = styled(Button)`
-  a {
-    color: white;
-    text-decoration: none;
-  }
-`;

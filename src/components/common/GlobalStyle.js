@@ -18,7 +18,7 @@ export const GlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.text};
     transition: all 0.50s linear;
   }
-a {
+.Breadcrumb-item a {
   text-decoration: none;
   color: ${({ theme }) => theme.text};
 

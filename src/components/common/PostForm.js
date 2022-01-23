@@ -175,7 +175,7 @@ const PostFormWrapper = styled.div`
   justify-content: center;
   padding: 12px 8px;
   padding-top: 64px;
-  height: calc(100vh - 88px);
+  height: calc(100vh - 152px);
   background: url(/assets/images/background.jpeg);
   background-repeat: no-repeat;
   background-size: cover;
