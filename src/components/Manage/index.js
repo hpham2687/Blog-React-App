@@ -1,4 +1,4 @@
-import { Icon } from "@ahaui/react";
+import { Icon, Breadcrumb } from "@ahaui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -51,6 +51,12 @@ export default function Manage() {
 
   return (
     <Layout>
+      <Breadcrumb style={{ padding: "10px 12px", margin: "0 auto" }}>
+        <Breadcrumb.Item>
+          <Link to={`/`}>Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item href="#">Manage Posts</Breadcrumb.Item>
+      </Breadcrumb>
       {loading && <PostListSkeleton aria-label="loading" num={5} />}
       {data && data.length > 0 ? (
         <PostList isManagePost={true} data={data} />

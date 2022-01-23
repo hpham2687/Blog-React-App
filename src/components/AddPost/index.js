@@ -1,4 +1,4 @@
-import { Button } from "@ahaui/react";
+import { Button, Breadcrumb } from "@ahaui/react";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -34,11 +34,20 @@ export default function AddPost(props) {
 
   return (
     <Layout>
-      <BackButton variant="primary">
+      {/* <BackButton variant="primary">
         <Link style={{ display: "block", width: "100%" }} to={`/manage`}>
           Back
         </Link>
-      </BackButton>
+      </BackButton> */}
+      <Breadcrumb style={{ padding: "10px 12px", margin: "0 auto" }}>
+        <Breadcrumb.Item>
+          <Link to={`/`}>Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to={`/manage`}>Manage Posts</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item href="#">Add Post</Breadcrumb.Item>
+      </Breadcrumb>
       <PostForm
         loading={loadingEditPost}
         submitText="Add"
