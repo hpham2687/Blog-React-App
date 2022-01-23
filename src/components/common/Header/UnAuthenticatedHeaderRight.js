@@ -12,7 +12,11 @@ export default function UnAuthenticatedHeaderRight() {
       </Link>
 
       <Link to="/register">
-        <Button size={"small"} variant="primary" className="u-marginRightSmall">
+        <Button
+          size={"small"}
+          variant="primary_outline"
+          className="u-marginRightSmall"
+        >
           <Button.Label>Register</Button.Label>
         </Button>
       </Link>

@@ -1,7 +1,7 @@
 import { Button, Card, Form, Loader } from "@ahaui/react";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "components/common/Layout";
 import { useAuth } from "hooks/useAuth";
@@ -12,16 +12,32 @@ import {
   AUTH_SUCCESS_MESSAGES,
 } from "constants/Auth/Message";
 import { notifyNegative, notifyPositive } from "utils/toast";
+import { AuthFormTitle } from "components/common/AuthFormTitle";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 
 export default function Login() {
   const { isLoggedIn, loading, error: errorApi } = useAuth();
   const dispatch = useDispatch();
+
+  const validationSchema = Yup.object().shape({
+    username: Yup.string()
+      .required(AUTH_ERROR_MESSAGES.USERNAME_REQUIRED)
+      .min(6, AUTH_ERROR_MESSAGES.USERNAME_INVALID_SHORT_LENGTH)
+      .max(20, AUTH_ERROR_MESSAGES.USERNAME_INVALID_LONG_LENGTH),
+    password: Yup.string()
+      .required(AUTH_ERROR_MESSAGES.PASSWORD_REQUIRED)
+      .min(6, AUTH_ERROR_MESSAGES.PASSWORD_INVALID_SHORT_LENGTH)
+      .max(40, AUTH_ERROR_MESSAGES.PASSWORD_INVALID_LONG_LENGTH),
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     mode: "onChange",
+    resolver: yupResolver(validationSchema),
   });
 
   const onSubmit = ({ username, password }) => {
@@ -54,18 +70,16 @@ export default function Login() {
           <Card.Body>
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormGroupWrapper>
+                <Form.Group>
+                  <AuthFormTitle>Login</AuthFormTitle>
+                </Form.Group>
                 <Form.Group controlId="loginForm.username">
                   <Form.Label>Username</Form.Label>
                   <Form.Input
                     type="text"
                     isInvalid={isHasUsernameError}
-                    placeholder="Enter text"
+                    placeholder="Enter username"
                     {...register("username", {
-                      required: AUTH_ERROR_MESSAGES.USERNAME_REQUIRED,
-                      minLength: {
-                        value: 6,
-                        message: AUTH_ERROR_MESSAGES.USERNAME_INVALID_LENGTH,
-                      },
                       onChange: () => {
                         dispatch(resetErrorAction());
                       },
@@ -87,11 +101,6 @@ export default function Login() {
                     isInvalid={isHasPasswordError}
                     placeholder="Enter password"
                     {...register("password", {
-                      required: AUTH_ERROR_MESSAGES.PASSWORD_REQUIRED,
-                      minLength: {
-                        value: 6,
-                        message: AUTH_ERROR_MESSAGES.PASSWORD_INVALID_LENGTH,
-                      },
                       onChange: () => {
                         dispatch(resetErrorAction());
                       },
@@ -112,8 +121,9 @@ export default function Login() {
                   type="submit"
                   variant="primary"
                   className="u-marginRightSmall"
+                  style={{ width: "100%" }}
                 >
-                  <Button.Label>
+                  <Button.Label style={{ fontWeight: "500" }}>
                     {loading ? (
                       <Loader aria-label="Loading" size="small" />
                     ) : (
@@ -121,6 +131,11 @@ export default function Login() {
                     )}
                   </Button.Label>
                 </StyledSubmitBtn>
+                <Form.Group>
+                  <HasAccountContainer>
+                    Don't have an account? <Link to="/register">Register</Link>
+                  </HasAccountContainer>
+                </Form.Group>
               </FormGroupWrapper>
             </form>
           </Card.Body>
@@ -129,6 +144,15 @@ export default function Login() {
     </Layout>
   );
 }
+
+const HasAccountContainer = styled.p`
+  margin: 0;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  a {
+    color: blue;
+  }
+`;
 
 const StyledSubmitBtn = styled(Button)`
   margin-left: auto;

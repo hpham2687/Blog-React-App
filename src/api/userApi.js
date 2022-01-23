@@ -9,9 +9,10 @@ function login({ username, password }) {
     },
   });
 }
-function register({ username, password }) {
+function register({ email, username, password }) {
   return client("register", {
     data: {
+      email,
       username,
       password,
     },

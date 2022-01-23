@@ -12,10 +12,33 @@ import { useAuth } from "hooks/useAuth";
 import { registerAction, resetErrorAction } from "store/authSlice";
 import Layout from "components/common/Layout";
 import { notifyNegative, notifyPositive } from "utils/toast";
+import { AuthFormTitle } from "components/common/AuthFormTitle";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 
 export default function Register() {
   const { isLoggedIn, loading, error: errorApi } = useAuth();
   const dispatch = useDispatch();
+
+  const validationSchema = Yup.object().shape({
+    username: Yup.string()
+      .required(AUTH_ERROR_MESSAGES.USERNAME_REQUIRED)
+      .min(6, AUTH_ERROR_MESSAGES.USERNAME_INVALID_SHORT_LENGTH)
+      .max(20, AUTH_ERROR_MESSAGES.USERNAME_INVALID_LONG_LENGTH),
+    email: Yup.string()
+      .required(AUTH_ERROR_MESSAGES.EMAIL_REQUIRED)
+      .email(AUTH_ERROR_MESSAGES.EMAIL_INVALID),
+    password: Yup.string()
+      .required(AUTH_ERROR_MESSAGES.PASSWORD_REQUIRED)
+      .min(6, AUTH_ERROR_MESSAGES.PASSWORD_INVALID_SHORT_LENGTH)
+      .max(40, AUTH_ERROR_MESSAGES.PASSWORD_INVALID_LONG_LENGTH),
+    confirmPassword: Yup.string()
+      .required(AUTH_ERROR_MESSAGES.CONFIRM_PASSWORD_REQUIRED)
+      .oneOf(
+        [Yup.ref("password"), null],
+        AUTH_ERROR_MESSAGES.CONFIRM_PASSWORD_NOT_MATCH
+      ),
+  });
 
   const {
     register,
@@ -23,6 +46,7 @@ export default function Register() {
     formState: { errors },
   } = useForm({
     mode: "onChange",
+    resolver: yupResolver(validationSchema),
   });
 
   const onSubmit = ({ email, username, password }) => {
@@ -50,6 +74,8 @@ export default function Register() {
   const isHasEmailError = errorApi?.email || errors?.email;
   const isHasUsernameError = errorApi?.username || errors?.username;
   const isHasPasswordError = errorApi?.password || errors?.password;
+  const isHasConfirmPasswordError =
+    errorApi?.confirmPassword || errors?.confirmPassword;
 
   return (
     <Layout>
@@ -58,6 +84,9 @@ export default function Register() {
           <Card.Body>
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormGroupWrapper>
+                <Form.Group>
+                  <AuthFormTitle>Register</AuthFormTitle>
+                </Form.Group>
                 <Form.Group controlId="registerForm.email">
                   <Form.Label>Email</Form.Label>
                   <Form.Input
@@ -65,11 +94,6 @@ export default function Register() {
                     placeholder="Enter email"
                     isInvalid={isHasEmailError}
                     {...register("email", {
-                      required: AUTH_ERROR_MESSAGES.EMAIL_REQUIRED,
-                      pattern: {
-                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                        message: AUTH_ERROR_MESSAGES.EMAIL_INVALID,
-                      },
                       onChange: () => {
                         dispatch(resetErrorAction());
                       },
@@ -85,14 +109,9 @@ export default function Register() {
                   <Form.Label>Username</Form.Label>
                   <Form.Input
                     type="text"
-                    placeholder="Enter text"
+                    placeholder="Enter username"
                     isInvalid={isHasUsernameError}
                     {...register("username", {
-                      required: AUTH_ERROR_MESSAGES.USERNAME_REQUIRED,
-                      minLength: {
-                        value: 6,
-                        message: AUTH_ERROR_MESSAGES.USERNAME_INVALID_LENGTH,
-                      },
                       onChange: () => {
                         dispatch(resetErrorAction());
                       },
@@ -114,11 +133,6 @@ export default function Register() {
                     placeholder="Enter password"
                     isInvalid={isHasPasswordError}
                     {...register("password", {
-                      required: AUTH_ERROR_MESSAGES.PASSWORD_REQUIRED,
-                      minLength: {
-                        value: 6,
-                        message: AUTH_ERROR_MESSAGES.PASSWORD_INVALID_LENGTH,
-                      },
                       onChange: () => {
                         dispatch(resetErrorAction());
                       },
@@ -133,13 +147,36 @@ export default function Register() {
                     </Form.Feedback>
                   )}
                 </Form.Group>
+                <Form.Group controlId="registerForm.confirmPassword">
+                  <Form.Label>Confirm Password</Form.Label>
+                  <Form.Input
+                    type="password"
+                    placeholder="Enter password"
+                    isInvalid={isHasConfirmPasswordError}
+                    {...register("confirmPassword", {
+                      onChange: () => {
+                        dispatch(resetErrorAction());
+                      },
+                    })}
+                  />
+                  {isHasConfirmPasswordError && (
+                    <Form.Feedback
+                      data-testid="error-confirm-password-msg"
+                      type="invalid"
+                    >
+                      {errorApi?.confirmPassword ||
+                        errors?.confirmPassword.message}
+                    </Form.Feedback>
+                  )}
+                </Form.Group>
                 <StyledSubmitBtn
                   size={"small"}
                   variant="primary"
                   className="u-marginRightSmall"
                   data-testid="register-btn"
+                  style={{ width: "100%" }}
                 >
-                  <Button.Label>
+                  <Button.Label style={{ fontWeight: "500" }}>
                     {loading ? (
                       <Loader aria-label="Loading" size="small" />
                     ) : (
