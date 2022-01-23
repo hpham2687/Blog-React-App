@@ -36,6 +36,7 @@ export default function MobileMenu({ onClose, isLoggedIn, isOpenMobileMenu }) {
           </>
         ) : (
           <>
+            <li className="logo-mobile">KRISS BLOG</li>
             <li>
               <Link to="/manage">Manage Posts</Link>
             </li>
@@ -55,7 +56,7 @@ const CloseMenuIcon = styled(Icon)`
   right: 10px;
   top: 10px;
   cursor: pointer;
-  color: black;
+  color: #ggg;
 `;
 
 const MobileMenuWrapper = styled.div`
@@ -68,9 +69,12 @@ const MobileMenuWrapper = styled.div`
   z-index: 100;
   transition: all 0.25s linear;
   ul {
+    li:first-child {
+      background: #ddd;
+      border-bottom: 1px solid #ddd;
+    }
     li {
       padding: 10px;
-      border-bottom: 1px solid #ddd;
       display: flex;
       height: 100%;
       justify-content: center;
