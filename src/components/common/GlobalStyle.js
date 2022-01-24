@@ -18,14 +18,13 @@ export const GlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.text};
     transition: all 0.50s linear;
   }
-.Breadcrumb-item a, a:link, a:visited {
+  .Breadcrumb-item a, a:link, a:visited,.PageLayout-header a button.u-backgroundTransparent span {
   color: ${({ theme }) => theme.link};
   text-decoration: none;
-
-}
-.auth-wrapper, .Card, .PageLayout-footer,.post-form-wrapper {
+  } 
+  .auth-wrapper, .Card, .PageLayout-footer,.post-form-wrapper {
   background: ${({ theme }) => theme.background};
-}
+  }
 
 
 

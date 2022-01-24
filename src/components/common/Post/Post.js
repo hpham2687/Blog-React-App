@@ -130,6 +130,7 @@ const StyledCard = styled(Card)`
   overflow: hidden;
   margin: 16px;
 
+  border: 1px solid #a5adba;
   display: flex;
   flex-direction: column;
 

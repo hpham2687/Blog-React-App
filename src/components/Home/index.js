@@ -75,7 +75,8 @@ export default function Home() {
 
       <Link to="/add-post">
         <AddIcon aria-label="add-icon-btn">
-          <Icon size="large" name="plus" />
+          {/* <Icon size="large" name="plus" /> */}
+          <Icon size="large" name="edit" />
         </AddIcon>
       </Link>
 

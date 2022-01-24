@@ -14,9 +14,15 @@ export default function AuthenticatedHeaderRight() {
   const dispatch = useDispatch();
   const HeaderDropdown = (
     <div className="u-marginRightSmall">
-      <Icon name="contact" size="medium" />
+      <Icon
+        style={{
+          color: "#97a0af",
+        }}
+        name="contact"
+        size="medium"
+      />
       {user.username}
-      <Icon size="extraSmall" name="arrowDown" />
+      <Icon style={{ marginLeft: "2px" }} size="extraSmall" name="arrowDown" />
     </div>
   );
 
