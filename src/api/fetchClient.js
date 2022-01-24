@@ -1,4 +1,4 @@
-const apiURL = "http://localhost:3000";
+const apiURL = process.env.REACT_APP_API_ENDPOINT;
 
 async function client(
   endpoint,
