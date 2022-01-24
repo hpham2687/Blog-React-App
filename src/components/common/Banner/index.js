@@ -33,6 +33,7 @@ export default function Banner() {
       <StyledSearchBox
         placeholder="Search..."
         value={searchText}
+        sizeControl="large"
         onChange={handleChange}
       />
     </StyledBanner>
@@ -59,7 +60,13 @@ const StyledSearchBox = styled(SearchBox)`
   @media ${device.mobileL} {
     min-width: 220px;
   }
+  input {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
   .Button {
-    padding: 0px;
+    padding: 0px 6px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
   }
 `;

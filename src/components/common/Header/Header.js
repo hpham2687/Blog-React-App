@@ -30,7 +30,11 @@ export default function Header() {
       />
       <StyledAhaHeader
         data-testid="header"
-        className={isDarkMode ? "u-backgroundDark" : "u-backgroundWhite"}
+        style={
+          isDarkMode
+            ? { background: "rgba(10, 25, 41, 0.72)" }
+            : { background: "white" }
+        }
       >
         <StyledAhaHeader.Brand>
           <Link to="/">
@@ -38,9 +42,6 @@ export default function Header() {
           </Link>
         </StyledAhaHeader.Brand>
         <StyledAhaHeader.Main className="">
-          {/* <StyledAhaHeader.Left>
-          <div className="u-paddingHorizontalLarge">LEFT</div>
-        </StyledAhaHeader.Left> */}
           <StyledAhaHeader.Right>
             <HeaderRightDesktopWrapper>{headerRight}</HeaderRightDesktopWrapper>
             <ThemeToggleButton
@@ -118,7 +119,7 @@ const ThemeToggleButton = styled.div`
     white-space: nowrap;
     position: absolute;
     top: calc(100% + 8px);
-    left: -50%;
+    left: -150%;
     background: rgb(23, 58, 94);
     border-radius: 10px;
     color: white;

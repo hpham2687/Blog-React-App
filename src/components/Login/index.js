@@ -1,19 +1,19 @@
 import { Button, Card, Form, Loader } from "@ahaui/react";
-import React from "react";
-import { useDispatch } from "react-redux";
-import { Link, Navigate } from "react-router-dom";
-import styled from "styled-components";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { AuthFormTitle } from "components/common/AuthFormTitle";
 import Layout from "components/common/Layout";
-import { useAuth } from "hooks/useAuth";
-import { loginAction, resetErrorAction } from "store/authSlice";
-import { useForm } from "react-hook-form";
 import {
   AUTH_ERROR_MESSAGES,
   AUTH_SUCCESS_MESSAGES,
 } from "constants/Auth/Message";
+import { useAuth } from "hooks/useAuth";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { Link, Navigate } from "react-router-dom";
+import { loginAction, resetErrorAction } from "store/authSlice";
+import styled from "styled-components";
 import { notifyNegative, notifyPositive } from "utils/toast";
-import { AuthFormTitle } from "components/common/AuthFormTitle";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 export default function Login() {
@@ -65,8 +65,12 @@ export default function Login() {
   const isHasPasswordError = errors?.password || errorApi?.password;
   return (
     <Layout>
-      <LoginWrapper>
-        <Card style={{ height: "fit-content" }} size={"medium"}>
+      <LoginWrapper className="auth-wrapper">
+        <Card
+          className="u-borderLight"
+          style={{ height: "fit-content" }}
+          size={"medium"}
+        >
           <Card.Body>
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormGroupWrapper>
@@ -169,7 +173,4 @@ const LoginWrapper = styled.div`
   justify-content: center;
   padding-top: 64px;
   height: calc(100vh - 112px);
-  background: url(/assets/images/background.jpeg);
-  background-repeat: no-repeat;
-  background-size: cover;
 `;

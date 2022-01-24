@@ -79,8 +79,12 @@ export default function Register() {
 
   return (
     <Layout>
-      <RegisterWrapper>
-        <Card style={{ height: "fit-content" }} size={"medium"}>
+      <RegisterWrapper className="auth-wrapper">
+        <Card
+          className="u-borderLight"
+          style={{ height: "fit-content" }}
+          size={"medium"}
+        >
           <Card.Body>
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormGroupWrapper>
@@ -222,7 +226,4 @@ const RegisterWrapper = styled.div`
   justify-content: center;
   padding-top: 64px;
   height: calc(100vh - 112px);
-  background: url(/assets/images/background.jpeg);
-  background-repeat: no-repeat;
-  background-size: cover;
 `;
