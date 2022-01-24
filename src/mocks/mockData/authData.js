@@ -32,15 +32,32 @@ async function create({ email, username, password }) {
   validateUserForm({ username, password });
   const id = hash(username);
   const passwordHash = hash(password);
+  // check if username existed
   if (users[id]) {
     const error = new Error(`User with the username "${username}" is existed`);
     error.status = 400;
-    error.custom = 123;
     throw error;
   }
+  // check if email existed
+  const isEmailExisted = isEmailRegistered(email);
+  if (isEmailExisted) {
+    const error = new Error(`Email "${email}" has already been registered`);
+    error.status = 400;
+    throw error;
+  }
+
   users[id] = { id, email, username, passwordHash };
   persist();
   return read(id);
+}
+
+function isEmailRegistered(email) {
+  for (var id of Object.keys(users)) {
+    if (email === users[id]?.email) {
+      return true;
+    }
+  }
+  return false;
 }
 
 async function read(id) {

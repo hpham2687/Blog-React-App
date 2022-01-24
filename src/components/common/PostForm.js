@@ -1,4 +1,5 @@
 import { Button, Card, Form, Loader } from "@ahaui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { ADD_POST_ERROR_MESSAGES } from "constants/AddPost/Message";
 import { FORM_VALIDATOR } from "constants/common";
 import PropTypes from "prop-types"; // ES6
@@ -6,6 +7,8 @@ import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { device } from "utils/mediaQuery";
+import * as Yup from "yup";
+import { FormTitle } from "./FormTitle";
 
 PostForm.propTypes = {
   submitText: PropTypes.string.isRequired,
@@ -27,15 +30,53 @@ export default function PostForm({
   data = null,
   ...rest
 }) {
+  Yup.addMethod(Yup.string, "imageUrlValidation", function (errorMessage) {
+    return this.test(`test-format`, errorMessage, function (value) {
+      const { path, createError } = this;
+      if (!value) return true;
+      return (
+        /(https?:\/\/.*\.(?:png|jpg))/i.test(value) ||
+        createError({ path, message: errorMessage })
+      );
+    });
+  });
+
+  const validationSchema = Yup.object().shape({
+    title: Yup.string()
+      .required(ADD_POST_ERROR_MESSAGES.TITLE_REQUIRED)
+      .min(
+        FORM_VALIDATOR.MIN_TITLE_LENGTH,
+        ADD_POST_ERROR_MESSAGES.TITLE_LENGTH_SHORT
+      )
+      .max(
+        FORM_VALIDATOR.MAX_TITLE_LENGTH,
+        ADD_POST_ERROR_MESSAGES.TITLE_LENGTH_EXCEED
+      ),
+    content: Yup.string()
+      .required(ADD_POST_ERROR_MESSAGES.CONTENT_REQUIRED)
+      .min(
+        FORM_VALIDATOR.MIN_CONTENT_LENGTH,
+        ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_SHORT
+      )
+      .max(
+        FORM_VALIDATOR.MAX_CONTENT_LENGTH,
+        ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_EXCEED
+      ),
+    picture: Yup.string().imageUrlValidation(
+      ADD_POST_ERROR_MESSAGES.INVALID_IMAGE_URL
+    ),
+  });
+
   const {
     control,
     register,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { isSubmitting, errors },
   } = useForm({
     mode: "onChange",
     defaultValues: data,
+    resolver: yupResolver(validationSchema),
   });
 
   useEffect(() => {
@@ -47,11 +88,16 @@ export default function PostForm({
   const isHasPictureError = errors?.picture;
 
   return (
-    <PostFormWrapper>
-      <StyledCard size={"medium"}>
+    <PostFormWrapper className="post-form-wrapper">
+      <StyledCard className="u-borderLight" size={"medium"}>
         <Card.Body>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <Form.Group>
+                <FormTitle>
+                  {submitText === "Add" ? "Add" : "Edit"} Post
+                </FormTitle>
+              </Form.Group>
               <Form.Group controlId="addPostForm.title">
                 <Form.Label>Title</Form.Label>
                 <Controller
@@ -62,17 +108,7 @@ export default function PostForm({
                       type="text"
                       isInvalid={isHasTitleNameError}
                       placeholder="Enter title"
-                      {...register("title", {
-                        required: ADD_POST_ERROR_MESSAGES.TITLE_REQUIRED,
-                        maxLength: {
-                          value: FORM_VALIDATOR.MAX_TITLE_LENGTH,
-                          message: ADD_POST_ERROR_MESSAGES.TITLE_LENGTH_EXCEED,
-                        },
-                        minLength: {
-                          value: FORM_VALIDATOR.MIN_TITLE_LENGTH,
-                          message: ADD_POST_ERROR_MESSAGES.TITLE_LENGTH_SHORT,
-                        },
-                      })}
+                      {...register("title")}
                       {...field}
                     />
                   )}
@@ -92,22 +128,11 @@ export default function PostForm({
                   render={({ field }) => (
                     <Form.Input
                       as="textarea"
-                      rows={3}
+                      rows={5}
                       type="text"
                       isInvalid={isHasContentError}
                       placeholder="Enter content"
-                      {...register("content", {
-                        maxLength: {
-                          value: FORM_VALIDATOR.MAX_CONTENT_LENGTH,
-                          message:
-                            ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_EXCEED,
-                        },
-                        minLength: {
-                          value: FORM_VALIDATOR.MIN_CONTENT_LENGTH,
-                          message: ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_SHORT,
-                        },
-                        required: ADD_POST_ERROR_MESSAGES.CONTENT_REQUIRED,
-                      })}
+                      {...register("content")}
                       {...field}
                     />
                   )}
@@ -130,13 +155,7 @@ export default function PostForm({
                       type="text"
                       isInvalid={isHasPictureError}
                       placeholder="Enter image url"
-                      {...register("picture", {
-                        pattern: {
-                          value:
-                            /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
-                          message: ADD_POST_ERROR_MESSAGES.INVALID_IMAGE_URL,
-                        },
-                      })}
+                      {...register("picture")}
                     />
                   )}
                 />
@@ -144,15 +163,16 @@ export default function PostForm({
                 {isHasPictureError && (
                   <Form.Feedback data-testid="error-picture-msg" type="invalid">
                     {errors?.picture.message}
-                    {/* {errorApi?.password || errors?.password.message} */}
                   </Form.Feedback>
                 )}
               </Form.Group>
               <Button
+                disabled={isSubmitting}
                 size={"small"}
                 type="submit"
                 variant="primary"
-                className="u-marginRightSmall"
+                style={{ marginLeft: "auto" }}
+                data-testid="post-form-submit-btn"
               >
                 <Button.Label>
                   {loading ? (
@@ -175,10 +195,7 @@ const PostFormWrapper = styled.div`
   justify-content: center;
   padding: 12px 8px;
   padding-top: 64px;
-  height: calc(100vh - 88px);
-  background: url(/assets/images/background.jpeg);
-  background-repeat: no-repeat;
-  background-size: cover;
+  height: calc(100vh - 152px);
 `;
 
 const StyledCard = styled(Card)`

@@ -1,4 +1,4 @@
-const apiURL = "http://localhost:3000";
+const apiURL = process.env.REACT_APP_API_ENDPOINT;
 
 async function client(
   endpoint,
@@ -22,10 +22,11 @@ async function client(
     ...customConfig,
   };
   var url = new URL(`${apiURL}/${endpoint}`);
+
   if (params) {
-    if (!params.search) delete params.search;
     url.search = new URLSearchParams(params).toString();
   }
+
   return window
     .fetch(url, config)
     .then(async (response) => {
@@ -37,7 +38,13 @@ async function client(
       }
     })
     .catch((error) => {
-      return Promise.reject(error);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        "UNKNOWN ERROR";
+      return Promise.reject(message);
     });
 }
 

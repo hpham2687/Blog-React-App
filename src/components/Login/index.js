@@ -1,27 +1,43 @@
 import { Button, Card, Form, Loader } from "@ahaui/react";
-import React from "react";
-import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
-import styled from "styled-components";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FormTitle } from "components/common/FormTitle";
 import Layout from "components/common/Layout";
-import { useAuth } from "hooks/useAuth";
-import { loginAction, resetErrorAction } from "store/authSlice";
-import { useForm } from "react-hook-form";
 import {
   AUTH_ERROR_MESSAGES,
   AUTH_SUCCESS_MESSAGES,
 } from "constants/Auth/Message";
+import { useAuth } from "hooks/useAuth";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { Link, Navigate } from "react-router-dom";
+import { loginAction, resetErrorAction } from "store/authSlice";
+import styled from "styled-components";
 import { notifyNegative, notifyPositive } from "utils/toast";
+import * as Yup from "yup";
 
 export default function Login() {
   const { isLoggedIn, loading, error: errorApi } = useAuth();
   const dispatch = useDispatch();
+
+  const validationSchema = Yup.object().shape({
+    username: Yup.string()
+      .required(AUTH_ERROR_MESSAGES.USERNAME_REQUIRED)
+      .min(6, AUTH_ERROR_MESSAGES.USERNAME_INVALID_SHORT_LENGTH)
+      .max(20, AUTH_ERROR_MESSAGES.USERNAME_INVALID_LONG_LENGTH),
+    password: Yup.string()
+      .required(AUTH_ERROR_MESSAGES.PASSWORD_REQUIRED)
+      .min(6, AUTH_ERROR_MESSAGES.PASSWORD_INVALID_SHORT_LENGTH)
+      .max(40, AUTH_ERROR_MESSAGES.PASSWORD_INVALID_LONG_LENGTH),
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     mode: "onChange",
+    resolver: yupResolver(validationSchema),
   });
 
   const onSubmit = ({ username, password }) => {
@@ -37,7 +53,7 @@ export default function Login() {
         notifyPositive({ message: AUTH_SUCCESS_MESSAGES.LOGIN_SUCCESS });
       })
       .catch((error) => {
-        return notifyNegative({ message: error });
+        return notifyNegative({ message: error.message });
       });
   };
 
@@ -49,23 +65,25 @@ export default function Login() {
   const isHasPasswordError = errors?.password || errorApi?.password;
   return (
     <Layout>
-      <LoginWrapper>
-        <Card style={{ height: "fit-content" }} size={"medium"}>
+      <LoginWrapper className="auth-wrapper">
+        <Card
+          className="u-borderLight"
+          style={{ height: "fit-content" }}
+          size={"medium"}
+        >
           <Card.Body>
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormGroupWrapper>
+                <Form.Group>
+                  <FormTitle>Login</FormTitle>
+                </Form.Group>
                 <Form.Group controlId="loginForm.username">
                   <Form.Label>Username</Form.Label>
                   <Form.Input
                     type="text"
                     isInvalid={isHasUsernameError}
-                    placeholder="Enter text"
+                    placeholder="Enter username"
                     {...register("username", {
-                      required: AUTH_ERROR_MESSAGES.USERNAME_REQUIRED,
-                      minLength: {
-                        value: 6,
-                        message: AUTH_ERROR_MESSAGES.USERNAME_INVALID_LENGTH,
-                      },
                       onChange: () => {
                         dispatch(resetErrorAction());
                       },
@@ -87,11 +105,6 @@ export default function Login() {
                     isInvalid={isHasPasswordError}
                     placeholder="Enter password"
                     {...register("password", {
-                      required: AUTH_ERROR_MESSAGES.PASSWORD_REQUIRED,
-                      minLength: {
-                        value: 6,
-                        message: AUTH_ERROR_MESSAGES.PASSWORD_INVALID_LENGTH,
-                      },
                       onChange: () => {
                         dispatch(resetErrorAction());
                       },
@@ -112,8 +125,9 @@ export default function Login() {
                   type="submit"
                   variant="primary"
                   className="u-marginRightSmall"
+                  style={{ width: "100%" }}
                 >
-                  <Button.Label>
+                  <Button.Label style={{ fontWeight: "500" }}>
                     {loading ? (
                       <Loader aria-label="Loading" size="small" />
                     ) : (
@@ -121,6 +135,11 @@ export default function Login() {
                     )}
                   </Button.Label>
                 </StyledSubmitBtn>
+                <Form.Group>
+                  <HasAccountContainer>
+                    Don't have an account? <Link to="/register">Register</Link>
+                  </HasAccountContainer>
+                </Form.Group>
               </FormGroupWrapper>
             </form>
           </Card.Body>
@@ -129,6 +148,12 @@ export default function Login() {
     </Layout>
   );
 }
+
+const HasAccountContainer = styled.p`
+  margin: 0;
+  margin-top: 8px;
+  font-size: 0.9rem;
+`;
 
 const StyledSubmitBtn = styled(Button)`
   margin-left: auto;
@@ -144,8 +169,5 @@ const LoginWrapper = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 64px;
-  height: calc(100vh - 88px);
-  background: url(/assets/images/background.jpeg);
-  background-repeat: no-repeat;
-  background-size: cover;
+  height: calc(100vh - 112px);
 `;

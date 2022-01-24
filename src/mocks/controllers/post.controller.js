@@ -36,6 +36,32 @@ export const getPostDetailCtrl = async (req, res, ctx) => {
   }
 };
 
+export const getUserPostDetailCtrl = async (req, res, ctx) => {
+  try {
+    let { postId } = req.params;
+    const user = await authData.getUser(req);
+    const post = await postsData.read(postId);
+    if (user.id !== post.authorId) {
+      return res(
+        ctx.status(403),
+        ctx.json({
+          status: "fail",
+          message: "You dont have permission to access this page",
+        })
+      );
+    }
+    return res(ctx.json(post));
+  } catch (error) {
+    return res(
+      ctx.status(500),
+      ctx.json({
+        status: "fail",
+        message: error.message,
+      })
+    );
+  }
+};
+
 export const getUserPosts = async (req, res, ctx) => {
   try {
     // Validate user

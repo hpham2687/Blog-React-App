@@ -12,8 +12,8 @@ function validatePostForm({ title, content }) {
 }
 
 function getFilterParams(req) {
-  let page = req.url.searchParams.get("page");
-  let items_per_page = req.url.searchParams.get("items_per_page");
+  let page = parseInt(req.url.searchParams.get("page"));
+  let items_per_page = parseInt(req.url.searchParams.get("items_per_page"));
   let search = req.url.searchParams.get("search") || null;
   return { page, items_per_page, search };
 }

@@ -16,10 +16,9 @@ test("switch to the dark styles when toggle button", async () => {
     </Provider>
   );
   render(<Home />, { wrapper: Wrapper });
-  const SwitchBtnWrapper = screen.getByTestId("theme-toggle-btn");
-  const SwitchButton = within(SwitchBtnWrapper).getByRole("button");
+  const SwitchButton = screen.getByTestId("theme-toggle-btn");
 
-  await act(async () => await userEvent.click(SwitchButton));
+  userEvent.click(SwitchButton);
   const header = screen.getByTestId("header");
-  expect(header).toHaveClass("u-backgroundDark");
+  expect(header).toHaveStyle("background: rgba(10, 25, 41, 0.72);");
 });

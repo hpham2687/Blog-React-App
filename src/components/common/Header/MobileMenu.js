@@ -11,18 +11,22 @@ MobileMenu.propTypes = {
   isLoggedIn: PropTypes.bool,
 };
 
-export default function MobileMenu({ onClose, isLoggedIn }) {
+const style = {
+  left: "0px",
+};
+export default function MobileMenu({ onClose, isLoggedIn, isOpenMobileMenu }) {
   const dispatch = useDispatch();
   const handleClickLogout = () => {
     dispatch(logout());
     onClose();
   };
   return (
-    <MobileMenuWrapper>
+    <MobileMenuWrapper style={isOpenMobileMenu ? style : null}>
       <CloseMenuIcon onClick={onClose} size="medium" name="close" />
       <ul>
         {!isLoggedIn ? (
           <>
+            <li className="logo-mobile">KRISS BLOG</li>
             <li>
               <Link to="/login">Login</Link>
             </li>
@@ -32,8 +36,9 @@ export default function MobileMenu({ onClose, isLoggedIn }) {
           </>
         ) : (
           <>
+            <li className="logo-mobile">KRISS BLOG</li>
             <li>
-              <Link to="/manage">Manage Post</Link>
+              <Link to="/manage">Manage Posts</Link>
             </li>
             <li>
               <span style={{ cursor: "pointer" }} onClick={handleClickLogout}>
@@ -51,6 +56,7 @@ const CloseMenuIcon = styled(Icon)`
   right: 10px;
   top: 10px;
   cursor: pointer;
+  color: #ggg;
 `;
 
 const MobileMenuWrapper = styled.div`
@@ -58,16 +64,17 @@ const MobileMenuWrapper = styled.div`
   position: fixed;
   top: 0;
   bottom: 0;
+  left: 100%;
   width: 100%;
   z-index: 100;
+  transition: all 0.25s linear;
   ul {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-    justify-content: space-evenly;
+    li:first-child {
+      background: #ddd;
+      border-bottom: 1px solid #ddd;
+    }
     li {
-      border-bottom: 1px solid #eee;
+      padding: 10px;
       display: flex;
       height: 100%;
       justify-content: center;
@@ -82,6 +89,11 @@ const MobileMenuWrapper = styled.div`
         text-decoration: none;
         color: black;
       }
+    }
+    .logo-mobile {
+      color: black;
+      font-size: 1.4rem;
+      font-weight: 400;
     }
   }
 `;

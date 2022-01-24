@@ -1,4 +1,4 @@
-import { Icon } from "@ahaui/react";
+import { Icon, Breadcrumb } from "@ahaui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -9,9 +9,10 @@ import {
 } from "store/userPostsSlice";
 import Layout from "components/common/Layout";
 import LoadMoreBtn from "components/common/LoadMoreBtn";
-import PostList from "components/Home/Post/PostList";
-import PostListSkeleton from "components/Home/Post/PostListSkeleton";
+import PostList from "components/common/Post/PostList";
+import PostListSkeleton from "components/common/Post/PostListSkeleton";
 import { AddIcon } from "../AddPost/AddIcon";
+import { notifyNegative } from "utils/toast";
 
 export default function Manage() {
   const dispatch = useDispatch();
@@ -20,11 +21,21 @@ export default function Manage() {
     (state) => state.userPosts
   );
   const canLoadMore = page < maximumNumOfPages;
+
   const onLoadMore = () => {
-    dispatch(loadMoreUserPostsAction({}));
+    dispatch(loadMoreUserPostsAction({}))
+      .unwrap()
+      .catch((error) => {
+        return notifyNegative({ message: error.message });
+      });
   };
+
   useEffect(() => {
-    dispatch(getUserPostsAction({ page: 1, items_per_page: 6 }));
+    dispatch(getUserPostsAction({ page: 1, items_per_page: 10 }))
+      .unwrap()
+      .catch((error) => {
+        return notifyNegative({ message: error.message });
+      });
   }, [dispatch]);
 
   if (error) {
@@ -40,6 +51,12 @@ export default function Manage() {
 
   return (
     <Layout>
+      <Breadcrumb style={{ padding: "10px 12px", margin: "0 auto" }}>
+        <Breadcrumb.Item>
+          <Link to={`/`}>Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item href="#">Manage Posts</Breadcrumb.Item>
+      </Breadcrumb>
       {loading && <PostListSkeleton aria-label="loading" num={5} />}
       {data && data.length > 0 ? (
         <PostList isManagePost={true} data={data} />

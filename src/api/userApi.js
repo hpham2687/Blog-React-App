@@ -9,9 +9,10 @@ function login({ username, password }) {
     },
   });
 }
-function register({ username, password }) {
+function register({ email, username, password }) {
   return client("register", {
     data: {
+      email,
       username,
       password,
     },
@@ -19,22 +20,28 @@ function register({ username, password }) {
 }
 
 function getPosts(page, items_per_page, search = null) {
+  const params = {
+    page,
+    items_per_page,
+    search,
+  };
+  if (!search) delete params.search;
+
   return client("posts", {
-    params: {
-      page,
-      items_per_page,
-      search,
-    },
+    params,
   });
 }
 
 function getUserPosts(page, items_per_page, search = null) {
+  const params = {
+    page,
+    items_per_page,
+    search,
+  };
+  if (!search) delete params.search;
+
   return client("user/posts", {
-    params: {
-      page,
-      items_per_page,
-      search,
-    },
+    params,
     headers: getHeadersWithToken(),
   });
 }

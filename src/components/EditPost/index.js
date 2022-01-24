@@ -1,47 +1,52 @@
-import { Button } from "@ahaui/react";
-import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import styled from "styled-components";
+import { Breadcrumb } from "@ahaui/react";
+import { editPost } from "api/postApi";
+import Layout from "components/common/Layout";
+import PostForm from "components/common/PostForm";
 import {
   EDIT_POST_ERROR_MESSAGES,
   EDIT_POST_SUCCESS_MESSAGES,
 } from "constants/EditPost/Message";
-import usePostDetail from "hooks/usePostDetail";
+import useUserPostDetail from "hooks/useUserPostDetail";
+import React, { useState } from "react";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { notifyNegative, notifyPositive } from "utils/toast";
-import Layout from "components/common/Layout";
-import PostForm from "components/common/PostForm";
-import { editPost } from "api/postApi";
 import EditPostSkeleton from "./EditPostSkeleton";
 
 export default function EditPost() {
   const { postId } = useParams();
-
-  const { postData, loading } = usePostDetail(postId);
+  let history = useNavigate();
+  const { postData, loading, error } = useUserPostDetail(postId);
   const [loadingEditPost, setLoadingEditPost] = useState(false);
-
+  if (error) {
+    return <Navigate to="/" />;
+  }
   const onSubmitEditPost = async (postData) => {
     setLoadingEditPost(true);
     editPost({ ...postData, id: postId })
       .then(() => {
+        setLoadingEditPost(false);
+        history("/manage");
         notifyPositive({
           message: EDIT_POST_SUCCESS_MESSAGES.EDIT_POST_SUCCESS,
         });
       })
       .catch((err) => {
-        notifyNegative({ message: EDIT_POST_ERROR_MESSAGES.EDIT_POST_FAIL });
-      })
-      .finally(() => {
         setLoadingEditPost(false);
+        notifyNegative({ message: EDIT_POST_ERROR_MESSAGES.EDIT_POST_FAIL });
       });
   };
 
   return (
     <Layout>
-      <BackButton variant="primary">
-        <Link style={{ display: "block", width: "100%" }} to={`/manage`}>
-          Back
-        </Link>
-      </BackButton>
+      <Breadcrumb style={{ padding: "10px 12px", margin: "0 auto" }}>
+        <Breadcrumb.Item>
+          <Link to={`/`}>Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to={`/manage`}>Manage Posts</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item href="#">Edit Post</Breadcrumb.Item>
+      </Breadcrumb>
       <PostForm
         loading={loadingEditPost}
         submitText="Save"
@@ -52,10 +57,3 @@ export default function EditPost() {
     </Layout>
   );
 }
-
-const BackButton = styled(Button)`
-  a {
-    color: white;
-    text-decoration: none;
-  }
-`;

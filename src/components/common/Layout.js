@@ -1,6 +1,6 @@
 import { PageLayout } from "@ahaui/react";
 import React from "react";
-import Header from "components/Header/Header";
+import Header from "components/common/Header/Header";
 import styled from "styled-components";
 
 export default function Layout({ children }) {
@@ -11,12 +11,12 @@ export default function Layout({ children }) {
       </PageLayout.Header>
       <StyledPageLayoutBody
         id="page-container-body"
-        style={{ paddingTop: "62px" }}
+        style={{ paddingTop: "69px" }}
         className={`u-backgroundLightest u-flexColumn`}
       >
         {children}
       </StyledPageLayoutBody>
-      <StyledPageFooter className="u-backgroundPositiveLight">
+      <StyledPageFooter>
         <div className="footer-content">
           Contact us - <a href="http://facebook.com/krysspham">Kriss Pham</a>
         </div>
@@ -30,6 +30,8 @@ const StyledPageFooter = styled(PageLayout.Footer)`
     text-align: center;
     color: var(--colorPrimary);
   }
+  border-top: 1px dashed #dfe1e6;
+  padding: 12px;
 `;
 const StyledPageLayoutBody = styled(PageLayout.Body)`
   padding-top: 64px;

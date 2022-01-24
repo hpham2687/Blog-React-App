@@ -63,5 +63,5 @@ test("correctly rejects the promise if there is an error", async () => {
       return res(ctx.status(400), ctx.json(testError));
     })
   );
-  await expect(client(endpoint)).rejects.toEqual(testError);
+  await expect(client(endpoint)).rejects.toEqual(testError.message);
 });

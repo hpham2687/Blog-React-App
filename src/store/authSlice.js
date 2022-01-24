@@ -4,22 +4,14 @@ import * as UserApi from "api/userApi";
 export const registerAction = createAsyncThunk(
   "auth/register",
   async ({ email, username, password }, thunkAPI) => {
-    return UserApi.register({ email, username, password }).catch((error) => {
-      const message =
-        error?.response?.data?.message || error?.message || "UNKNOWN ERROR";
-      return thunkAPI.rejectWithValue(message);
-    });
+    return UserApi.register({ email, username, password });
   }
 );
 
 export const loginAction = createAsyncThunk(
   "auth/login",
   async ({ username, password }, thunkAPI) => {
-    return UserApi.login({ username, password }).catch((error) => {
-      const message =
-        error?.response?.data?.message || error?.message || "UNKNOWN ERROR";
-      return thunkAPI.rejectWithValue(message);
-    });
+    return UserApi.login({ username, password });
   }
 );
 

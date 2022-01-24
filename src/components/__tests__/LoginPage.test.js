@@ -40,7 +40,11 @@ test(`logging in displays the manage option, success login message`, async () =>
   );
 
   renderApp();
-  userEvent.click(screen.getByText(/login/i));
+  userEvent.click(
+    screen.getByRole("button", {
+      name: /login/i,
+    })
+  );
   userEvent.type(
     screen.getByRole("textbox", {
       name: /username/i,
@@ -52,15 +56,15 @@ test(`logging in displays the manage option, success login message`, async () =>
   act(() => userEvent.click(screen.getByTestId("login-btn")));
 
   // expect loading to be show
-  expect(
-    await screen.findByRole("button", {
-      name: /loading/i,
-    })
-  ).toBeInTheDocument();
+
+  await screen.findByRole("button", {
+    name: /loading/i,
+  });
+
   // expect alert success message to be show
-  expect(
-    (await screen.findByTestId("toast-alert")).textContent
-  ).toMatchInlineSnapshot(`"Login Successfully"`);
+  expect((await screen.findByTestId("toast-alert")).textContent).toBe(
+    "Login Successfully"
+  );
   // expect page to be redirected to /
   expect(global.window.location.pathname).toEqual("/");
   // expect alert manage button to be show
@@ -94,7 +98,11 @@ test(`dispay error login message when server is down`, async () => {
   );
 
   renderApp();
-  userEvent.click(screen.getByText(/login/i));
+  userEvent.click(
+    screen.getByRole("button", {
+      name: /login/i,
+    })
+  );
   userEvent.type(
     screen.getByRole("textbox", {
       name: /username/i,
@@ -106,11 +114,9 @@ test(`dispay error login message when server is down`, async () => {
   act(() => userEvent.click(screen.getByTestId("login-btn")));
 
   // expect loading to be show
-  expect(
-    await screen.findByRole("button", {
-      name: /loading/i,
-    })
-  ).toBeInTheDocument();
+  await screen.findByRole("button", {
+    name: /loading/i,
+  });
   // expect alert success message to be show
   expect(
     (await screen.findByTestId("toast-alert")).textContent

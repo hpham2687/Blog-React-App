@@ -5,6 +5,7 @@
   "dependencies": {
     "@ahaui/css": "^2.0.3",
     "@ahaui/react": "^2.0.2",
+    "@hookform/resolvers": "^2.8.8",
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.16.0",
     "@testing-library/react": "^11.2.7",
@@ -20,7 +21,8 @@
     "react-scripts": "4.0.3",
     "short-uuid": "^4.2.0",
     "styled-components": "^5.3.3",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",

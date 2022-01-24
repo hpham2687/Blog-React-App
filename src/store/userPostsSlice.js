@@ -5,15 +5,7 @@ import * as UserApi from "api/userApi";
 export const getUserPostsAction = createAsyncThunk(
   "posts/getUserPosts",
   async ({ page = 1, items_per_page = 6, search = null }, thunkAPI) => {
-    return UserApi.getUserPosts(page, items_per_page, search).catch((error) => {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    });
+    return UserApi.getUserPosts(page, items_per_page, search);
   }
 );
 
@@ -25,20 +17,13 @@ export const loadMoreUserPostsAction = createAsyncThunk(
     } = thunkAPI.getState();
     let newPage = ++page;
 
-    return UserApi.getUserPosts(newPage, items_per_page).catch((error) => {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    });
+    return UserApi.getUserPosts(newPage, items_per_page);
   }
 );
+
 const initialState = {
   data: [],
-  items_per_page: 6,
+  items_per_page: 10,
   page: 1,
   maximumNumOfPages: null,
   loading: false,
@@ -79,7 +64,6 @@ const userPostsSlice = createSlice({
     },
     [loadMoreUserPostsAction.rejected]: (state, action) => {
       state.loading = false;
-      state.data = null;
     },
   },
 });

@@ -29,10 +29,9 @@ test("load post detail content at initial", async () => {
 
   renderWithWrapper(<PostDetail />);
   await waitForElementToBeRemoved(() => screen.getByTestId("Loading"));
-  expect(screen.getByText(/post title demo/i)).toBeInTheDocument();
-  expect(
-    screen.getByText(
-      /post content demo post content demo post content demo post content demo/i
-    )
-  ).toBeInTheDocument();
+  screen.getByText(/post title demo/i);
+
+  screen.getByText(
+    /post content demo post content demo post content demo post content demo/i
+  );
 });

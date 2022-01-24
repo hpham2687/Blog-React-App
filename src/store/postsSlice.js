@@ -2,59 +2,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as PostApi from "api/postApi";
 import * as UserApi from "api/userApi";
-import { getUserPostsAction } from "./userPostsSlice";
 
 export const createPostsAction = createAsyncThunk(
   "posts/createPosts",
   async (postData, thunkAPI) => {
-    return PostApi.createPost(postData).catch((error) => {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    });
+    return PostApi.createPost(postData);
   }
 );
 
 export const removePostAction = createAsyncThunk(
   "posts/removePost",
   async ({ postId }, thunkAPI) => {
-    return PostApi.removePost(postId)
-      .then((response) => {
-        thunkAPI.dispatch(getUserPostsAction({ page: 1, items_per_page: 6 }));
-        return response;
-      })
-      .catch((error) => {
-        const message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        return thunkAPI.rejectWithValue(message);
-      });
+    return PostApi.removePost(postId);
   }
 );
 
 export const getPostsAction = createAsyncThunk(
   "posts/getPosts",
-  async ({ page = 1, items_per_page = 6, search = null }, thunkAPI) => {
-    return UserApi.getPosts(page, items_per_page, search)
-      .then((data) => {
-        return data;
-      })
-      .catch((error) => {
-        const message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        return thunkAPI.rejectWithValue(message);
-      });
+  async ({ page = 1, items_per_page = 10, search = null }, thunkAPI) => {
+    return UserApi.getPosts(page, items_per_page, search);
   }
 );
 
@@ -65,21 +31,13 @@ export const loadMorePostsAction = createAsyncThunk(
       posts: { items_per_page, page, search },
     } = thunkAPI.getState();
     let newPage = ++page;
-    return UserApi.getPosts(newPage, items_per_page, search).catch((error) => {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    });
+    return UserApi.getPosts(newPage, items_per_page, search);
   }
 );
 
 const initialState = {
   data: [],
-  items_per_page: 6,
+  items_per_page: 10,
   page: 1,
   search: null,
   maximumNumOfPages: null,
@@ -124,7 +82,6 @@ const postsSlice = createSlice({
     },
     [loadMorePostsAction.rejected]: (state, action) => {
       state.loading = false;
-      state.data = null;
     },
   },
 });
