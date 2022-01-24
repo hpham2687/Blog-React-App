@@ -24,7 +24,6 @@ export default function EditPost() {
   }
   const onSubmitEditPost = async (postData) => {
     setLoadingEditPost(true);
-    console.log(postData);
     editPost({ ...postData, id: postId })
       .then(() => {
         history("/manage");

@@ -8,6 +8,7 @@ import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { device } from "utils/mediaQuery";
 import * as Yup from "yup";
+import { FormTitle } from "./FormTitle";
 
 PostForm.propTypes = {
   submitText: PropTypes.string.isRequired,
@@ -92,6 +93,11 @@ export default function PostForm({
         <Card.Body>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div style={{ display: "flex", flexDirection: "column" }}>
+              <Form.Group>
+                <FormTitle>
+                  {submitText === "Add" ? "Add" : "Edit"} Post
+                </FormTitle>
+              </Form.Group>
               <Form.Group controlId="addPostForm.title">
                 <Form.Label>Title</Form.Label>
                 <Controller

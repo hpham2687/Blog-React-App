@@ -12,7 +12,7 @@ import { useAuth } from "hooks/useAuth";
 import { registerAction, resetErrorAction } from "store/authSlice";
 import Layout from "components/common/Layout";
 import { notifyNegative, notifyPositive } from "utils/toast";
-import { AuthFormTitle } from "components/common/AuthFormTitle";
+import { FormTitle } from "components/common/FormTitle";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
@@ -89,7 +89,7 @@ export default function Register() {
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormGroupWrapper>
                 <Form.Group>
-                  <AuthFormTitle>Register</AuthFormTitle>
+                  <FormTitle>Register</FormTitle>
                 </Form.Group>
                 <Form.Group controlId="registerForm.email">
                   <Form.Label>Email</Form.Label>

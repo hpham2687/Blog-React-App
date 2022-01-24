@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, Separator, Tag } from "@ahaui/react";
+import { Avatar, Icon, Button, Card, Separator, Tag } from "@ahaui/react";
 import Layout from "components/common/Layout";
 import { useAuth } from "hooks/useAuth";
 import usePostDetail from "hooks/usePostDetail";
@@ -31,14 +31,11 @@ export default function PostDetail() {
     position: absolute;
     filter: blur(1px);
   `;
-  console.log(content);
 
   return (
     <Layout>
-      <BackButton variant="primary">
-        <Link style={{ display: "block", width: "100%" }} to={`/`}>
-          Back
-        </Link>
+      <BackButton to={`/`}>
+        <Icon size="medium" name="arrowRoundBack" /> Back to home page
       </BackButton>
       <PostListWrapper>
         {loading ? (
@@ -96,10 +93,15 @@ const ThumbnailTitle = styled.div`
   margin: 8px 12px;
 `;
 
-const BackButton = styled(Button)`
-  a {
-    color: white;
-    text-decoration: none;
+const BackButton = styled(Link)`
+  transition: all 0.1s linear;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  align-items: center;
+  color: black;
+  &:hover {
+    transform: translateY(-1px);
   }
 `;
 

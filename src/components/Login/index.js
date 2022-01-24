@@ -1,6 +1,6 @@
 import { Button, Card, Form, Loader } from "@ahaui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { AuthFormTitle } from "components/common/AuthFormTitle";
+import { FormTitle } from "components/common/FormTitle";
 import Layout from "components/common/Layout";
 import {
   AUTH_ERROR_MESSAGES,
@@ -75,7 +75,7 @@ export default function Login() {
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormGroupWrapper>
                 <Form.Group>
-                  <AuthFormTitle>Login</AuthFormTitle>
+                  <FormTitle>Login</FormTitle>
                 </Form.Group>
                 <Form.Group controlId="loginForm.username">
                   <Form.Label>Username</Form.Label>
