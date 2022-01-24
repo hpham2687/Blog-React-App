@@ -11,7 +11,7 @@ export default function Layout({ children }) {
       </PageLayout.Header>
       <StyledPageLayoutBody
         id="page-container-body"
-        style={{ paddingTop: "62px" }}
+        style={{ paddingTop: "69px" }}
         className={`u-backgroundLightest u-flexColumn`}
       >
         {children}

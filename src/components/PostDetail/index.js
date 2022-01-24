@@ -93,6 +93,7 @@ const ThumbnailTitle = styled.div`
   border: 3px solid #f1f1f1;
   color: white;
   padding: 6px 8px;
+  margin: 8px 12px;
 `;
 
 const BackButton = styled(Button)`
