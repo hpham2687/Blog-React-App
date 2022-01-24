@@ -153,9 +153,6 @@ const HasAccountContainer = styled.p`
   margin: 0;
   margin-top: 8px;
   font-size: 0.9rem;
-  a {
-    color: blue;
-  }
 `;
 
 const StyledSubmitBtn = styled(Button)`
