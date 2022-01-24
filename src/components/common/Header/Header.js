@@ -1,5 +1,4 @@
 import { Header as AhaHeader, Icon } from "@ahaui/react";
-import SwitchThemeButton from "components/common/Header/SwitchThemeButton";
 import { useTheme } from "context/ThemeContext";
 import { useAuth } from "hooks/useAuth";
 import React from "react";
@@ -9,9 +8,11 @@ import { device } from "utils/mediaQuery";
 import AuthenticatedHeaderRight from "./AuthenticatedHeaderRight";
 import MobileMenu from "./MobileMenu";
 import UnAuthenticatedHeaderRight from "./UnAuthenticatedHeaderRight";
+import { ReactComponent as MoonIcon } from "./moon-solid.svg";
+import { ReactComponent as SunIcon } from "./sun-solid.svg";
 
 export default function Header() {
-  const [isDarkMode] = useTheme();
+  const [isDarkMode, setIsDarkMode] = useTheme();
   const { isLoggedIn } = useAuth();
   const [isOpenMobileMenu, setIsOpenMobileMenu] = React.useState(false);
 
@@ -42,15 +43,21 @@ export default function Header() {
         </StyledAhaHeader.Left> */}
           <StyledAhaHeader.Right>
             <HeaderRightDesktopWrapper>{headerRight}</HeaderRightDesktopWrapper>
+            <ThemeToggleButton
+              isDarkMode={isDarkMode}
+              onClick={() => setIsDarkMode((prev) => !prev)}
+            >
+              {isDarkMode ? <SunIcon /> : <MoonIcon />}
+
+              <div className="DarkModeToggle-tooltip">
+                Turn off the {isDarkMode ? "light" : "dark"}
+              </div>
+            </ThemeToggleButton>
             <HeaderRightMobileWrapper onClick={() => setIsOpenMobileMenu(true)}>
               <Icon size="medium" name="menu" />
             </HeaderRightMobileWrapper>
           </StyledAhaHeader.Right>
         </StyledAhaHeader.Main>
-
-        <StyledAhaHeader.AbsoluteCenter>
-          <SwitchThemeButton />
-        </StyledAhaHeader.AbsoluteCenter>
       </StyledAhaHeader>
     </>
   );
@@ -75,13 +82,15 @@ const StyledAhaHeader = styled(AhaHeader)`
 `;
 
 const HeaderRightDesktopWrapper = styled.div`
+  display: flex;
+  align-items: center;
   padding-left: 32px;
-  padding-right: 32px;
   @media ${device.mobileL} {
     display: none;
   }
 `;
 const HeaderRightMobileWrapper = styled.div`
+  margin-left: 6px;
   svg {
     cursor: pointer;
     display: none;
@@ -91,5 +100,39 @@ const HeaderRightMobileWrapper = styled.div`
     svg {
       display: block;
     }
+  }
+`;
+
+const ThemeToggleButton = styled.div`
+  transition: background 0.3s ease-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border: 1px solid rgb(224, 227, 231);
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  .DarkModeToggle-tooltip {
+    white-space: nowrap;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: -50%;
+    background: rgb(23, 58, 94);
+    border-radius: 10px;
+    color: white;
+    padding: 6px 8px;
+    display: none;
+  }
+  &:hover {
+    .DarkModeToggle-tooltip {
+      display: block;
+    }
+  }
+  svg {
+    margin: 0;
+    width: 20px;
+    height: 20px;
   }
 `;
