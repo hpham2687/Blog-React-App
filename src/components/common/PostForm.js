@@ -29,6 +29,17 @@ export default function PostForm({
   data = null,
   ...rest
 }) {
+  Yup.addMethod(Yup.string, "imageUrlValidation", function (errorMessage) {
+    return this.test(`test-format`, errorMessage, function (value) {
+      const { path, createError } = this;
+      if (!value) return true;
+      return (
+        /(https?:\/\/.*\.(?:png|jpg))/i.test(value) ||
+        createError({ path, message: errorMessage })
+      );
+    });
+  });
+
   const validationSchema = Yup.object().shape({
     title: Yup.string()
       .required(ADD_POST_ERROR_MESSAGES.TITLE_REQUIRED)
@@ -50,8 +61,7 @@ export default function PostForm({
         FORM_VALIDATOR.MAX_CONTENT_LENGTH,
         ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_EXCEED
       ),
-    picture: Yup.string().matches(
-      /(https?:\/\/.*\.(?:png|jpg))/i,
+    picture: Yup.string().imageUrlValidation(
       ADD_POST_ERROR_MESSAGES.INVALID_IMAGE_URL
     ),
   });
