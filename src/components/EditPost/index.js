@@ -17,8 +17,6 @@ export default function EditPost() {
   let history = useNavigate();
   const { postData, loading, error } = useUserPostDetail(postId);
   const [loadingEditPost, setLoadingEditPost] = useState(false);
-  console.log({ postData });
-
   if (error) {
     return <Navigate to="/" />;
   }
@@ -26,16 +24,15 @@ export default function EditPost() {
     setLoadingEditPost(true);
     editPost({ ...postData, id: postId })
       .then(() => {
+        setLoadingEditPost(false);
         history("/manage");
         notifyPositive({
           message: EDIT_POST_SUCCESS_MESSAGES.EDIT_POST_SUCCESS,
         });
       })
       .catch((err) => {
-        notifyNegative({ message: EDIT_POST_ERROR_MESSAGES.EDIT_POST_FAIL });
-      })
-      .finally(() => {
         setLoadingEditPost(false);
+        notifyNegative({ message: EDIT_POST_ERROR_MESSAGES.EDIT_POST_FAIL });
       });
   };
 

@@ -47,7 +47,6 @@ async function create({ email, username, password }) {
   }
 
   users[id] = { id, email, username, passwordHash };
-  console.log(users[id]);
   persist();
   return read(id);
 }

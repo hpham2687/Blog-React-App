@@ -38,8 +38,6 @@ async function client(
       }
     })
     .catch((error) => {
-      console.log("vao error");
-      console.log({ error });
       const message =
         (error.response &&
           error.response.data &&

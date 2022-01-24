@@ -49,7 +49,7 @@ test(`register in displays the manage option, success register message`, async (
   mockApi();
 
   renderApp();
-  userEvent.click(screen.getByText(/register/i));
+  userEvent.click(screen.getAllByText(/register/i)[0]);
 
   userEvent.type(
     screen.getByRole("textbox", {
@@ -63,7 +63,8 @@ test(`register in displays the manage option, success register message`, async (
     }),
     username
   );
-  userEvent.type(screen.getByLabelText(/password/i), password);
+  userEvent.type(screen.getAllByLabelText(/password/i)[0], password);
+  userEvent.type(screen.getAllByLabelText(/password/i)[1], password);
   userEvent.click(screen.getByTestId("register-btn"));
 
   // expect loading to be show
@@ -95,7 +96,7 @@ test(`display error register message when server is down`, async () => {
   );
 
   renderApp();
-  userEvent.click(screen.getByText(/register/i));
+  userEvent.click(screen.getAllByText(/register/i)[0]);
 
   userEvent.type(
     screen.getByRole("textbox", {
@@ -109,7 +110,8 @@ test(`display error register message when server is down`, async () => {
     }),
     username
   );
-  userEvent.type(screen.getByLabelText(/password/i), password);
+  userEvent.type(screen.getAllByLabelText(/password/i)[0], password);
+  userEvent.type(screen.getAllByLabelText(/password/i)[1], password);
   userEvent.click(screen.getByTestId("register-btn"));
 
   // expect loading to be show

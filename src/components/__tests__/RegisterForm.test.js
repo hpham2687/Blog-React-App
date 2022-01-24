@@ -32,7 +32,8 @@ test("show error message when omit required fields register form", async () => {
     username
   );
 
-  userEvent.type(screen.getByLabelText(/password/i), password);
+  userEvent.type(screen.getAllByLabelText(/password/i)[0], password);
+  userEvent.type(screen.getAllByLabelText(/password/i)[1], password);
   userEvent.click(screen.getByTestId("register-btn"));
 
   expect((await screen.findByTestId("error-email-msg")).textContent).toBe(
@@ -79,7 +80,10 @@ test("show error message when username and password is less than 6 character", a
     }),
     username
   );
-  userEvent.type(screen.getByLabelText(/password/i), password);
+
+  userEvent.type(screen.getAllByLabelText(/password/i)[0], password);
+  userEvent.type(screen.getAllByLabelText(/password/i)[1], password);
+
   userEvent.click(screen.getByTestId("register-btn"));
 
   expect((await screen.findByTestId("error-password-msg")).textContent).toBe(

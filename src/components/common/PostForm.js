@@ -172,6 +172,7 @@ export default function PostForm({
                 type="submit"
                 variant="primary"
                 style={{ marginLeft: "auto" }}
+                data-testid="post-form-submit-btn"
               >
                 <Button.Label>
                   {loading ? (

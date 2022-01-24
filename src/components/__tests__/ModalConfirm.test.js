@@ -89,7 +89,11 @@ test("Success message notification when  click confirm remove post button", asyn
   mockApi();
 
   const { container } = renderApp();
-  userEvent.click(screen.getByText(/login/i));
+  userEvent.click(
+    screen.getAllByRole("link", {
+      name: /login/i,
+    })[0]
+  );
   userEvent.type(
     screen.getByRole("textbox", {
       name: /username/i,

@@ -45,6 +45,7 @@ export default function Header() {
           <StyledAhaHeader.Right>
             <HeaderRightDesktopWrapper>{headerRight}</HeaderRightDesktopWrapper>
             <ThemeToggleButton
+              data-testid="theme-toggle-btn"
               isDarkMode={isDarkMode}
               onClick={() => setIsDarkMode((prev) => !prev)}
             >
