@@ -1,16 +1,15 @@
-import { Button, Breadcrumb } from "@ahaui/react";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { createPostsAction } from "store/postsSlice";
+import { Breadcrumb } from "@ahaui/react";
 import Layout from "components/common/Layout";
 import PostForm from "components/common/PostForm";
-import { notifyNegative, notifyPositive } from "utils/toast";
 import {
   ADD_POST_ERROR_MESSAGES,
   ADD_POST_SUCCESS_MESSAGES,
 } from "constants/AddPost/Message";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { createPostsAction } from "store/postsSlice";
+import { notifyNegative, notifyPositive } from "utils/toast";
 
 export default function AddPost(props) {
   let history = useNavigate();
