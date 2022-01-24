@@ -17,13 +17,14 @@ export default function EditPost() {
   let history = useNavigate();
   const { postData, loading, error } = useUserPostDetail(postId);
   const [loadingEditPost, setLoadingEditPost] = useState(false);
-  console.log({ error });
+  console.log({ postData });
 
   if (error) {
     return <Navigate to="/" />;
   }
   const onSubmitEditPost = async (postData) => {
     setLoadingEditPost(true);
+    console.log(postData);
     editPost({ ...postData, id: postId })
       .then(() => {
         history("/manage");

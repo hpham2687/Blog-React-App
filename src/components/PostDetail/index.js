@@ -31,6 +31,7 @@ export default function PostDetail() {
     position: absolute;
     filter: blur(1px);
   `;
+  console.log(content);
 
   return (
     <Layout>
@@ -49,7 +50,7 @@ export default function PostDetail() {
               <ThumbnailTitle>{title}</ThumbnailTitle>
             </ThumbnailWrapper>
             <StyledCard.Body className="Card-body">
-              <p>{content}</p>
+              <p style={{ whiteSpace: "pre-wrap" }}>{content}</p>
             </StyledCard.Body>
             <Separator />
             <StyledCard.Body className="Card-footer">
