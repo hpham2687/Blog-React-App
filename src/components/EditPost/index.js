@@ -1,6 +1,6 @@
 import { Button, Breadcrumb } from "@ahaui/react";
 import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import {
   EDIT_POST_ERROR_MESSAGES,
@@ -15,7 +15,7 @@ import EditPostSkeleton from "./EditPostSkeleton";
 
 export default function EditPost() {
   const { postId } = useParams();
-
+  let history = useNavigate();
   const { postData, loading } = usePostDetail(postId);
   const [loadingEditPost, setLoadingEditPost] = useState(false);
 
@@ -23,6 +23,7 @@ export default function EditPost() {
     setLoadingEditPost(true);
     editPost({ ...postData, id: postId })
       .then(() => {
+        history("/manage");
         notifyPositive({
           message: EDIT_POST_SUCCESS_MESSAGES.EDIT_POST_SUCCESS,
         });

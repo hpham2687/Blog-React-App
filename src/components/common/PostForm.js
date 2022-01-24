@@ -6,6 +6,8 @@ import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { device } from "utils/mediaQuery";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 PostForm.propTypes = {
   submitText: PropTypes.string.isRequired,
@@ -27,6 +29,33 @@ export default function PostForm({
   data = null,
   ...rest
 }) {
+  const validationSchema = Yup.object().shape({
+    title: Yup.string()
+      .required(ADD_POST_ERROR_MESSAGES.TITLE_REQUIRED)
+      .min(
+        FORM_VALIDATOR.MIN_TITLE_LENGTH,
+        ADD_POST_ERROR_MESSAGES.TITLE_LENGTH_SHORT
+      )
+      .max(
+        FORM_VALIDATOR.MAX_TITLE_LENGTH,
+        ADD_POST_ERROR_MESSAGES.TITLE_LENGTH_EXCEED
+      ),
+    content: Yup.string()
+      .required(ADD_POST_ERROR_MESSAGES.CONTENT_REQUIRED)
+      .min(
+        FORM_VALIDATOR.MIN_CONTENT_LENGTH,
+        ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_SHORT
+      )
+      .max(
+        FORM_VALIDATOR.MAX_CONTENT_LENGTH,
+        ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_EXCEED
+      ),
+    picture: Yup.string().matches(
+      /(https?:\/\/.*\.(?:png|jpg))/i,
+      ADD_POST_ERROR_MESSAGES.INVALID_IMAGE_URL
+    ),
+  });
+
   const {
     control,
     register,
@@ -36,6 +65,7 @@ export default function PostForm({
   } = useForm({
     mode: "onChange",
     defaultValues: data,
+    resolver: yupResolver(validationSchema),
   });
 
   useEffect(() => {
@@ -48,7 +78,7 @@ export default function PostForm({
 
   return (
     <PostFormWrapper className="post-form-wrapper">
-      <StyledCard size={"medium"}>
+      <StyledCard className="u-borderLight" size={"medium"}>
         <Card.Body>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -63,15 +93,15 @@ export default function PostForm({
                       isInvalid={isHasTitleNameError}
                       placeholder="Enter title"
                       {...register("title", {
-                        required: ADD_POST_ERROR_MESSAGES.TITLE_REQUIRED,
-                        maxLength: {
-                          value: FORM_VALIDATOR.MAX_TITLE_LENGTH,
-                          message: ADD_POST_ERROR_MESSAGES.TITLE_LENGTH_EXCEED,
-                        },
-                        minLength: {
-                          value: FORM_VALIDATOR.MIN_TITLE_LENGTH,
-                          message: ADD_POST_ERROR_MESSAGES.TITLE_LENGTH_SHORT,
-                        },
+                        // required: ADD_POST_ERROR_MESSAGES.TITLE_REQUIRED,
+                        // maxLength: {
+                        //   value: FORM_VALIDATOR.MAX_TITLE_LENGTH,
+                        //   message: ADD_POST_ERROR_MESSAGES.TITLE_LENGTH_EXCEED,
+                        // },
+                        // minLength: {
+                        //   value: FORM_VALIDATOR.MIN_TITLE_LENGTH,
+                        //   message: ADD_POST_ERROR_MESSAGES.TITLE_LENGTH_SHORT,
+                        // },
                       })}
                       {...field}
                     />
@@ -97,16 +127,16 @@ export default function PostForm({
                       isInvalid={isHasContentError}
                       placeholder="Enter content"
                       {...register("content", {
-                        maxLength: {
-                          value: FORM_VALIDATOR.MAX_CONTENT_LENGTH,
-                          message:
-                            ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_EXCEED,
-                        },
-                        minLength: {
-                          value: FORM_VALIDATOR.MIN_CONTENT_LENGTH,
-                          message: ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_SHORT,
-                        },
-                        required: ADD_POST_ERROR_MESSAGES.CONTENT_REQUIRED,
+                        // maxLength: {
+                        //   value: FORM_VALIDATOR.MAX_CONTENT_LENGTH,
+                        //   message:
+                        //     ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_EXCEED,
+                        // },
+                        // minLength: {
+                        //   value: FORM_VALIDATOR.MIN_CONTENT_LENGTH,
+                        //   message: ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_SHORT,
+                        // },
+                        // required: ADD_POST_ERROR_MESSAGES.CONTENT_REQUIRED,
                       })}
                       {...field}
                     />
@@ -131,11 +161,11 @@ export default function PostForm({
                       isInvalid={isHasPictureError}
                       placeholder="Enter image url"
                       {...register("picture", {
-                        pattern: {
-                          value:
-                            /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
-                          message: ADD_POST_ERROR_MESSAGES.INVALID_IMAGE_URL,
-                        },
+                        // pattern: {
+                        //   value:
+                        //     /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
+                        //   message: ADD_POST_ERROR_MESSAGES.INVALID_IMAGE_URL,
+                        // },
                       })}
                     />
                   )}
