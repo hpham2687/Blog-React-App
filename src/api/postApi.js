@@ -4,6 +4,13 @@ import { client } from "./fetchClient";
 function getPostDetail(postId) {
   return client(`posts/${postId}`);
 }
+
+function getUserPostDetail(postId) {
+  return client(`user-posts/${postId}`, {
+    headers: getHeadersWithToken(),
+  });
+}
+
 function createPost(postData) {
   return client("posts", {
     data: postData,
@@ -26,4 +33,4 @@ function removePost(postId) {
   });
 }
 
-export { getPostDetail, createPost, editPost, removePost };
+export { getPostDetail, getUserPostDetail, createPost, editPost, removePost };

@@ -43,6 +43,11 @@ export default function Post(props) {
     <PostListWrapper>
       {show && (
         <ModalConfirm
+          content={
+            <>
+              Do you want to delete post with id <b>{id}</b>?
+            </>
+          }
           onConfirm={onSubmitRemove}
           show={show}
           handleClose={handleClose}

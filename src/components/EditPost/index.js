@@ -1,24 +1,27 @@
-import { Button, Breadcrumb } from "@ahaui/react";
-import React, { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import styled from "styled-components";
+import { Breadcrumb } from "@ahaui/react";
+import { editPost } from "api/postApi";
+import Layout from "components/common/Layout";
+import PostForm from "components/common/PostForm";
 import {
   EDIT_POST_ERROR_MESSAGES,
   EDIT_POST_SUCCESS_MESSAGES,
 } from "constants/EditPost/Message";
-import usePostDetail from "hooks/usePostDetail";
+import useUserPostDetail from "hooks/useUserPostDetail";
+import React, { useState } from "react";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { notifyNegative, notifyPositive } from "utils/toast";
-import Layout from "components/common/Layout";
-import PostForm from "components/common/PostForm";
-import { editPost } from "api/postApi";
 import EditPostSkeleton from "./EditPostSkeleton";
 
 export default function EditPost() {
   const { postId } = useParams();
   let history = useNavigate();
-  const { postData, loading } = usePostDetail(postId);
+  const { postData, loading, error } = useUserPostDetail(postId);
   const [loadingEditPost, setLoadingEditPost] = useState(false);
+  console.log({ error });
 
+  if (error) {
+    return <Navigate to="/" />;
+  }
   const onSubmitEditPost = async (postData) => {
     setLoadingEditPost(true);
     editPost({ ...postData, id: postId })
@@ -47,7 +50,6 @@ export default function EditPost() {
         </Breadcrumb.Item>
         <Breadcrumb.Item href="#">Edit Post</Breadcrumb.Item>
       </Breadcrumb>
-
       <PostForm
         loading={loadingEditPost}
         submitText="Save"

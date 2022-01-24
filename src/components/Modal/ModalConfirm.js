@@ -22,6 +22,7 @@ export default function ModalConfirm({
   handleClose,
   setShow,
   onConfirm,
+  content,
 }) {
   return reactDom.createPortal(
     <Modal
@@ -35,7 +36,7 @@ export default function ModalConfirm({
         <Modal.Title>Confirmation</Modal.Title>
       </StyledModalHeader>
       <Modal.Body>
-        <div className="u-textCenter">Do you want to delete this post?</div>
+        <div className="u-textCenter">{content}</div>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={() => setShow(false)} width="full">
