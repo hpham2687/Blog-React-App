@@ -1,4 +1,5 @@
 import { Button, Card, Form, Loader } from "@ahaui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { ADD_POST_ERROR_MESSAGES } from "constants/AddPost/Message";
 import { FORM_VALIDATOR } from "constants/common";
 import PropTypes from "prop-types"; // ES6
@@ -7,7 +8,6 @@ import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { device } from "utils/mediaQuery";
 import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 PostForm.propTypes = {
   submitText: PropTypes.string.isRequired,
@@ -61,7 +61,7 @@ export default function PostForm({
     register,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { isSubmitting, errors },
   } = useForm({
     mode: "onChange",
     defaultValues: data,
@@ -92,17 +92,7 @@ export default function PostForm({
                       type="text"
                       isInvalid={isHasTitleNameError}
                       placeholder="Enter title"
-                      {...register("title", {
-                        // required: ADD_POST_ERROR_MESSAGES.TITLE_REQUIRED,
-                        // maxLength: {
-                        //   value: FORM_VALIDATOR.MAX_TITLE_LENGTH,
-                        //   message: ADD_POST_ERROR_MESSAGES.TITLE_LENGTH_EXCEED,
-                        // },
-                        // minLength: {
-                        //   value: FORM_VALIDATOR.MIN_TITLE_LENGTH,
-                        //   message: ADD_POST_ERROR_MESSAGES.TITLE_LENGTH_SHORT,
-                        // },
-                      })}
+                      {...register("title")}
                       {...field}
                     />
                   )}
@@ -122,22 +112,11 @@ export default function PostForm({
                   render={({ field }) => (
                     <Form.Input
                       as="textarea"
-                      rows={3}
+                      rows={5}
                       type="text"
                       isInvalid={isHasContentError}
                       placeholder="Enter content"
-                      {...register("content", {
-                        // maxLength: {
-                        //   value: FORM_VALIDATOR.MAX_CONTENT_LENGTH,
-                        //   message:
-                        //     ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_EXCEED,
-                        // },
-                        // minLength: {
-                        //   value: FORM_VALIDATOR.MIN_CONTENT_LENGTH,
-                        //   message: ADD_POST_ERROR_MESSAGES.CONTENT_LENGTH_SHORT,
-                        // },
-                        // required: ADD_POST_ERROR_MESSAGES.CONTENT_REQUIRED,
-                      })}
+                      {...register("content")}
                       {...field}
                     />
                   )}
@@ -160,13 +139,7 @@ export default function PostForm({
                       type="text"
                       isInvalid={isHasPictureError}
                       placeholder="Enter image url"
-                      {...register("picture", {
-                        // pattern: {
-                        //   value:
-                        //     /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,
-                        //   message: ADD_POST_ERROR_MESSAGES.INVALID_IMAGE_URL,
-                        // },
-                      })}
+                      {...register("picture")}
                     />
                   )}
                 />
@@ -174,11 +147,11 @@ export default function PostForm({
                 {isHasPictureError && (
                   <Form.Feedback data-testid="error-picture-msg" type="invalid">
                     {errors?.picture.message}
-                    {/* {errorApi?.password || errors?.password.message} */}
                   </Form.Feedback>
                 )}
               </Form.Group>
               <Button
+                disabled={isSubmitting}
                 size={"small"}
                 type="submit"
                 variant="primary"
